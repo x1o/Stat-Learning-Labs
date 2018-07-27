@@ -1,0 +1,816 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass scrartcl
+\begin_preamble
+%\usepackage{nicefrac}
+%\usepackage{colortbl}
+%\usepackage[noend]{algpseudocode}
+\usepackage[all]{xy}
+\usepackage{mathrsfs}
+
+%\usepackage[columns=1,itemlayout=singlepar,totoc=true]{idxlayout}
+
+%\@addtoreset{chapter}{part}
+\DeclareMathOperator{\Int}{Int}
+\DeclareMathOperator{\rk}{rk}
+
+\newcommand{\bigperp}{%
+  \mathop{\mathpalette\bigp@rp\relax}%
+  \displaylimits
+}
+
+\newcommand{\bigp@rp}[2]{%
+  \vcenter{
+    \m@th\hbox{\scalebox{\ifx#1\displaystyle2.1\else1.5\fi}{$#1\perp$}}
+  }%
+}
+
+\newcommand{\bignparallel}{%
+  \mathop{\mathpalette\bignp@rp\relax}%
+  \displaylimits
+}
+
+\newcommand{\bignp@rp}[2]{%
+  \vcenter{
+    \m@th\hbox{\scalebox{\ifx#1\displaystyle2.1\else1.5\fi}{$#1\nparallel$}}
+  }%
+}
+\end_preamble
+\use_default_options true
+\begin_modules
+theorems-ams-bytype
+theorems-ams-extended-bytype
+theorems-chap-bytype
+\end_modules
+\maintain_unincluded_children false
+\begin_local_layout
+Format 49
+
+Style Solution
+        CopyStyle       "Proof"
+        LatexName       solution
+        Argument        1
+                LabelString   "Alternative Solution String"
+                Tooltip       "Alternative solution string"
+        EndArgument
+        LabelString     "Solution."
+        Preamble
+                \newenvironment{solution}
+                  {\renewcommand\qedsymbol{$\lrcorner$}
+                   \begin{proof}[\solutionname]}
+                  {\end{proof}}
+        EndPreamble
+        LangPreamble
+                \providecommand{\solutionname}{_(Solution)}
+        EndLangPreamble
+        BabelPreamble
+                \addto\captions$$lang{\renewcommand{\solutionname}{_(Solution)}}
+        EndBabelPreamble
+
+End
+\end_local_layout
+\language russian
+\language_package default
+\inputencoding utf8
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_math auto
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement h
+\paperfontsize default
+\spacing single
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen true
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder false
+\pdf_colorlinks true
+\pdf_backref false
+\pdf_pdfusetitle true
+\papersize a4paper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 2
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 2
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date true
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2.5cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language french
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\bullet 1 0 25 -1
+\bullet 2 0 26 -1
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\N}{\mathrm{N}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\P}{\mathsf{P}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\E}{\mathsf{E}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\D}{\mathsf{D}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\renewcommand{\O}{\Omega}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\F}{\mathcal{F}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\K}{\mathsf{K}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\A}{\mathscr{A}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\Pcal}{\mathcal{P}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\th}{\theta}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\toas}{\xrightarrow{{\rm a.s.}}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\toP}{\xrightarrow{\P}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\tod}{\xrightarrow{\mathrm{d}}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\iid}{\mathrm{i.i.d.}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\T}{\mathrm{T}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\L}{\mathcal{L}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\dd}[2]{\frac{\mathrm{d}#1}{\mathrm{d}#2}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\a}{\alpha}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\b}{\beta}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\t}{\mathrm{t}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\RR}{\mathbb{R}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\d}{\,\mathrm{d}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\U}{\mathrm{U}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\thb}{\boldsymbol{\theta}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\I}{\mathrm{I}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\II}{\mathrm{II}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\ein}{\mathbf{1}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\pv}{p\text{-value}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\MLE}{\mathrm{MLE}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\indep}{\perp\!\!\!\perp}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\xib}{\boldsymbol{\xi}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\Pscr}{\mathscr{P}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\m}{\mathsf{m}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Title
+Вычисление интегралов методом Монте-Карло
+\end_layout
+
+\begin_layout Date
+Tue 21 Feb 2017
+\end_layout
+
+\begin_layout Author
+422 группа
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Общая схема
+\end_layout
+
+\begin_layout Standard
+Пусть 
+\begin_inset Formula $\nu:\A\to\bar{\RR}$
+\end_inset
+
+ --- конечный заряд на пространстве 
+\begin_inset Formula $(D,\A)$
+\end_inset
+
+.
+ Найдем 
+\begin_inset Formula $J=\nu(D)$
+\end_inset
+
+.
+ Для этого введем 
+\begin_inset Formula $\xi:(\Omega,\F,\P)\to(D,\A)$
+\end_inset
+
+ --- случайную величина с распределением 
+\begin_inset Formula $\Pcal=\Pcal_{\xi}$
+\end_inset
+
+, причем 
+\begin_inset Formula $\nu\prec\Pcal$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$$
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+xymatrix{
+\end_layout
+
+\begin_layout Plain Layout
+
+    (D, 
+\backslash
+A) 
+\backslash
+ar[r]^{
+\backslash
+nu}_{
+\backslash
+Pcal_
+\backslash
+xi} & (
+\backslash
+overline{
+\backslash
+RR}, 
+\backslash
+mathcal{B}) 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    (
+\backslash
+Omega, 
+\backslash
+F, 
+\backslash
+P) 
+\backslash
+ar[u]^
+\backslash
+xi 
+\backslash
+ar[ru]_{m 
+\backslash
+circ 
+\backslash
+xi = 
+\backslash
+eta}
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+$$
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Значит существует производная Радона-Никодима 
+\begin_inset Formula 
+\[
+m=\frac{\d\nu}{\d\Pcal}:D\to\bar{\RR},
+\]
+
+\end_inset
+
+т.е.
+ такая функция 
+\begin_inset Formula $m(x)$
+\end_inset
+
+, что
+\begin_inset Formula 
+\[
+\int_{A}m\d\Pcal=\int_{A}\d\nu=\nu(A),\quad\forall A\in\A.
+\]
+
+\end_inset
+
+
+\begin_inset Formula $J$
+\end_inset
+
+ может быть найдена как 
+\begin_inset Formula 
+\[
+J=\E m(\xi)=\int_{\Omega}m(\xi)\d\P=\int_{D}m(x)\d\Pcal=\int_{D}\frac{\d\nu}{\d\Pcal}\d\Pcal=\int_{D}\d\nu=\nu(D).
+\]
+
+\end_inset
+
+ По ЗБЧ может быть найдена оценка 
+\begin_inset Formula $\hat{J}_{n}$
+\end_inset
+
+: если 
+\begin_inset Formula $\xi_{1},\ldots,\xi_{n}$
+\end_inset
+
+ i.i.d., то 
+\begin_inset Formula 
+\[
+\hat{J}_{n}=\frac{1}{n}\sum_{i=1}^{n}m(\xi_{i})\toP\E m(\xi)=J.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Вычисление интеграла
+\end_layout
+
+\begin_layout Standard
+Посчитаем интеграл 
+\begin_inset Formula 
+\[
+\nu(A)=\int_{A}f\d\lambda.
+\]
+
+\end_inset
+
+Автоматически, 
+\begin_inset Formula $\d\nu=f\d\lambda$
+\end_inset
+
+ и 
+\begin_inset Formula $\nu\prec\lambda$
+\end_inset
+
+.
+ Пусть также 
+\begin_inset Formula $\d\Pcal=p\d\lambda$
+\end_inset
+
+, то есть 
+\begin_inset Formula $\Pcal\prec\lambda$
+\end_inset
+
+.
+ Таким образом, мера 
+\begin_inset Formula $\Pcal$
+\end_inset
+
+ и заряд 
+\begin_inset Formula $\nu$
+\end_inset
+
+ абсолютно непрерывны относительно третьей меры 
+\begin_inset Formula $\lambda$
+\end_inset
+
+.
+ Тогда для существования 
+\begin_inset Formula $m=\d\nu/\d\Pcal$
+\end_inset
+
+ необходимо и достаточно, чтобы 
+\begin_inset Formula $\lambda\left\{ x:f(x)\neq0\,\&\,p(x)=0\right\} =0$
+\end_inset
+
+, при этом 
+\begin_inset Formula 
+\[
+m(x)=\frac{\d\nu}{\d\Pcal}=\frac{f\d\lambda}{p\d\lambda}=\frac{f(x)}{p(x)}.
+\]
+
+\end_inset
+
+ Таким образом, 
+\begin_inset Formula 
+\[
+\hat{J}_{n}=\frac{1}{n}\sum_{i=1}^{n}\frac{f(\xi_{i})}{p(\xi_{i})}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Вычисление дисперсии
+\end_layout
+
+\begin_layout Standard
+Так как 
+\begin_inset Formula 
+\[
+\D m(\xi)=\E m^{2}(\xi)-\left(\E m(\xi)\right)^{2}=\E m^{2}(\xi)-J^{2},
+\]
+
+\end_inset
+
+ то
+\begin_inset Formula 
+\[
+s_{n}^{2}=\frac{1}{n}\sum_{i=1}^{n}m^{2}(\xi_{i})-\hat{J}_{n}^{2}.
+\]
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+ Можно также посчитать 
+\begin_inset Formula $\D\hat{J}_{n}$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Асимптотический доверительный интервал
+\end_layout
+
+\begin_layout Standard
+ По ЦПТ, 
+\begin_inset Formula 
+\[
+\frac{\sum\xi_{i}-\sum\E\xi_{i}}{\sqrt{\sum_{i}\D\xi_{i}}}=\frac{\sum\xi_{i}-n\mu}{\sqrt{n\sigma^{2}}}=\sqrt{n}\frac{1/n\cdot\sum\xi_{i}-\mu}{\sigma}=\frac{\sqrt{n}}{\sigma}\left(\hat{J}_{n}-J\right)\tod\N(0,1),
+\]
+
+\end_inset
+
+ откуда 
+\begin_inset Formula 
+\[
+\P\left(-x\leq\frac{\sqrt{n}}{\sigma}\left(\hat{J}_{n}-J\right)\leq x\right)\tod\Phi(x)-\Phi(-x)=1-\gamma\iff x=x_{\gamma},
+\]
+
+\end_inset
+
+и 
+\begin_inset Formula 
+\[
+\P\left(-x_{\gamma}\frac{\sigma}{\sqrt{n}}\leq\hat{J}_{n}-J\leq x_{\gamma}\frac{\sigma}{\sqrt{n}}\right),
+\]
+
+\end_inset
+
+откуда доверительный интервал имеет вид 
+\begin_inset Formula 
+\[
+J\in\left(\hat{J}_{n}-\frac{\sigma}{\sqrt{n}}x_{\gamma};\hat{J}_{n}+\frac{\sigma}{\sqrt{n}}x_{\gamma}\right).
+\]
+
+\end_inset
+
+ Неизвестную 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ можно заменить на выборочный стандарт 
+\begin_inset Formula $s_{n}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Трудоемкость
+\end_layout
+
+\begin_layout Standard
+Найдем такое 
+\begin_inset Formula $n_{0}:\forall n\geq n_{0}$
+\end_inset
+
+ 
+\begin_inset Formula $\P\left(\left|\hat{J}_{n}-J\right|\leq\epsilon\right)=1-\gamma$
+\end_inset
+
+: 
+\begin_inset Formula 
+\[
+x_{\gamma}\frac{\sigma}{\sqrt{n_{0}}}=\epsilon\implies n_{0}=\frac{\sigma^{2}}{\epsilon^{2}}x_{\gamma}^{2}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Итого, скорость сходимости 
+\begin_inset Formula $\mathcal{O}(1/\sqrt{n})$
+\end_inset
+
+.
+ Для реального применения непригодны, потому что содержат неизвестную 
+\begin_inset Formula $\sigma$
+\end_inset
+
+.
+ ЦПТ выдерживает подстановку состоятельную оценку дисперсии.
+\end_layout
+
+\begin_layout Section
+Доверительный интервал через теорему Донскер
+\end_layout
+
+\begin_layout Standard
+...
+ Объединение доверительных интервалов не является доверительным интервалом
+ для траектории ...
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\hat{J}_{n}=\frac{(n-1)\hat{J}_{n-1}+m(\xi_{n})}{n}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Для таких вещей есть аналог ЦПТ: Пусть есть 
+\begin_inset Formula $x_{1},\ldots x_{n}$
+\end_inset
+
+ i.i.d с 
+\begin_inset Formula $\mu=\E x_{i},\sigma^{2}=\D x_{i}$
+\end_inset
+
+.
+ Переведем 
+\begin_inset Formula $\hat{J}_{n}=\frac{1}{n}\sum_{i=1}^{n}x_{i}$
+\end_inset
+
+ в интервал [0,1] :
+\begin_inset Formula 
+\[
+\delta_{n}(t)=\frac{1}{\left\lfloor nt\right\rfloor }\sum_{i=1}^{\left\lfloor nt\right\rfloor }x_{i},\quad t\in[0,1].
+\]
+
+\end_inset
+
+Справедлива теорема Донскер: 
+\begin_inset Formula 
+\[
+\frac{1}{\sqrt{n}}\sum_{i=1}^{\left\lfloor nt\right\rfloor }\left(\frac{x_{i}-\mu}{\sigma}\right)\xrightarrow[n\to\infty]{\sim}W(t),
+\]
+
+\end_inset
+
+ где 
+\begin_inset Formula $W(t)$
+\end_inset
+
+ --- Броуновский мост.
+ Как и ЦПТ, выдерживает замену 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ на 
+\begin_inset Formula $\tilde{s}$
+\end_inset
+
+ .
+ 
+\begin_inset Formula $\hat{J}_{n}=\delta_{n}(1)$
+\end_inset
+
+, 
+\begin_inset Formula $x_{i}=m(\xi_{i})$
+\end_inset
+
+ .
+ 
+\begin_inset Formula 
+\[
+\frac{1}{\sqrt{n}\tilde{s}}\sum_{i=1}^{\left\lfloor nt\right\rfloor }\left(x_{i}-\delta(1)\right)-\underbrace{J}_{\mu}+J=\frac{1}{\sqrt{n}\tilde{s}}\sum_{i=1}^{\left\lfloor nt\right\rfloor }\left(x_{i}-J\right)-\frac{\left\lfloor nt\right\rfloor }{\sqrt{n}\tilde{s}}\left(\hat{J}_{n}-J\right)\xrightarrow[n\to\infty]{}W(t)+tU,\quad U\sim\N(0,1)
+\]
+
+\end_inset
+
+(«броуновский мост со сносом»).
+ Аналог доверительных интервалов для процессов: 
+\begin_inset Formula 
+\[
+\left(\delta_{n}(1)-\frac{\tilde{s}\sqrt{n}}{\left\lfloor nt\right\rfloor }U^{**}(t),\delta_{n}(1)+\frac{\tilde{s}\sqrt{n}}{\left\lfloor nt\right\rfloor }U^{**}(t)\right),
+\]
+
+\end_inset
+
+для 95%-го доверительного интервала можно взять 
+\begin_inset Formula 
+\[
+U^{**}(t)=a+b\sqrt{t},\quad a=0.1,b=3.15.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

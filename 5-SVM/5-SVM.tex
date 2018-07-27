@@ -1,0 +1,303 @@
+%% LyX 2.1.4 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[russian]{scrartcl}
+\usepackage[T2A,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper]{geometry}
+\geometry{verbose,tmargin=2cm,bmargin=2.5cm,lmargin=2cm,rmargin=2cm}
+\usepackage{color}
+\usepackage{babel}
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage[unicode=true,pdfusetitle,
+ bookmarks=true,bookmarksnumbered=false,bookmarksopen=true,bookmarksopenlevel=1,
+ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=true]
+ {hyperref}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+\DeclareRobustCommand{\cyrtext}{%
+  \fontencoding{T2A}\selectfont\def\encodingdefault{T2A}}
+\DeclareRobustCommand{\textcyr}[1]{\leavevmode{\cyrtext #1}}
+\AtBeginDocument{\DeclareFontEncoding{T2A}{}{}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+  \theoremstyle{plain}
+  \newtheorem*{thm*}{\protect\theoremname}
+
+\@ifundefined{date}{}{\date{}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+%\usepackage{nicefrac}
+%\usepackage{colortbl}
+%\usepackage[noend]{algpseudocode}
+%\usepackage[all]{xy}
+\usepackage{mathrsfs}
+
+%\usepackage[columns=1,itemlayout=singlepar,totoc=true]{idxlayout}
+
+%\@addtoreset{chapter}{part}
+\DeclareMathOperator{\Int}{Int}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\cdf}{cdf}
+\DeclareMathOperator{\ecdf}{ecdf}
+\DeclareMathOperator{\qnt}{qnt}
+\DeclareMathOperator{\pdf}{pdf}
+\DeclareMathOperator{\pmf}{pmf}
+\DeclareMathOperator{\dom}{dom}
+\DeclareMathOperator{\bias}{bias}
+\DeclareMathOperator{\MSE}{MSE}
+\DeclareMathOperator{\med}{med}
+\DeclareMathOperator{\Exp}{Exp}
+\DeclareMathOperator{\Bin}{Bin}
+\DeclareMathOperator{\Ber}{Ber}
+\DeclareMathOperator{\Geom}{Geom}
+\DeclareMathOperator{\Pois}{Pois}
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\cov}{cov}
+\DeclareMathOperator{\cor}{cor}
+\DeclareMathOperator{\sign}{sign}
+\DeclareMathOperator{\Lin}{Lin}
+\DeclareMathOperator{\SE}{SE}
+\DeclareMathOperator{\SD}{SD}
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator{\supp}{supp}
+
+\newcommand{\bigperp}{%
+  \mathop{\mathpalette\bigp@rp\relax}%
+  \displaylimits
+}
+
+\newcommand{\bigp@rp}[2]{%
+  \vcenter{
+    \m@th\hbox{\scalebox{\ifx#1\displaystyle2.1\else1.5\fi}{$#1\perp$}}
+  }%
+}
+
+\newcommand{\bignparallel}{%
+  \mathop{\mathpalette\bignp@rp\relax}%
+  \displaylimits
+}
+
+\newcommand{\bignp@rp}[2]{%
+  \vcenter{
+    \m@th\hbox{\scalebox{\ifx#1\displaystyle2.1\else1.5\fi}{$#1\nparallel$}}
+  }%
+}
+
+\AtBeginDocument{
+  \def\labelitemii{\(\circ\)}
+  \def\labelitemiii{\(\diamond\)}
+}
+
+\makeatother
+
+  \providecommand{\theoremname}{Теорема}
+
+\begin{document}
+\global\long\def\N{\mathrm{N}}
+\global\long\def\P{\mathsf{P}}
+\global\long\def\E{\mathsf{E}}
+\global\long\def\D{\mathsf{D}}
+\global\long\def\O{\Omega}
+\global\long\def\F{\mathcal{F}}
+\global\long\def\K{\mathsf{K}}
+\global\long\def\A{\mathscr{A}}
+\global\long\def\Pcal{\mathcal{P}}
+\global\long\def\th{\theta}
+\global\long\def\toas{\xrightarrow{{\rm a.s.}}}
+\global\long\def\toP{\xrightarrow{\P}}
+\global\long\def\tod{\xrightarrow{\mathrm{d}}}
+\global\long\def\iid{\mathrm{i.i.d.}}
+\global\long\def\T{\mathrm{T}}
+\global\long\def\L{\mathcal{L}}
+\global\long\def\dd#1#2{\frac{\mathrm{d}#1}{\mathrm{d}#2}}
+\global\long\def\a{\alpha}
+\global\long\def\b{\beta}
+\global\long\def\t{\mathrm{t}}
+\global\long\def\RR{\mathbb{R}}
+\global\long\def\d{\,\mathrm{d}}
+\global\long\def\U{\mathrm{U}}
+\global\long\def\thb{\boldsymbol{\theta}}
+\global\long\def\I{\mathrm{I}}
+\global\long\def\II{\mathrm{II}}
+\global\long\def\ein{\mathbf{1}}
+\global\long\def\pv{p\text{-value}}
+\global\long\def\MLE{\mathrm{MLE}}
+\global\long\def\indep{\perp\!\!\!\perp}
+\global\long\def\xib{\boldsymbol{\xi}}
+\global\long\def\Pscr{\mathscr{P}}
+\global\long\def\m{\mathsf{m}}
+\global\long\def\X{\mathfrak{X}}
+\global\long\def\Q{\mathcal{Q}}
+\global\long\def\beb{\boldsymbol{\beta}}
+\global\long\def\xx{\mathbf{x}}
+\global\long\def\T{\mathsf{T}}
+\global\long\def\H{\mathcal{H}}
+\global\long\def\st{\mathrm{subject\ to\ }}
+\global\long\def\hh{\mathbf{h}}
+\global\long\def\RR{\mathbb{R}}
+\global\long\def\yy{\mathbf{y}}
+
+
+
+\title{Support Vector Machines}
+
+
+\date{Tue 21 Mar 2017}
+
+
+\author{422 группа}
+
+\maketitle
+\tableofcontents{}
+
+
+\section{Maximium margin classifier}
+
+Пусть задана выборка $\left\{ (\xx_{i},y_{i})\right\} _{i=1}^{N}$,
+$\xx_{i}\in\RR^{p},\ y_{i}\in\left\{ -1,1\right\} $.
+\begin{itemize}
+\item Гиперплоскость 
+\[
+\H=\left\{ \xx:f(\xx)=\beb^{\T}\xx+\beta_{0}=0\right\} ,\quad\beb=\begin{pmatrix}\beta_{1}\\
+\vdots\\
+\beta_{p}
+\end{pmatrix}.
+\]
+
+\item Нормаль к $\H$ 
+\[
+\nabla f(\xx)=\beb.
+\]
+
+\item Расстояние со знаком от $\xx$ до проекции $\xx_{0}\in\H$:
+
+\begin{itemize}
+\item Пусть $\xx\parallel\xx'$; тогда $\left\langle \xx,\xx'\right\rangle =\pm\left\Vert \xx\right\Vert \left\Vert \xx'\right\Vert $
+\item Поскольку $\nabla f(\xx_{0})\parallel(\xx-\xx_{0})$ и $\beb^{\T}\xx_{0}=-\beta_{0}$,
+\[
+\left\Vert (\xx-\xx_{0})\right\Vert =\frac{\left\langle \xx-\xx_{0},\nabla f(\xx_{0})\right\rangle }{\left\Vert \nabla f(\xx_{0})\right\Vert }=\frac{1}{\left\Vert \beb\right\Vert }\beb^{\T}(\xx-\xx_{0})=\frac{1}{\left\Vert \beb\right\Vert }(\beb^{\T}\xx+\beta_{0})=\frac{f(\xx)}{\left\Vert \nabla f(\xx)\right\Vert }.
+\]
+
+\item Если $\left\Vert \beb\right\Vert =1$, то расстояние от $\H$ до точки
+$\xx$ есть 
+\[
+f(\xx).
+\]
+
+\end{itemize}
+\item Оптимизационная задача 
+\[
+\max_{\beb,\beta_{0}}M,\quad\st\left\Vert \beb\right\Vert =1,\ f(\xx_{i})y_{i}\geq M,\ i\in1:N,
+\]
+ что то же
+\[
+\max_{\beb,\beta_{0}}M,\quad\st\frac{f(\xx_{i})}{\left\Vert \beb\right\Vert }y_{i}\geq M\iff f(\xx_{i})y_{i}\geq M\left\Vert \beb\right\Vert ,\ i\in1:N,
+\]
+и, т.к. $\forall\beb,\beta_{0}$ удовлетворяющих неравенств $c\cdot\beb,c\cdot\beta$
+тоже удовлетворяет, положим $\left\Vert \beb\right\Vert =1/M$, тогда
+\[
+\min_{\beb,\beta_{0}}\left\Vert \beb\right\Vert ,\quad\st f(\xx_{i})y_{i}\geq1,\ i\in1:N.
+\]
+
+
+\begin{itemize}
+\item Лагранжиан  
+\[
+L=\frac{1}{2}\left\Vert \beb\right\Vert ^{2}-\sum_{i=1}^{N}\lambda_{i}(f(\xx_{i})y_{i}-1).
+\]
+
+\item Решение 
+\begin{eqnarray}
+\beb & = & \sum_{i=1}^{N}\lambda_{i}y_{i}\xx_{i}\label{eq:1}\\
+0 & = & \sum_{i=1}^{N}\lambda_{i}y_{i}.\label{eq:2}
+\end{eqnarray}
+
+\item При подстановке в $L$, двойственная
+\begin{equation}
+L_{D}=\sum_{i=1}^{N}\lambda_{i}-\frac{1}{2}\sum_{i=1}^{N}\sum_{k=1}^{N}\lambda_{i}\lambda_{k}y_{i}y_{k}\xx_{i}^{\T}\xx_{k},\quad\st\lambda_{i}\geq0,\ \sum_{i=1}^{N}\lambda_{i}y_{i}=0\label{eq:3}
+\end{equation}
+и еще условии 
+\begin{equation}
+\lambda_{i}(y_{i}f(\xx_{i})-1)=0,\quad i\in1:N.\label{eq:4}
+\end{equation}
+Максимизируя её получают решение, которое должно удовлетворять KKT
+условиям (\ref{eq:1})--(\ref{eq:4}).
+\end{itemize}
+\item Опорные вектора: из (\ref{eq:4}) видно, что если $\lambda_{i}\neq0$,
+то $y_{i}f(\xx_{i})=1$ и $\xx_{i}$ лежит на границе; если $y_{i}f(\xx_{i})>1$,
+то $\lambda_{i}=0$. Поэтому в (\ref{eq:1}) участвуют только вектора
+на границе --- \emph{опорные}.
+\item Классификатор: 
+\[
+G(\xx_{0})=\sign\hat{f}(\xx_{0}).
+\]
+
+\end{itemize}
+
+\section{Support Vector Classifier (soft margin)}
+\begin{itemize}
+\item Оптимизационная задача
+\[
+\max_{\beb,\beta_{0},\boldsymbol{\epsilon}}M,\quad\st\left\Vert \beb\right\Vert =1,\ f(\xx_{i})y_{i}\geq M(1-\epsilon_{i}),\ \epsilon_{i}\geq0\ i\in1:N,\ \sum_{i=1}^{N}\epsilon_{i}\leq C_{0}.
+\]
+
+
+\begin{itemize}
+\item $C_{0}$ --- максимальное количество мисклассифицированных точек:
+
+\begin{itemize}
+\item Если $\epsilon_{i}=0$, то $\xx_{i}$ лежит снаружи границы
+\item Если $\epsilon_{i}\in(0,1)$, то внутри с правильной стороны
+\item Если $\epsilon_{i}>1$, то с неправильной стороны
+\end{itemize}
+\item Как и прежде, эквивалентной задачей будет 
+\[
+\min_{\beb,\beta_{0}}\left\Vert \beb\right\Vert ,\quad\st f(\xx_{i})y_{i}\geq1-\epsilon_{i},\ i\in1:N,\ \sum_{i=1}^{N}\epsilon_{i}\leq C_{0}
+\]
+что то же, 
+\[
+\min_{\beb,\beta_{0}}\frac{1}{2}\left\Vert \beb\right\Vert ^{2}+C\sum_{i=1}^{N}\epsilon_{i},\quad\st f(\xx_{i})y_{i}\geq1-\epsilon_{i},\ i\in1:N.
+\]
+
+\end{itemize}
+\item Опорные вектора: теперь лежат как на границе, так и внутри.
+\end{itemize}
+
+\section{Support Vector Machine (kernels)}
+
+Пусть $h_{1},\ldots,h_{M}$ --- базисные функции. Можно было бы спроецировать
+$\hh(\xx_{i})=(h_{1}(\xx_{i}),\ldots,h_{M}(\xx_{i}))^{\T}$ и в результирующем
+пространстве построить классификатор. Расширение идеи --- ядра. Ядро
+есть симметричная положительно определенная 
+\[
+K(\xx,\xx')=\left\langle \hh(\xx),\hh(\xx')\right\rangle .
+\]
+
+\begin{thm*}[Мерцер]
+Пусть $K(\xx,\yy)$ непрерывное, симметричное, положительно определенное
+ядро, $\xx,\yy\in\X$ (полное, метрическое, сепарабельное). Тогда
+существует такое гильбертово пространство $\H$ и отображение $\hh:\X\to\H$
+что 
+\[
+K(\xx,\yy)=\left\langle \hh(\xx),\hh(\yy)\right\rangle _{\H}.
+\]
+
+\end{thm*}
+Видно, что
+\begin{eqnarray*}
+\hat{f}(\xx_{0}) & = & \beta_{0}+\hh(\xx_{0})^{\T}\hat{\beb}=\beta_{0}+\hh(\xx_{0})^{\T}\sum_{i=1}^{N}\lambda_{i}y_{i}\hh(\xx_{i})=\beta_{0}+\sum_{i=1}^{N}\lambda_{i}y_{i}\left\langle \hh(\xx_{0}),\hh(\xx_{i})\right\rangle \\
+ & = & \beta_{0}+\sum_{i=1}^{N}\lambda_{i}y_{i}\left\langle \hh(\xx_{0}),\hh(\xx_{i})\right\rangle =\beta_{0}+\sum_{i=1}^{N}\lambda_{i}y_{i}K(\xx_{0},\xx_{i}),
+\end{eqnarray*}
+так что в классификаторе $G(\xx_{0})=\sign\hat{f}(\xx_{0})$ участвуют
+только суммы ядер на опорных векторах (таких, что $0<\lambda_{i}<C$).
+
+
+
+
+\end{document}

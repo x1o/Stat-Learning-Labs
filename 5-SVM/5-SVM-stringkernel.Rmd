@@ -1,0 +1,123 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+promoters <- read.csv('Promoters/promoters.data.txt',
+                      header = FALSE, as.is = 3, strip.white = TRUE)[,c(1,3)]
+names(promoters)[1] <- 'is.promoter'
+index <- 1:nrow(promoters)
+set.seed(1)
+test.index <- sample(index, trunc(length(index) / 3))
+train.index <- setdiff(index, test.index)
+test.set <- promoters[test.index,]
+train.set <- promoters[train.index,]
+```
+
+```{r}
+library('kernlab')
+# spectrum.2 <- stringdot(type="spectrum", length=2, normalized=FALSE)
+# spectrum.2('radar', 'abracadabra')
+```
+
+```{r}
+m <- ksvm(as.list(promoters[,2]), promoters[,1], subset=train.index,
+          kernel="stringdot",
+          kpar=list(length=3),
+          C=1,
+          cross=0)
+mean(test.set[,1] == predict(m, as.list(test.set[,-1])))
+```
+
+```{r}
+# str(reuters)
+# str(rlabels)
+```
+
+```{r}
+# data(iris)
+# 
+# ## Create a kernel function using the build in rbfdot function
+# rbf <- rbfdot(sigma=0.1)
+# rbf
+# 
+# ## train a bound constraint support vector machine
+# irismodel <- ksvm(Species~.,data=iris,type="C-bsvc",
+#                  kernel=rbf,C=10)
+# 
+# irismodel
+# 
+# ## get fitted values
+# fitted(irismodel)
+# 
+# ## Test on the training set with probabilities as output
+# predict(irismodel, iris[,-5])
+# mean(iris[,5] == predict(irismodel, iris[,-5]))
+
+```
+
+```{r}
+# data(reuters)
+# is(reuters)
+# tsv <- ksvm(reuters,rlabels,kernel="stringdot",
+#            kpar=list(length=5),cross=3,C=10)
+# tsv
+```
+
+## hyper-parameter tunining for iris
+
+```{r}
+set.seed(1)
+
+n <- nrow(iris)
+train.set <- sample(n, size = 3/4*n)
+test.set <- setdiff(1:n, train.set)
+task <- makeClassifTask(data=iris, target='Species')
+task.learn <- subsetTask(task, train.set)
+learner <- makeLearner('classif.ksvm', kernel='vanilladot')
+
+ps = makeParamSet(
+  makeDiscreteParam("C", values = 2^(-2:5))
+)
+ctrl = makeTuneControlGrid()
+rdesc = makeResampleDesc("CV", iters = 5L)
+res = tuneParams(learner, task=task.learn, resampling=rdesc, par.set=ps, control=ctrl)
+
+lrn.opt = setHyperPars(makeLearner("classif.ksvm", kernel='vanilladot'), par.vals = res$x)
+model = train(lrn.opt, task, subset=train.set)
+pred = predict(model, task = task, subset = test.set)
+performance(pred, measures = list(mmce, acc))
+```
+
+## hyper-parameter tunining for promoters
+
+Unfortunately, mlr doesn't support string data as of yet.
+
+```{r}
+library('mlr')
+library('kernlab')
+
+set.seed(1)
+
+n <- nrow(promoters)
+train.set <- sample(n, size = 3/4*n)
+test.set <- setdiff(1:n, train.set)
+
+task <- makeClassifTask(data=promoters, target='is.promoter', check.data=FALSE)
+task.learn <- subsetTask(task, train.set)
+learner <- makeLearner('classif.ksvm', par.vals=list(kernel='stringdot'))
+
+ps = makeParamSet(
+  makeDiscreteParam("C", values = 2^(-2:5))
+)
+ctrl = makeTuneControlGrid()
+rdesc = makeResampleDesc("CV", iters = 5L)
+res = tuneParams(learner, task=task.learn, resampling=rdesc, par.set=ps, control=ctrl)
+
+lrn.opt = setHyperPars(makeLearner("classif.ksvm", kernel='vanilladot'), par.vals = res$x)
+model = train(lrn.opt, task, subset=train.set)
+pred = predict(model, task = task, subset = test.set)
+performance(pred, measures = list(mmce, acc))
+```
+

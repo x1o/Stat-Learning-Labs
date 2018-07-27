@@ -1,0 +1,402 @@
+%% LyX 2.1.4 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[russian,abstract=yes]{scrartcl}
+\usepackage[T2A,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper]{geometry}
+\geometry{verbose,tmargin=2cm,bmargin=2.5cm,lmargin=2cm,rmargin=2cm}
+\usepackage{color}
+\usepackage{babel}
+\usepackage{latexsym}
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{esint}
+\usepackage[unicode=true,pdfusetitle,
+ bookmarks=true,bookmarksnumbered=false,bookmarksopen=true,bookmarksopenlevel=1,
+ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=true]
+ {hyperref}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+\DeclareRobustCommand{\cyrtext}{%
+  \fontencoding{T2A}\selectfont\def\encodingdefault{T2A}}
+\DeclareRobustCommand{\textcyr}[1]{\leavevmode{\cyrtext #1}}
+\AtBeginDocument{\DeclareFontEncoding{T2A}{}{}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+ \theoremstyle{definition}
+ \newtheorem*{defn*}{\protect\definitionname}
+  \theoremstyle{remark}
+  \newtheorem*{rem*}{\protect\remarkname}
+  \theoremstyle{definition}
+  \newtheorem*{example*}{\protect\examplename}
+  \theoremstyle{plain}
+  \newtheorem*{thm*}{\protect\theoremname}
+  \theoremstyle{plain}
+  \newtheorem*{cor*}{\protect\corollaryname}
+  \theoremstyle{remark}
+  \newtheorem*{claim*}{\protect\claimname}
+
+\@ifundefined{date}{}{\date{}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+%\usepackage{nicefrac}
+%\usepackage{colortbl}
+%\usepackage[noend]{algpseudocode}
+%\usepackage[all]{xy}
+\usepackage{mathrsfs}
+
+%\usepackage[columns=1,itemlayout=singlepar,totoc=true]{idxlayout}
+
+%\@addtoreset{chapter}{part}
+\DeclareMathOperator{\Int}{Int}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\qnt}{qnt}
+\DeclareMathOperator*{\rt}{root}
+
+\newcommand{\bigperp}{%
+  \mathop{\mathpalette\bigp@rp\relax}%
+  \displaylimits
+}
+
+\newcommand{\bigp@rp}[2]{%
+  \vcenter{
+    \m@th\hbox{\scalebox{\ifx#1\displaystyle2.1\else1.5\fi}{$#1\perp$}}
+  }%
+}
+
+\newcommand{\bignparallel}{%
+  \mathop{\mathpalette\bignp@rp\relax}%
+  \displaylimits
+}
+
+\newcommand{\bignp@rp}[2]{%
+  \vcenter{
+    \m@th\hbox{\scalebox{\ifx#1\displaystyle2.1\else1.5\fi}{$#1\nparallel$}}
+  }%
+}
+
+\addto\captionsrussian{%
+  \renewcommand{\abstractname}{TL;DR}%
+}
+
+\AtBeginDocument{
+  \def\labelitemii{\(\Diamond\)}
+  \def\labelitemiii{\(\Box\)}
+}
+
+\makeatother
+
+  \providecommand{\claimname}{Утверждение}
+  \providecommand{\corollaryname}{Следствие}
+  \providecommand{\definitionname}{Определение}
+  \providecommand{\examplename}{Пример}
+  \providecommand{\remarkname}{Замечание}
+  \providecommand{\theoremname}{Теорема}
+
+\begin{document}
+\global\long\def\N{\mathrm{N}}
+\global\long\def\P{\mathsf{P}}
+\global\long\def\E{\mathsf{E}}
+\global\long\def\D{\mathsf{D}}
+\global\long\def\O{\Omega}
+\global\long\def\F{\mathcal{F}}
+\global\long\def\K{\mathsf{K}}
+\global\long\def\A{\mathscr{A}}
+\global\long\def\Pcal{\mathcal{P}}
+\global\long\def\th{\theta}
+\global\long\def\toas{\xrightarrow{{\rm a.s.}}}
+\global\long\def\toP{\xrightarrow{\P}}
+\global\long\def\tod{\xrightarrow{\mathrm{d}}}
+\global\long\def\iid{\mathrm{i.i.d.}}
+\global\long\def\T{\mathrm{T}}
+\global\long\def\L{\mathcal{L}}
+\global\long\def\dd#1#2{\frac{\mathrm{d}#1}{\mathrm{d}#2}}
+\global\long\def\a{\alpha}
+\global\long\def\b{\beta}
+\global\long\def\t{\mathrm{t}}
+\global\long\def\RR{\mathbb{R}}
+\global\long\def\d{\,\mathrm{d}}
+\global\long\def\U{\mathrm{U}}
+\global\long\def\thb{\boldsymbol{\theta}}
+\global\long\def\I{\mathrm{I}}
+\global\long\def\II{\mathrm{II}}
+\global\long\def\ein{\mathbf{1}}
+\global\long\def\pv{p\text{-value}}
+\global\long\def\MLE{\mathrm{MLE}}
+\global\long\def\indep{\perp\!\!\!\perp}
+\global\long\def\xib{\boldsymbol{\xi}}
+\global\long\def\Pscr{\mathscr{P}}
+\global\long\def\m{\mathsf{m}}
+\global\long\def\X{\mathfrak{X}}
+
+
+
+\title{$M$-оценки и ОМП}
+
+
+\date{Tue 28 Feb 2017}
+
+
+\author{422 группа}
+
+\maketitle
+\tableofcontents{}
+
+
+\section{$M$- и $Z$-оценки}
+
+По выборке $\mathbf{x}=\left(x_{1},\ldots,x_{n}\right),$ оценим параметр
+$\th\in\Theta$. Введем функцию-критерий 
+\[
+m_{\th}:\X\to\bar{\RR},
+\]
+показывающую насколько наблюдения соответствуют параметру и отображение
+\[
+\th\mapsto M_{n}(\th)=\frac{1}{n}\sum_{i=1}^{n}m_{\th}(x_{i}),
+\]
+сопоставляющее каждому параметру его <<подходящесть>>.
+\begin{defn*}[$M$-оценка\footnote{<<Maximum>>}]
+По принципу <<наилучшей хорошести>>, оценка есть 
+\[
+\hat{\th}_{n}=\argmax_{\th}M_{n}(\th).
+\]
+\end{defn*}
+\begin{rem*}
+Чтобы $\hat{\th}_{n}$ было случайной величиной, требуем, чтобы $\hat{\th}_{n}$
+было измеримым, а для этого, чтобы $\Theta$ --- польским (полным,
+измеримым, метрическим).
+\end{rem*}
+
+\begin{rem*}
+Если взять $m=\log p_{\th}$, то $M$-оценка есть ОМП.\end{rem*}
+\begin{defn*}[Z-оценка\footnote{<<Zero>>}]
+Рассмотрим другие критерии $\psi_{\th}(x)$ и отображение 
+\[
+\th\mapsto\Psi_{n}(\th)=\frac{1}{n}\sum_{i=1}^{n}\psi_{\th}(x_{i}).
+\]
+В качестве оценки найдем 
+\[
+\hat{\th}_{n}=\rt_{\th}\Psi_{n}(\th).
+\]
+\end{defn*}
+\begin{rem*}
+$M$-оценка может быть сведена к этой оценке $\psi_{\th}=\partial m_{\th}/\partial\th$.
+\end{rem*}
+
+\begin{rem*}
+$\psi_{\th}$ должна быть, конечно, дифференцируема.\end{rem*}
+\begin{example*}
+Пусть $x_{1},\ldots,x_{n}$ $\iid$ на $\U[0,\th)$, то $p_{\th}=\th^{-1}\ein_{[0,\th)}$
+и 
+\[
+\th\mapsto\sum_{i=1}^{n}(\log\ein_{[0,\th)}(x_{i})-\log(\th)).
+\]
+Максимум z-оценки достигается на 
+\[
+\hat{\th}_{n}=\max x_{i}.
+\]
+ ОМП оценку не найти, потому что не продифференцировать индикатор.
+\end{example*}
+
+\section{Состоятельность}
+
+Пусть есть 
+\[
+M_{n}(\th)=\frac{1}{n}\sum_{i=1}^{n}m_{\th}(x_{i})\xrightarrow[n\to\infty]{\P}\E m_{\th}=M(\th)=\int m_{\th}\d\Pcal_{x}.
+\]
+ Навесим $\argmax$ на обе стороны: 
+\[
+M_{n}(\th)\rightsquigarrow\hat{\th}_{n}=\argmax_{\th}M_{n}(\th).
+\]
+Если бы $\argmax$ было непрерывным, то $\hat{\th}_{n}\xrightarrow[n\to\infty]{\P}\th^{*}=\argmax M(\th).$
+Нужно проверить следующие вещи:
+\begin{enumerate}
+\item Сходится ли $\hat{\th}_{n}$ хоть к чему-нибудь.
+\item Правда ли, что $\th^{*}=\th_{0}$.
+\end{enumerate}
+$\argmax$ в принципе не является непрерывным. До тех пор, пока находимся
+в области притяжения параметра, всё хорошо, но как только из нее выходим,
+можем резко перескочить на другой экстремум.
+
+
+\subsection{Сходимость к чему-нибудь}
+\begin{thm*}[Вальд]
+Рассматриваем $M$-оценку. Пусть
+\begin{enumerate}
+\item $m_{\th}$ полунепрерывна сверху по $\th$ для почти всех $x$: 
+\[
+\lim_{\th\to\th_{0}}\sup\leq m_{\th_{0}},\quad\text{для почти всех }x.
+\]
+ (если экстремум в $\th_{0}$, то он хорошо выражен).
+\item $\argmax$ должно быть случайной величиной. Для этого отображение
+\[
+\forall B_{\delta}\subset\Theta\ x\mapsto\sup_{\th\in B_{\delta}}m_{\th}(x)
+\]
+ должно быть
+
+\begin{enumerate}
+\item измеримо
+\item ограничнено: 
+\[
+\int\sup_{B_{\delta}}m_{\th}(x)\d\P<\infty.
+\]
+
+\end{enumerate}
+\end{enumerate}
+\end{thm*}
+\begin{rem*}
+Пусть $\Theta^{*}=\left\{ \th^{*}\in\Theta:M(\th^{*})=\sup_{\th}M(\th)\right\} .$
+Еще ослабим условие: максимум будет достигаться асимптотически. Пусть
+интересует 
+\[
+\hat{\th}_{n}=\argmax(M_{n}(\th)-o(1))
+\]
+ (не доходим до максимума --- с точки зрения приложений ок, потому
+что ищем оценки численно). Т.е. интересуемся 
+\[
+M_{n}(\hat{\th}_{n})\geq c\sup_{\th}M_{n}(\th),\quad c\xrightarrow[n\to\infty]{}1,\ 0\leq c<1.
+\]
+ Тогда для любой такой последовательности оценок, $\forall\epsilon>0\ \forall K\subset\Theta$
+($K$ --- компакт), верно, что 
+\[
+\P\left(\dist\left(\hat{\th}_{n},\th^{*}\right)\geq\epsilon,\hat{\th}_{n}\in K\right)\xrightarrow[n\to\infty]{}0.
+\]
+Иными словами, это условие на то, как оценка не сходится --- либо
+последовательность сходится, либо выходит за компакт.\end{rem*}
+\begin{cor*}
+Поэтому для $\RR^{n}$ всё либо сходится по вероятности, либо уходит
+на бесконечности --- \emph{не может колебаться} на манер $\left(-1\right)^{n}$.
+Это очень здорово.
+\end{cor*}
+
+\subsection{Равенство $\theta^{*}=\theta_{0}$}
+
+Говорили, что ОМП получаются, когда 
+\[
+M_{n}(\th)=\frac{1}{n}\sum_{i=1}^{n}\log p_{\th}(x_{i}).
+\]
+Совершим трюк: добавим константу, так что 
+\[
+M_{n}(\th)=\frac{1}{n}\sum_{i=1}^{n}\log\frac{p_{\th}(x_{i})}{p_{\th_{0}}(x_{i})}.
+\]
+ На максимум не влияет, конечно. Тогда 
+\[
+\frac{1}{n}\sum_{i=1}^{n}\ln\frac{p_{\thb}}{p_{\thb_{0}}}(x_{i})\toP\int_{\RR}\ln\left(\frac{p_{\thb}(x)}{p_{\thb_{0}}(x)}\right)p_{\thb_{0}}(x)\d x=\E\ln\frac{p_{\thb}}{p_{\thb_{0}}}\leq\ln\E\frac{p_{\thb}}{p_{\thb_{0}}}=\ln\int_{\RR}\frac{p_{\thb}}{p_{\thb_{0}}}(x)p_{\thb_{0}}(x)\d x=\ln1=0
+\]
+ так что 
+\[
+M(\th)\leq0.
+\]
+ Интересуемся $\th:M(\th)=0$. Это так, когда $p_{\th}=p_{\th_{0}}$
+для почти всех $x$. В предположении свойства \emph{идентифицируемости}
+задачи ($\th_{1}\neq\th_{2}\implies\Pcal_{\th_{1}}\neq\Pcal_{\th_{2}}$),
+получаем $\th=\th_{0}.$
+
+Таким образом, нужно иметь адекватную модель (выполнялось бы условие
+идентифицируемости). Для выполнимость теоремы Вальда достаточно компактности
+и $\sqrt{\log p}$\ldots{} Компактность на практике выполняется ---
+можно взять достаточно большой отрезок всегда.
+
+Так что состоятельность выполняется.
+
+
+\section{Скорость сходимости}
+
+При выполнении некоторых условий регулярности (простые почти никогда
+не выполняются, сложные сложно проверить) ОМП асимптотически нормальны,
+т.е. 
+\[
+\sqrt{n}(\hat{\th}_{n}-\th_{0})\tod\N(0,I^{-1}(\th_{0})).
+\]
+
+
+Если условия регулярности не выполняются, может быть все что угодно.
+Обычно, если $\Theta=\RR^{n}$, то оценки сходятся оч быстро. Иначе
+медленно.
+
+
+\section{Доверительные границы}
+
+
+\subsection{Аппроксимация Вальда}
+
+Исходя из нормальной аппроксимации, доверительные границы можно 
+\[
+\left(\hat{\th}_{n}-\th_{0}\right)^{\T}\Sigma^{-1}\left(\hat{\th}_{n}-\th\right)\tod\chi_{d}^{2}.
+\]
+ Проблемы:
+\begin{itemize}
+\item Границы лишь асимптотические.
+\item Нужно знать $\Sigma$, зависящую от оцениваемого параметра. Поэтому
+нужно еще и оценивать $\Sigma^{-1}$.
+\end{itemize}
+Так можно делать в низких размерностях и при больших выборках.
+
+
+\subsection{Метод профилей правдоподобия}
+
+Пусть есть $\thb,\dim\thb=k$. НУО, выделим $\thb=(\thb_{1},\thb_{2}),\dim\thb_{1}=k_{1}.$
+Рассмотрим логарифм функции правдоподобия как функцию двух аргументов
+\[
+\ell(\thb)=\ell(\thb_{1},\thb_{2}).
+\]
+ Построим \emph{профиль} 
+\[
+r(\thb_{2})=\ell(\hat{\thb}_{1}(\thb_{2}),\thb_{2}),
+\]
+ где $\hat{\thb}_{1}(\thb_{2})$ --- MLE оценка $\thb_{1}$ с данным
+$\thb_{2}$: $\hat{\thb}_{1}(\thb_{2})=\argmax_{\thb_{1}}\ell(\thb_{1},\thb_{2})$.
+\begin{rem*}
+Если $\thb_{2}=\hat{\left(\thb_{2}\right)}_{\MLE}$, то $\hat{\thb}_{1}\hat{\left(\thb_{2}\right)}_{\MLE}=\hat{\left(\thb_{1}\right)}_{\MLE}.$\end{rem*}
+\begin{claim*}
+Пусть истинный параметр $\thb_{0}=(\thb_{10},\thb_{20})$. Тогда 
+\[
+z^{2}:=-2\left(r(\thb_{10})-\ell(\hat{\thb}_{n})\right)\tod\chi^{2}(k_{1}).
+\]
+\end{claim*}
+\begin{proof}[Идея доказательства]
+Знаем, что $\hat{\thb}_{n}$ имеет нормальное распределение, $\ell(\hat{\thb}_{n})\sim\chi^{2}.$
+Тогда в пределе $\ell$ должна выглядеть как сумма квадратов --- можно
+разложить по Тейлору, будет что-то вроде 
+\[
+\dots+\frac{1}{2}\left(\thb_{0}-\hat{\thb}_{n}\right)^{2}+\dots
+\]
+ Условия регулярности нужны чтобы убить все члены старше второго.
+\end{proof}
+Нужно уметь обращать $r$, чтобы 
+\[
+\thb_{10}:\qnt_{\chi^{2}}(\gamma_{1})\leq-2\left(\dots\right)\leq\qnt_{\chi^{2}}(\gamma_{2}).
+\]
+Так что заменили задачу оценивания $\Sigma^{-1}$ на задачу обращения
+детерминированной функции $r$. В качестве бонуса --- профиль должен
+быть похож на квадратичную функцию, тогда доверительный интервал по
+квантилям будет правильно выбран (частный случай <<локальной асимптотической
+нормальности>>).
+
+На глаз можно посмотреть график $\left|z\right|$. Когда всё хорошо,
+он будет выглядеть как модуль. 
+\begin{example*}
+Пусть $\xi\sim\N(\mu_{0},\sigma_{0}^{2})$, $\thb=(\mu,\sigma^{2})$.
+Пусть $\mu_{0}$ известна; оценим по выборке $\sigma^{2}$. Т.к. $\chi^{2}(1)=(\N(0,1))^{2}$,
+то 
+\[
+z^{2}=-2(\underbrace{r(\mu_{0})}_{\max_{\sigma^{2}}\ell(\mu_{0},\sigma^{2})}-\ell(\mu_{0},\widehat{\sigma^{2}}))\tod\left(\N(0,1)\right)^{2}.
+\]
+ Значит $z\tod\N(0,1)$. Ясно, что в $\widehat{\sigma^{2}}=\widehat{\sigma^{2}}_{\MLE},$
+$\left|z\right|=0$. На остальных значениях это модуль-галочка, причем
+по значениям $\left|z\right|$ --- квантилям $\N(0,1)$ --- можно
+построить доверительный интервал для $\widehat{\sigma^{2}}$.\end{example*}
+\begin{rem*}
+В R --- пакет \texttt{bbmle}, функция \texttt{mle2}. На выходе ---
+объект типа \texttt{mle}. Это оценки + \ldots{}. \texttt{summary(mle)}.
+Построить профиль можно при помощи функции \texttt{p <- profile(m)}.
+Вызывает \texttt{optim} и т.п. Профили можно рисовать:\texttt{ plot(p)}.
+Подсчет доверительных интервалов: \texttt{confint(p)}.\end{rem*}
+
+\end{document}

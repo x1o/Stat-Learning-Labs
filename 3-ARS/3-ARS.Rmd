@@ -1,0 +1,413 @@
+---
+title: "Adaptive Rejection Sampling"
+author: "Dmitry Zotikov"
+date: "March 27, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+set.seed(1)
+```
+
+# Toy example: моделирование $\mathrm{N}(0,1)$
+
+```{r, eval=FALSE, include=FALSE}
+f <- function(x) x^2
+x <- 4
+numericDeriv(quote(f(x)), c('x'))
+```
+
+```{r}
+library('numDeriv')
+f <- function(x) x^2
+grad(f, 4)
+```
+
+TODO: use `cut`?
+
+```{r}
+p <- function(x) dnorm(x, -2, 1)
+h <- function(x) log(p(x)) 
+curve(h, -10, 10)
+```
+
+```{r}
+k <- 4  # partition rank
+tt.bounds <- c(-3, 3)
+tt <- seq(tt.bounds[1], tt.bounds[2], length.out=k)  # partition itself
+tt
+hh <- h(tt)
+hh.deriv <- grad(h, tt)
+```
+
+$\mathbf{z}=(z_{0},\ldots,z_{k})$ так что `zz` длины $k+1$ индексируется как `j. <- j+1`: если $z_{j},\ j\in0:k$, то $j_{\cdot}\in1:(k+1)$ и `zz[j.] == zz[j+1]`.
+
+```{r}
+zz <- numeric(k+1)
+compute.z.j <- function(j, tt, hh, hh.deriv) {
+  if (j == 0) {
+    return(-Inf)
+  } else if (j == length(tt)) {
+    return(Inf)
+  } else {
+    (hh[j+1] - hh[j] - tt[j+1] * hh.deriv[j+1] + tt[j] * hh.deriv[j]) /
+      (hh.deriv[j] - hh.deriv[j+1])
+  }
+}
+for (j in 0:k) {
+  j. <- j + 1
+  zz[j.] <- compute.z.j(j, tt, hh, hh.deriv)
+}
+zz
+```
+
+```{r}
+interval.idx <- function(x, xx, tol=10^-6) {
+  if (x < min(xx) || x > max(xx)) {
+    warning('Outside of partition boundaries')
+    j <- NULL
+  } else if (x == -Inf || abs(xx[1] - x) < tol) {
+    j <- 1  # at the lower boundary -- a special case
+  } else if (x == Inf) {
+    j <- length(xx) - 1
+  } else {
+    j <- which(abs(xx - x) < tol) - 1 # at parition points
+    if (length(j) == 0) {
+      j <- which.max(xx > x) - 1
+    }
+  }
+  return(j)
+}
+```
+
+```{r, warning=FALSE}
+for (x in c(-Inf, -4, -3, -2, -1, 0, 1, 2, 3, 4, Inf)) {
+  cat(x, '->', interval.idx(x, tt), '\n')
+}
+for (x in c(-Inf, -3, -2, -1, 0, 1, 2, 3, Inf)) {
+  cat(x, '->', interval.idx(x, zz), '\n')
+}
+```
+
+```{r}
+u <- function(x, tt, hh, hh.deriv, zz, tol=10^-6) {
+  # cat('x =', x, '\n')
+  if (x %in% c(-Inf, Inf)) {
+    u <- -Inf
+    # cat('u = -Inf\n')
+  } else {
+    j <- interval.idx(x, zz, tol)
+    # cat('j =', j, '\n')
+    u <- hh[j] + hh.deriv[j] * (x - tt[j])
+  }
+  return(u)
+}
+```
+
+```{r}
+for (x in c(-Inf, -3, -2, -1, 0, 1, 2, 3, Inf)) {
+  print(u(x, tt, hh, hh.deriv, zz))
+}
+```
+
+$\mathbf{u}=(u_{0},\ldots,u_{k})=(u(z_{0}),\ldots,u(z_{k})$ тоже индексируется `j.`
+
+```{r}
+uu <- sapply(zz, function(z) u(z, tt, hh, hh.deriv, zz))
+uu
+```
+
+```{r}
+compute.C.summands <- function(uu, hh.deriv) {
+  k <- length(uu) - 1
+  (exp(uu[2:(k+1)]) - exp(uu[1:k])) / hh.deriv
+}
+C.summands <- compute.C.summands(uu, hh.deriv)
+C.summands
+C <- sum(C.summands)
+C
+cdf.Q <- function(z, zz, C, tol=10^-6) {
+  # cat('z =', z, '\n')
+  if (z == -Inf) {
+    return(0)
+  }
+  j.max <- interval.idx(z, zz, tol)
+  # cat('jj =', 1:j.max, '\n')
+  sum(C.summands[1:j.max]) / C
+}
+```
+
+```{r}
+for (z in c(-Inf, -4, -3, -2, -1, 0, 1, 2, 3, 4, Inf)) {
+  cat('cdf.Q(', z, ') = ', cdf.Q(z, zz, C) ,'\n', sep='')
+}
+```
+
+FIXME: NaN если $\alpha < F(z_1)$ потому что `zz[0] = -Inf`.
+
+```{r}
+sample.Q <- function(hh.deriv, zz, uu, C) {
+  alpha <- runif(1)
+  # cat('alpha =', alpha, '\n')
+  FF <- sapply(zz, function(z) cdf.Q(z, zz, C))
+  i. <- interval.idx(alpha, FF)
+  # FIXME: HACK: what if alpha > FF?
+  if (length(i.) == 0) {
+    i. <- length(FF)
+  }
+  i <- i. - 1
+  # cat('FF = ', FF, '\n')
+  # cat('i =', i, '\n')
+  zz[i.] + log(1 + hh.deriv[i+1] * C * (alpha - cdf.Q(zz[i.], zz, C)) / exp(uu[i.])) / hh.deriv[i+1]
+}
+sample.Q(hh.deriv, zz, uu, C)
+```
+
+```{r, eval=FALSE, include=FALSE}
+xx <- replicate(1000, sample.Q(hh.deriv, zz, uu, C))
+sum(is.nan(xx))
+shapiro.test(xx)
+hist(xx, freq=FALSE)
+```
+
+## Rejection sampling (upper hull)
+
+```{r}
+rs.maj <- function(tt, hh, hh.deriv, zz, uu, C) {
+  i <- 1
+  while (TRUE) {
+    while (is.nan(eta <- sample.Q(hh.deriv, zz, uu, C))) {}
+    # eta <- sample.Q(cdf.Q, zz, uu, C, hh.deriv)
+    alpha <- runif(1)
+    if (alpha <= exp(h(eta) - u(eta, tt, hh, hh.deriv, zz))) {
+      return(c(eta, i))
+    }
+    i <- i+1
+  }
+}
+```
+
+```{r}
+rs.runner <- function(n, rs) {
+  etas <- numeric(n)
+  n.iters <- numeric(n)
+  
+  low.n <- 0
+  up.n <- 0
+  for (i in 1:n) {
+    res <- rs()
+    etas[i] <- res[1]
+    n.iters[i] <- res[2]
+    if (length(res) > 2) {
+      if (res[3] == -1) {
+        low.n <- low.n + 1
+      } else if (res[3] == 1) {
+        up.n <- up.n + 1
+      } else {
+        warning(paste('Unknown convergence type:', res[3]))
+      }
+    }
+  }
+  cat('Avg. # of iterations:', sum(n.iters) / n, '\n')
+  if (length(res) > 2) {
+    cat('% lower hull:', low.n / n, '\n')
+    cat('% upper hull:', up.n / n, '\n')
+  }
+  return(etas)
+}
+```
+
+```{r}
+set.seed(1)
+xx <- rs.runner(1000, function() rs.maj(tt, hh, hh.deriv, zz, uu, C))
+hist(xx, freq=FALSE)
+shapiro.test(xx)
+```
+
+## Rejection sampling (upper + lower hulls)
+
+```{r}
+ell <- function(x, tt, hh) {
+  if (x < tt[1] || x > tt[length(tt)]) {
+    return(-Inf)
+  }
+  j <- interval.idx(x, tt)
+  ((tt[j+1] - x) * hh[j] + (x - tt[j]) * hh[j+1]) / (tt[j+1] - tt[j])
+}
+```
+
+```{r}
+for (x in c(-Inf, -4:4, Inf)) {
+  cat('ell(', x, ') = ', ell(x, tt, hh) ,'\n', sep='')
+}
+```
+
+```{r}
+rs <- function(tt, hh, hh.deriv, zz, uu, C) {
+  i <- 1
+  while (TRUE) {
+    while (is.nan(eta <- sample.Q(hh.deriv, zz, uu, C))) {}
+    alpha <- runif(1)
+    u.eta <- u(eta, tt, hh, hh.deriv, zz)
+    if (alpha <= exp(ell(eta, tt, hh) - u.eta)) {
+      return(c(eta, i, -1))
+    } else if (alpha <= exp(h(eta) - u.eta)) {
+      return(c(eta, i, 1))
+    }
+    i <- i+1
+  }
+}
+```
+
+```{r}
+set.seed(1)
+xx <- rs.runner(1000, function() rs(tt, hh, hh.deriv, zz, uu, C))
+hist(xx, freq=FALSE)
+shapiro.test(xx)
+```
+
+## Adaptive Rejection Sampling
+
+```{r}
+ars <- function(tt, hh, hh.deriv, zz, uu, C) {
+  i <- 1
+  while (TRUE) {
+    while (is.nan(eta <- sample.Q(hh.deriv, zz, uu, C))) {}
+    # eta <- sample.Q(hh.deriv, zz, uu, C)
+    alpha <- runif(1)
+    u.eta <- u(eta, tt, hh, hh.deriv, zz)
+    if (alpha <= exp(ell(eta, tt, hh) - u.eta)) {
+      return(c(eta, i, -1))
+    } else {
+      h.eta <- h(eta)
+      if (eta > tt.bounds[1] && eta < tt.bounds[2]) {
+        # FIXME: really?
+        tt <- sort(c(tt, eta))
+        # if (length(tt) == 27) browser()
+        j <- interval.idx(eta, tt) + 1
+        j. <- j+1
+        hh <- append(hh, h.eta, after=j-1)
+        hh.deriv <- append(hh.deriv, grad(h, eta), after=j-1)
+        z.j <- compute.z.j(j, tt, hh, hh.deriv)
+        zz <- append(zz, z.j, after=j.-1)
+        uu <- append(uu, u(z.j, tt, hh, hh.deriv, zz), after=j.-1)
+        C.summands <- compute.C.summands(uu, hh.deriv)
+        C <- sum(C.summands)
+        tt <<- tt
+        hh <<- hh
+        hh.deriv <<- hh.deriv
+        zz <<- zz
+        uu <<- uu
+        C.summands <<- C.summands
+        C <<- C
+      }
+      if (alpha <= exp(h.eta - u.eta)) {
+        return(c(eta, i, 1))
+      }
+    }
+    i <- i+1
+  }
+}
+```
+
+```{r, eval=FALSE, include=FALSE}
+# ars(tt, hh, hh.deriv, zz, uu, C)
+```
+
+```{r}
+set.seed(1)
+xx <- rs.runner(1000, function() ars(tt, hh, hh.deriv, zz, uu, C))
+hist(xx, freq=FALSE)
+shapiro.test(xx)
+```
+
+```{r, fig.height=8, fig.width=10}
+par(mfrow=c(2,3))
+pars <- list(tt, hh, hh.deriv, zz, uu)
+p.names <- c('x.j', 'h(x.j)', "h'(x.j)", 'z.j', 'u(z.j)')
+for (i in 1:length(pars)) {
+  plot(pars[[i]], type='b', main=p.names[i])
+}
+par(mfrow=c(1,1))
+```
+
+# Задание
+
+Плотность распределения Бирнбаума--Саундерса $$p_{\mathrm{BS}}(x)=\frac{\sqrt{x}+\sqrt{1/x}}{2\gamma x} \phi\left(\frac{\sqrt{x}-\sqrt{1/x}}{\gamma}\right), \quad x>0,\gamma>0,\phi(x)=\mathrm{pdf}_{\mathrm{N}(0,1)}(x).$$
+
+```{r}
+p.bs <- function(x, gamma) {
+  (sqrt(x) + sqrt(1/x)) / (2*gamma*x) * dnorm((sqrt(x) - sqrt(1/x)) / gamma)
+}
+```
+
+```{r}
+plot.f.par <- function(f, pp, from=0, to=5) {
+  par(mfrow=c(2,2))
+  for (p in pp) {
+    f.pp <- function(x) f(x, p)
+    curve(f.pp, from=from, to=to, main=p)
+  }
+  par(mfrow=c(1,1))
+}
+
+```
+
+```{r, fig.height=8, fig.width=8}
+plot.f.par(p.bs, c(0.1, 0.5, 1, 2))
+```
+
+```{r}
+p.bs.log <- function(x, gamma) {
+  log(p.bs(x, gamma))
+}
+plot.f.par(p.bs.log, c(0.1, 0.5, 1, 2))
+```
+
+
+$$\frac{\sqrt{x}+\sqrt{1/x}}{2\gamma x}$$
+```{r, fig.height=8, fig.width=8}
+f <- function(x, gamma) {
+  (sqrt(x) + sqrt(1/x)) / (2*gamma*x)
+}
+plot.f.par(f, c(0.1, 0.5, 1, 2), to=1)
+```
+
+$$\phi\left(\frac{\sqrt{x}-\sqrt{1/x}}{\gamma}\right)$$
+```{r, fig.height=8, fig.width=8}
+g <- function(x, gamma) {
+  dnorm((sqrt(x) - sqrt(1/x)) / gamma)
+}
+plot.f.par(g, c(0.1, 0.5, 1, 2), to=10)
+```
+
+$$\exp\left\{ -\frac{1}{2}\frac{x^{2}}{\gamma^{2}}\right\}$$
+
+```{r, fig.height=8, fig.width=8}
+g.1 <- function(x, gamma) {
+  exp(-1/2 * x^2 / gamma^2)
+}
+plot.f.par(g.1, c(0.1, 0.5, 1, 2), to=10)
+```
+
+$$\exp\left\{ \frac{1}{\gamma^{2}}\right\}$$
+
+```{r, fig.height=8, fig.width=8}
+g.2 <- function(x, gamma) {
+  exp(1 / gamma^2) * x/x
+}
+plot.f.par(g.2, c(0.1, 0.5, 1, 2), to=10)
+```
+
+$$\exp\left\{ -\frac{1}{2}\frac{1}{x\gamma^{2}}\right\}$$
+
+```{r, fig.height=8, fig.width=8}
+g.3 <- function(x, gamma) {
+  exp(-1/2 * 1/(x * gamma^2))
+}
+plot.f.par(g.3, c(0.1, 0.5, 1, 2), to=10)
+```

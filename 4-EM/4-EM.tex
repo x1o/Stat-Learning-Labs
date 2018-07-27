@@ -1,0 +1,554 @@
+%% LyX 2.1.4 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[russian]{scrartcl}
+\usepackage[T2A,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper]{geometry}
+\geometry{verbose,tmargin=2cm,bmargin=2.5cm,lmargin=2cm,rmargin=2cm}
+\usepackage{color}
+\usepackage{babel}
+\usepackage{latexsym}
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage[unicode=true,pdfusetitle,
+ bookmarks=true,bookmarksnumbered=false,bookmarksopen=true,bookmarksopenlevel=1,
+ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=true]
+ {hyperref}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+\DeclareRobustCommand{\cyrtext}{%
+  \fontencoding{T2A}\selectfont\def\encodingdefault{T2A}}
+\DeclareRobustCommand{\textcyr}[1]{\leavevmode{\cyrtext #1}}
+\AtBeginDocument{\DeclareFontEncoding{T2A}{}{}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+  \theoremstyle{plain}
+  \newtheorem*{lyxalgorithm*}{\protect\algorithmname}
+  \theoremstyle{remark}
+  \newtheorem*{rem*}{\protect\remarkname}
+ \theoremstyle{definition}
+ \newtheorem*{defn*}{\protect\definitionname}
+  \theoremstyle{definition}
+  \newtheorem*{example*}{\protect\examplename}
+
+\@ifundefined{date}{}{\date{}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+%\usepackage{nicefrac}
+%\usepackage{colortbl}
+%\usepackage[noend]{algpseudocode}
+%\usepackage[all]{xy}
+\usepackage{mathrsfs}
+
+%\usepackage[columns=1,itemlayout=singlepar,totoc=true]{idxlayout}
+
+%\@addtoreset{chapter}{part}
+\DeclareMathOperator{\Int}{Int}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Mult}{Mult}
+\DeclareMathOperator{\pdf}{pdf}
+\DeclareMathOperator{\cov}{cov}
+\DeclareMathOperator*{\argmax}{argmax}
+
+\newcommand{\bigperp}{%
+  \mathop{\mathpalette\bigp@rp\relax}%
+  \displaylimits
+}
+
+\newcommand{\bigp@rp}[2]{%
+  \vcenter{
+    \m@th\hbox{\scalebox{\ifx#1\displaystyle2.1\else1.5\fi}{$#1\perp$}}
+  }%
+}
+
+\newcommand{\bignparallel}{%
+  \mathop{\mathpalette\bignp@rp\relax}%
+  \displaylimits
+}
+
+\newcommand{\bignp@rp}[2]{%
+  \vcenter{
+    \m@th\hbox{\scalebox{\ifx#1\displaystyle2.1\else1.5\fi}{$#1\nparallel$}}
+  }%
+}
+
+\AtBeginDocument{
+  \def\labelitemii{\(\Diamond\)}
+  \def\labelitemiii{\(\Box\)}
+}
+
+\makeatother
+
+  \providecommand{\algorithmname}{Алгоритм}
+  \providecommand{\definitionname}{Определение}
+  \providecommand{\examplename}{Пример}
+  \providecommand{\remarkname}{Замечание}
+
+\begin{document}
+\global\long\def\N{\mathrm{N}}
+\global\long\def\P{\mathsf{P}}
+\global\long\def\E{\mathsf{E}}
+\global\long\def\D{\mathsf{D}}
+\global\long\def\O{\Omega}
+\global\long\def\F{\mathcal{F}}
+\global\long\def\K{\mathsf{K}}
+\global\long\def\A{\mathscr{A}}
+\global\long\def\Pcal{\mathcal{P}}
+\global\long\def\th{\theta}
+\global\long\def\toas{\xrightarrow{{\rm a.s.}}}
+\global\long\def\toP{\xrightarrow{\P}}
+\global\long\def\tod{\xrightarrow{\mathrm{d}}}
+\global\long\def\iid{\mathrm{i.i.d.}}
+\global\long\def\T{\mathsf{T}}
+\global\long\def\L{\mathsf{L}}
+\global\long\def\dd#1#2{\frac{\mathrm{d}#1}{\mathrm{d}#2}}
+\global\long\def\a{\alpha}
+\global\long\def\b{\beta}
+\global\long\def\t{\mathrm{t}}
+\global\long\def\RR{\mathbb{R}}
+\global\long\def\d{\,\mathrm{d}}
+\global\long\def\U{\mathrm{U}}
+\global\long\def\thb{\boldsymbol{\theta}}
+\global\long\def\I{\mathrm{I}}
+\global\long\def\II{\mathrm{II}}
+\global\long\def\ein{\mathbf{1}}
+\global\long\def\pv{p\text{-value}}
+\global\long\def\MLE{\mathrm{MLE}}
+\global\long\def\indep{\perp\!\!\!\perp}
+\global\long\def\xib{\boldsymbol{\xi}}
+\global\long\def\Pscr{\mathscr{P}}
+\global\long\def\m{\mathsf{m}}
+\global\long\def\X{\mathfrak{X}}
+\global\long\def\Q{\mathcal{Q}}
+\global\long\def\AIC{\mathrm{AIC}}
+\global\long\def\BIC{\mathrm{BIC}}
+\global\long\def\etab{\boldsymbol{\eta}}
+\global\long\def\xib{\boldsymbol{\xi}}
+\global\long\def\y{\mathbf{y}}
+\global\long\def\Y{\mathbf{Y}}
+\global\long\def\Sb{\boldsymbol{\Sigma}}
+\global\long\def\mub{\boldsymbol{\mu}}
+\global\long\def\bz{\boldsymbol{\zeta}}
+\global\long\def\w{\mathbf{w}}
+\global\long\def\p{\mathbf{p}}
+
+
+
+\title{EM-алгоритм}
+
+\maketitle
+
+\section{Мотивация}
+
+Пусть 
+\[
+\etab\sim\Mult_{4}(n,\mathbf{p}),\quad\mathbf{p}=\left(\frac{1}{2}+\frac{\th}{4},\frac{1-\th}{4},\frac{1-\th}{4},\frac{\th}{4}\right)
+\]
+с плотностью 
+\[
+q_{\th}(\mathbf{y})=\frac{n!}{y_{1}!y_{2}!y_{3}!y_{4}!}\left(\frac{1}{2}+\frac{\th}{4}\right)^{y_{1}}\left(\frac{1-\th}{4}\right)^{y_{2}+y_{3}}\left(\frac{\th}{4}\right)^{y_{4}}.
+\]
+Выборка $\mathbf{Y}=\left(\y_{1},\ldots,\y_{N}\right)$; по ОМП, 
+\begin{eqnarray*}
+\log q_{\th}(\Y) & \propto & \sum_{i=1}^{N}y_{1}^{(i)}\log\left(\frac{1}{2}+\frac{\th}{4}\right)+y_{2}^{(i)}\log\frac{1-\th}{4}+y_{3}^{(i)}\log\frac{1-\th}{4}+y_{4}^{(i)}\log\frac{\th}{4}\\
+\frac{\partial\log q_{\th}(\Y)}{\partial\th} & \propto & \sum_{i=1}^{N}y_{1}^{(i)}\frac{1/4}{1/2+\th/4}-(y_{2}^{(i)}+y_{3}^{(i)})\frac{1}{1-\th}+y_{4}^{(i)}\frac{1}{\th}\\
+ & = & \sum_{i=1}^{N}\frac{y_{1}^{(i)}}{2+\th}+\frac{y_{2}^{(i)}+y_{3}^{(i)}}{\th-1}+\frac{y_{4}^{(i)}}{\th}.
+\end{eqnarray*}
+Получили кубическое\footnote{На самом деле квадратное.}
+уравнение относительно $\th$ (могло быть и выше).
+
+С другой стороны, пусть
+\[
+\xib\sim\Mult_{5}(n,\mathbf{p}),\quad\mathbf{p}=\left(\frac{1}{2},\frac{\th}{4},\frac{1-\th}{4},\frac{1-\th}{4},\frac{\th}{4}\right).
+\]
+ОМП для $\xib$: 
+\begin{eqnarray*}
+p_{\th}(\mathbf{x}) & \propto & \left(\frac{1}{2}\right)^{x_{1}}\left(\frac{\th}{4}\right)^{x_{2}}\left(\frac{1-\th}{4}\right)^{x_{3}+x_{4}}\left(\frac{\th}{4}\right)^{x_{5}}\\
+\log p_{\th}(\mathbf{x}) & \propto & x_{1}\log\frac{1}{2}+x_{2}\log\frac{\th}{4}+(x_{3}+x_{4})\log\frac{1-\th}{4}+x_{5}\log\frac{\th}{4}\\
+\frac{\partial\log p_{\th}}{\partial\th} & \propto & \frac{x_{2}+x_{5}}{\th}-\frac{x_{3}+x_{4}}{1-\th}=0\iff\hat{\th}=\frac{x_{2}+x_{5}}{x_{2}+x_{3}+x_{4}+x_{5}}.
+\end{eqnarray*}
+ Так что $\hat{\th}$ находится достаточно просто.
+
+Исходную задачу оценки параметров $\etab$ можно переформулировать
+через оценку параметров $\xib$: 
+\[
+\etab=\left(\xi_{1}+\xi_{2},\xi_{3},\xi_{4},\xi_{5}\right).
+\]
+В примерах выше тогда можно думать про $\mathbf{x}$ как про полные
+данные, $\mathbf{y}$ --- неполные данные (с <<пропусками>>), причем
+\[
+y_{1}=x_{1}+x_{2},\ y_{2}=x_{3},\ y_{3}=x_{4},\ y_{4}=x_{5}.
+\]
+ А для полных данных функция правдоподобия, как было видно, будет
+иметь более простой вид.
+
+Однако элемент выборки $x_{2}$ не наблюдается. Можно тогда посчитать
+мат. ожидание:  
+\begin{eqnarray*}
+\E(\xib\mid\etab=\mathbf{y}) & = & (\E(\xi_{1}\mid\xi_{1}+\xi_{2}=y_{1}),\E(\xi_{2}\mid\xi_{1}+\xi_{2}=y_{1}),y_{2},y_{3},y_{4})=\\
+ & = & \left(y_{1}\frac{1/2}{1/2+\th/4},y_{1}\frac{\th/4}{1/2+\th/4},y_{2},y_{3},y_{4}\right).
+\end{eqnarray*}
+
+
+Но 
+\[
+\P(\xi_{1}=x\mid\xi_{1}+\xi_{2}=y_{1})=\frac{\P(\xi_{1}=x,\xi_{2}=y_{1}-x)}{\P(\xi_{2}=y_{1}-x)}=\frac{}{}
+\]
+Пусть есть приближение $\hat{\th}^{(n)}.$ Тогда 
+\[
+\hat{x}_{2}^{(n)}=\frac{\hat{\th}^{(n)}/4}{1/2+\hat{\th}^{(n)}/4}y_{1}
+\]
+ и ОМП по полной выборке есть 
+\[
+\hat{\th}^{(n+1)}=\frac{\hat{x}_{2}^{(n)}+x_{5}}{\hat{x}_{2}^{(n)}+x_{3}+x_{4}+x_{5}}.
+\]
+
+
+Необходимо удостовериться, что оценка сойдется куда нужно.
+
+
+\section{EM-алгоритм}
+
+
+\subsection{Формулировка}
+
+Пусть $\eta\sim\Q(\th)$ на $(\mathfrak{Y},\mathcal{B})$ с плотностью
+$q_{\th}$, $\th\in\Theta$; $\mathbf{y}$ --- \emph{неполные} данные.
+Пусть $\xi\sim\Pcal(\th)$ на $(\X,\mathcal{A})$ с плотностью $p_{\th}$
+такой, что относительно просто по \emph{дополненной} выборке $\mathbf{x}$
+можем посчитать ФП, так что 
+\[
+\hat{\th}=\argmax_{\th\in\Theta}\log p_{\th}(\mathbf{x}),
+\]
+ причем 
+\[
+\eta=T(\xi).
+\]
+ Наблюдается $\eta$, а $\xi$ --- нет. 
+\begin{lyxalgorithm*}
+Пусть $\hat{\th}^{(k)}$ --- текущее приближение параметра.
+\begin{enumerate}
+\item Expectation: 
+\[
+Q^{(k)}(\th)=\E_{\hat{\th}^{(k)}}(\log p_{\th}(\mathbf{x})\mid T(\mathbf{x})=\mathbf{y}).
+\]
+
+\item Maximization: 
+\[
+\hat{\th}^{(k+1)}=\argmax_{\th}Q^{(k)}(\th).
+\]
+
+\end{enumerate}
+\end{lyxalgorithm*}
+\begin{rem*}
+$Q(\th)$ в некоторых задачах считается относительно хорошо. Кроме
+того, можем сами выбирать $T$ (обычно проекция) и распределение полных
+данных $\xi$. Фиксировано только $\eta$.
+\end{rem*}
+
+\subsection{EM алгоритм для распределений из экспоненциального семейства}
+\begin{defn*}
+\emph{Экспоненциальное семейство} есть семейство плотностей вида 
+\[
+p_{\th}(x)=\frac{b(x)}{a(\th)}\exp\left\{ \mathbf{c}^{\T}(\th)\mathbf{t}(x)\right\} ,
+\]
+$\mathbf{t}$ --- достаточные статистики.
+\end{defn*}
+Для таких плотностей 
+\begin{eqnarray*}
+Q^{(k)}(\th) & = & \E_{\hat{\th}^{(k)}}\left(\log b(x)-\log a(\th)+\mathbf{c}^{\T}(\th)\mathbf{t}(x)\mid\etab=\mathbf{y}\right)\\
+ & = & \E_{\hat{\th}^{(k)}}(\log b(x)\mid\etab=\mathbf{y})-\log a(\th)+\mathbf{c}^{\T}(\th)\E_{\hat{\th}^{(k)}}(\mathbf{t}(x)\mid\etab=\mathbf{y}),
+\end{eqnarray*}
+так что всё, что нужно уметь делать --- считать 
+\[
+\E_{\hat{\th}^{(k)}}(\mathbf{t}(x)\mid T(\mathbf{x})=\mathbf{y}),
+\]
+ тем более, что $\mathbf{t}(x)$ часто --- суммы или суммы квадратов.
+
+
+\subsection{Свойства алгоритма}
+\begin{itemize}
+\item Не предполагая ничего дополнительно, можем доказать, что последовательность
+$\hat{\th}^{(k)}$ приводит к неуменьшению $\log p_{\th}(\mathbf{x})=\L(\th)$:
+\[
+\L(\hat{\th}^{(k)})\geq\L(\hat{\th}^{(k-1)})
+\]
+по неравенству Єнсена.
+\item Если требовать дополнительно, например, регулярность, то 
+\[
+\L(\hat{\th}^{(k)})>\L(\hat{\th}^{(k-1)})
+\]
+ Но если разница пропорциональна $1/k$, то ни к чему не сойдемся
+--- будем делать бесконечно мелкие шаги. Может застрять в локальном
+максимуме или на плато.
+\end{itemize}
+\ldots{}EM-алгоритм в каждой точке функции правдоподобия строит наилучшие
+приближения\ldots{}
+\begin{rem*}
+\ldots{}MM-алгоритм (требование выполнения неравенства Єнсена. для
+$\phi$)\ldots{}
+\end{rem*}
+
+\section{Задача о разделении смеси}
+
+
+\subsection{EM для нормальной смеси}
+
+
+
+
+\subsubsection{Две компоненты}
+
+Пусть дана выборка $\Y=\left(\y_{1},\ldots,\y_{N}\right)$. Зададим
+модель как смесь двух нормальных величин $\etab^{(1)}\sim\N(\mub^{(1)},\Sb^{(1)}),\ \etab^{(2)}\sim\N(\mub^{(2)},\Sb^{(2)})$:
+\[
+\etab=\etab^{(\zeta+1)}=(1-\zeta)\cdot\etab^{(1)}+\zeta\cdot\etab^{(2)},\quad\zeta\in\left\{ 0,1\right\} ,\P(\zeta)=p.
+\]
+ Тогда плотность $\etab$ есть 
+\[
+q(\mathbf{y})=(1-p)\phi^{(1)}(\mathbf{y})+p\phi^{(2)}(\mathbf{y}),\quad\phi^{(\ell)}=\pdf_{\N(\mub^{(\ell)},\Sb^{(\ell)})}
+\]
+ Так что нужно оценить параметры $\thb=(p,\mub^{(1)},\mub^{(2)},\Sb^{(1)},\Sb^{(2)})$
+. Логарифм ФП 
+\[
+\log\L_{q}(\thb)=\sum_{i=1}^{N}\log\left[(1-p)\phi^{(1)}(\y_{i})+p\phi^{(2)}(\y_{i})\right]
+\]
+ может быть сложно максимизировать напрямую.
+
+Пусть для каждой точки $\y_{j}$ известно, из какой она компоненты,
+т.е. заданы пары $\left(\left(\y_{j},z_{j}\right)\right)_{j=1}^{N}=\mathbf{X}$.
+На этих (полных) данных, плотность есть 
+\[
+p(\mathbf{x})=\left[(1-p)\phi^{(1)}(\y)\right]^{1-z}\left[p\phi^{(2)}(\y)\right]^{z},
+\]
+и логарифм (полной) ФП 
+\begin{eqnarray*}
+\log\L_{p}(\th) & = & \log\prod_{j=1}^{N}\left[(1-p)\phi^{(1)}(\y_{j})\right]^{1-z_{j}}\left[p\phi^{(2)}(\y_{j})\right]^{z_{j}}\\
+ & = & \sum_{j=1}^{N}(1-z_{j})\log\left[(1-p)\phi^{(1)}(\y_{j})\right]+z_{j}\log\left[p\phi^{(2)}(\y_{j})\right]\\
+ & = & \sum_{j=1}^{N}(1-z_{j})\log\phi^{(1)}(\y_{j})+z_{j}\log\phi^{(2)}(\y_{j})+\sum_{j=1}^{N}(1-z_{j})\log(1-p)+z_{j}\log p.
+\end{eqnarray*}
+Находя максимум, можно показать, что 
+\[
+\hat{\mub}^{(\ell)}=\bar{\Y}^{(\ell)},\quad\hat{\Sb}^{(\ell)}=\widehat{\cov}\Y^{(\ell)},\quad\hat{p}=\sum_{j=1}^{N}z_{j}/N.
+\]
+ где $\Y^{(\ell)}$ --- часть данных, для которых $\ell$-я компонента
+не нулевая.
+
+Вместо неизвестных $z_{j}$ подставим 
+\begin{eqnarray*}
+\zeta_{j}(\thb) & = & \E_{\hat{\thb}_{k}}(z_{j}\mid\mbox{\ensuremath{\Y}})=\P_{\hat{\thb}_{k}}(z_{j}=1\mid\eta_{j}=\y_{j})=\frac{\P(\eta_{j}=\y_{j}\mid z_{j}=1)\P(z_{j}=1)}{\P(\eta_{j}=\y_{j})}\\
+ & = & \frac{\P(\eta_{j}=\y_{j}\mid z_{j}=1)\P(z_{j}=1)}{\P(\eta_{j}=\y_{j}\mid z_{j}=0)\P(z_{j}=0)+\P(\eta_{j}=\y_{j}\mid z_{j}=1)\P(z_{j}=1)}\\
+ & = & \frac{\phi^{(2)}(\y_{j})p}{\phi^{(1)}(\y_{j})(1-p)+\phi^{(2)}(\y_{j})p},\quad j\in1:N.
+\end{eqnarray*}
+Тогда в обозначении 
+\begin{align*}
+w_{j}^{(1)} & :=\frac{1-\hat{\zeta}_{j}}{\sum_{j'=1}^{N}(1-\hat{\zeta}_{j'})} & w_{j}^{(2)} & :=\frac{\hat{\zeta}_{j}}{\sum_{j'=1}^{N}\hat{\zeta}_{j'}}
+\end{align*}
+ оценки примут вид 
+\begin{align*}
+\hat{\mu}_{i}^{(\ell)} & =\sum_{j=1}^{N}w_{j}^{(\ell)}y_{ji} & \widehat{\cov}\left(\eta_{i_{1}}^{(\ell)},\eta_{i_{2}}^{(\ell)}\right) & =\sum_{j=1}^{N}w_{j}^{(\ell)}(y_{ji_{1}}-\hat{\mu}_{i_{1}}^{(\ell)})(y_{ji_{2}}-\hat{\mu}_{i_{2}}^{(\ell)}) & \hat{p} & =\sum_{i=1}^{N}\hat{\zeta}_{i}/N
+\end{align*}
+
+
+
+\paragraph{Векторизованная форма}
+
+Пусть 
+\[
+\Y=\begin{pmatrix}\y_{1} & \dots & \y_{N}\end{pmatrix}^{\T}=\begin{pmatrix}y_{11} & \dots & y_{1d}\\
+\vdots & \ddots & \vdots\\
+y_{N1} & \dots & y_{Nd}
+\end{pmatrix},\quad\hat{\boldsymbol{\zeta}}=\begin{pmatrix}\hat{\zeta}_{1}\\
+\vdots\\
+\hat{\zeta}_{N}
+\end{pmatrix}.
+\]
+Тогда,  в обозначении 
+\begin{align*}
+\w^{(1)} & =\frac{(\ein-\hat{\bz})}{\ein^{\T}(\ein-\hat{\bz})} & \w^{(2)} & =\frac{\hat{\bz}}{\ein^{\T}\hat{\bz}}
+\end{align*}
+оценки примут вид 
+\begin{align*}
+\hat{\mub}^{(\ell)} & =\begin{pmatrix}\sum_{j=1}^{N}w_{j}^{(\ell)}y_{j1}\\
+\vdots\\
+\sum_{j=1}^{N}w_{j}^{(\ell)}y_{jd}
+\end{pmatrix}=\Y^{\T}\w^{(\ell)} & \hat{\Sb}^{(\ell)} & =\dots.
+\end{align*}
+ 
+\begin{lyxalgorithm*}
+Выбрать начальные значение $\hat{\mub}^{(\ell)}=\y_{j_{\ell}},j_{\ell}\in1:N$,
+$\hat{\Sb}^{(\ell)}$, $\hat{p}=1/2$.
+\begin{enumerate}
+\item Expectation: Найти $\hat{\zeta}_{j},\quad j\in1:N$.
+\item Maximization: по формулам выше пересчитать $\hat{\mub}^{(\ell)},\hat{\Sb}^{(\ell)},\hat{p}$.
+\end{enumerate}
+\end{lyxalgorithm*}
+
+\subsubsection{Произвольное количество компонент}
+
+Пусть 
+\[
+\etab=\etab^{(\zeta)},\quad\etab^{(\ell)}\sim\N(\mub^{(\ell)},\Sb^{(\ell)}),\ \zeta\in\left\{ 1,\ldots,m\right\} ,\P(\zeta=\ell)=p_{\ell}.
+\]
+
+\begin{itemize}
+\item Плотность $\etab$ есть 
+\[
+q(\mathbf{y})=\sum_{\ell=1}^{m}p_{\ell}\phi^{(\ell)}(\mathbf{y}),\quad\phi^{(\ell)}=\pdf_{\N(\mub^{(\ell)},\Sb^{(\ell)})}.
+\]
+
+\item Логарифм ФП $\etab$ 
+\[
+\log\L_{q}(\thb)=\sum_{j=1}^{N}\log\sum_{\ell=1}^{m}p_{\ell}\phi^{(\ell)}(\y_{j}).
+\]
+
+\item Плотность $\xib$: 
+\item Логарифм (полной) ФП  
+\item Оценка $z_{j}$: 
+\[
+\zeta_{j}^{(\ell)}(\thb)=\P_{\hat{\thb}_{k}}(z_{j}=\ell\mid\eta_{j}=\y_{j})=\frac{\phi^{(\ell)}(\y_{j})p_{\ell}}{\sum_{\ell'=1}^{m}\phi^{(\ell')}(\y_{j})p_{\ell'}},\quad j\in1:N.
+\]
+
+\item Веса:
+\[
+w_{j}^{(\ell)}:=\frac{\zeta_{j}^{(\ell)}}{\sum_{j'=1}^{N}\zeta_{j'}^{(\ell)}}.
+\]
+
+\item Оценки:
+\begin{align*}
+\hat{\mu}_{i}^{(\ell)} & =\sum_{j=1}^{N}w_{j}^{(\ell)}y_{ji} & \widehat{\cov}\left(\eta_{i_{1}}^{(\ell)},\eta_{i_{2}}^{(\ell)}\right) & =\sum_{j=1}^{N}w_{j}^{(\ell)}(y_{ji_{1}}-\hat{\mu}_{i_{1}}^{(\ell)})(y_{ji_{2}}-\hat{\mu}_{i_{2}}^{(\ell)}) & \hat{p}_{\ell} & =\frac{1}{N}\sum_{j=1}^{N}\hat{\zeta}_{j}^{(\ell)}
+\end{align*}
+
+\end{itemize}
+
+\paragraph{Векторизованная форма}
+
+Пусть 
+\[
+\Y=\begin{pmatrix}\y_{1} & \dots & \y_{N}\end{pmatrix}^{\T}=\begin{pmatrix}y_{11} & \dots & y_{1d}\\
+\vdots & \ddots & \vdots\\
+y_{N1} & \dots & y_{Nd}
+\end{pmatrix},\quad\hat{\boldsymbol{\zeta}}^{(\ell)}=\begin{pmatrix}\hat{\zeta}_{1}^{(\ell)}\\
+\vdots\\
+\hat{\zeta}_{N}^{(\ell)}
+\end{pmatrix}.
+\]
+Тогда,  в обозначении 
+\[
+\w^{(\ell)}=\frac{\hat{\bz}^{(\ell)}}{\ein^{\T}\hat{\bz}^{(\ell)}}
+\]
+оценки примут вид 
+\begin{align*}
+\hat{\mub}^{(\ell)} & =\begin{pmatrix}\sum_{j=1}^{N}w_{j}^{(\ell)}y_{j1}\\
+\vdots\\
+\sum_{j=1}^{N}w_{j}^{(\ell)}y_{jd}
+\end{pmatrix}=\Y^{\T}\w^{(\ell)} & \hat{\Sb}^{(\ell)} & =\dots.
+\end{align*}
+ 
+\begin{lyxalgorithm*}
+Выбрать начальные значение $\hat{\mub}^{(\ell)}=\y_{j_{\ell}},j_{\ell}\in1:N$,
+$\hat{\Sb}^{(\ell)}$, $\hat{\p}=1/m$.
+\begin{enumerate}
+\item Expectation: Найти $\hat{\boldsymbol{\zeta}}^{(\ell)},\quad\ell\in1:m$.
+\item Maximization: по формулам выше пересчитать $\hat{\mub}^{(\ell)},\hat{\Sb}^{(\ell)},\hat{\p}$.
+\end{enumerate}
+\end{lyxalgorithm*}
+\begin{rem*}
+$z_{j}$ можно проинтерпретировать как апостериорные оценки принадлежности
+к той или иной компоненты смеси. \ldots{}Bayesian / frequentist\ldots{}
+\end{rem*}
+
+\begin{rem*}
+Пусть $\dim\etab=d$, количество компонент $m$; тогда количество
+параметров 
+\[
+(m-1)+md+m\cdot\frac{d(d+1)}{2}.
+\]
+
+\end{rem*}
+
+\begin{rem*}
+Хуже всего сходится ковариационная матрица (должна быть оценена вся
+сразу). В качестве индикатора сходимости используют либо $-\log\L$
+либо сходимость ковариационной матрицы в себе.
+\end{rem*}
+
+\begin{rem*}
+$\max_{\thb}\log\L=\infty$ достигается в точке пространства параметров,
+где $\mub_{1}=\y_{i}$, $\Sb=\mathbf{0}$, однако <<хорошим>> решением
+это не является, поэтому ищут лишь подходящий локальный максимум.
+Из всевозможных локальных максимумов выбирают такой (запуская алгоритм
+несколько раз с разными начальными параметрами), что на нем величина
+$\log\L$ наибольшая.
+\end{rem*}
+
+\begin{rem*}
+У $q$ 2 глобальных максимума, так что оценки МП не вполне правомочны.
+В общем случае $m$ компонент, экстремумов $m!$. 
+\end{rem*}
+
+\subsection{Model-based Clustering}
+
+Пусть количество компонент $m$ произвольно. Задача:
+\begin{itemize}
+\item Выбрать $m$.
+\item Выбрать подходящую структуру зависимости данных --- $\Sb$.
+\item Оценить параметры..
+\end{itemize}
+
+\paragraph{Структура $\protect\Sb$}
+
+Положительно определенную $\boldsymbol{\boldsymbol{\Sigma}}$ можно
+<<привести к главным осям>> 
+\[
+\boldsymbol{\boldsymbol{\Sigma}}=\lambda\mathbf{D}^{\T}\mathbf{A}\mathbf{D},
+\]
+ где $\mathbf{D}$ --- ортогональная матрица поворота, $\tr\mathbf{A}=1$.
+Варианты
+\begin{itemize}
+\item $\boldsymbol{\boldsymbol{\Sigma}}=\lambda\mathbf{I}$, т.е. все компоненты
+независимы и с одинаковой дисперсии, так что параметр вообще один,
+либо
+\item $\Sb=\lambda\mathbf{A}$ --- компоненты некоррелированы, но разная
+дисперсия, либо
+\item $\boldsymbol{\boldsymbol{\Sigma}}=\lambda_{k}\mathbf{I}$ (своя дисперсия
+в каждой компоненте), либо
+\item $\boldsymbol{\boldsymbol{\Sigma}}=\lambda_{k}\mathbf{A}_{k}$ и т.д.\end{itemize}
+\begin{rem*}
+В R --- \texttt{Mclust}. Позволяет оценить параметры, когда выборка
+из смеси нормальных распределений, задать модели для ковариационных
+матриц и выбрать наилучшую. Любая модель задается аббревиатурой
+\begin{description}
+\item [{\texttt{I}}] Identity
+\item [{\texttt{E}}] Equal
+\item [{\texttt{V}}] Variate
+\end{description}
+Как признак меняется по разным компонентам смеси. Можно думать об
+объеме ($\lambda$), форме ($\mathbf{A}$) и ориентации ($\mathbf{D}$).\end{rem*}
+\begin{example*}
+$\boldsymbol{\boldsymbol{\Sigma}}_{k}=\lambda\mathbf{I}$ соответствует
+\texttt{EII}.
+\end{example*}
+
+\section{Information Criteria}
+
+Чем более общая модель, тем выше $\log\L$. Напрямую сравнивать нельзя,
+но можем вычитать штраф за количество параметров $f({\rm df})$; тогда
+\[
+\log\L(\th)-f({\rm df}).
+\]
+
+\begin{defn*}
+$\AIC=\log\L(\th)-{\rm df}.$\end{defn*}
+\begin{rem*}
+$\AIC$ работает только в случае, когда истинная модель содержится
+в пространстве параметров.\end{rem*}
+\begin{defn*}
+$\BIC=\log\L(\th)-{\rm df}/2\cdot\log N$.\end{defn*}
+
+\end{document}

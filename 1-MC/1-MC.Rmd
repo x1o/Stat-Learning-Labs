@@ -1,0 +1,437 @@
+---
+title: 'Вычисление интегралов методом М-К (HW)'
+author: "Dmitry Zotikov"
+date: "February 28, 2017"
+# header-includes:
+#   - \DeclareMathOperator{\Dir}{Dir}
+#   - \DeclareMathOperator{\Exp}{Exp}
+output:
+  html_document:
+    md_extensions: +latex_macros
+---
+
+<!-- Completed: 2017-03-21 -->
+
+
+\newcommand{\E}{\mathsf{E}}
+\newcommand{\D}{\mathsf{D}}
+\newcommand{\P}{\mathsf{P}}
+\newcommand{\Pcal}{\mathcal{P}}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\toP}{\xrightarrow{\P}}
+\newcommand{\N}{\mathrm{N}}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\A}{\mathscr{A}}
+\newcommand{\th}{\theta}
+\newcommand{\toas}{\xrightarrow{{\rm a.s.}}}
+\newcommand{\toP}{\xrightarrow{\P}}
+\newcommand{\tod}{\xrightarrow{\mathrm{d}}}
+\newcommand{\iid}{\mathrm{i.i.d.}}
+\newcommand{\T}{\mathrm{T}}
+\newcommand{\L}{\mathcal{L}}
+\newcommand{\dd#1#2}{\frac{\mathrm{d}#1}{\mathrm{d}#2}}
+\newcommand{\a}{\alpha}
+\newcommand{\ab}{\boldsymbol{\alpha}}
+\newcommand{\b}{\beta}
+\newcommand{\t}{\mathrm{t}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\d}{\,\mathrm{d}}
+\newcommand{\U}{\mathrm{U}}
+\newcommand{\thb}{\boldsymbol{\theta}}
+\newcommand{\I}{\mathrm{I}}
+\newcommand{\II}{\mathrm{II}}
+\newcommand{\ein}{\mathbf{1}}
+\newcommand{\pv}{p\text{-value}}
+\newcommand{\MLE}{\mathrm{MLE}}
+\newcommand{\indep}{\perp\!\!\!\perp}
+\newcommand{\xib}{\boldsymbol{\xi}}
+\newcommand{\Pscr}{\mathscr{P}}
+\newcommand{\m}{\mathsf{m}}
+
+\newcommand{\Dir}{\mathrm{Dir}}
+\newcommand{\Exp}{\mathrm{Exp}}
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+ * Посчитать интеграл методом Монте-Карло, минимизирую дисперсию, выбрав разные случайные величины (плотность). 
+ * Построить доверительные интервалы.  Сравнить поточечные и по Донскер.
+ * Подумать, когда не сходится ($\D = \infty$ или сходится не туда). 
+ * Подумать, от чего зависит скорость сходимости.
+ 
+В бумажке:
+
+ * Убедиться, что интеграл сходится
+ * Реализовать процедуру многомерного Монте-Карло интегрирования для произвольной линейно-
+ограниченной области с равномерной интегрирующей плотностью
+ * Вычислить интеграл методом Монте-Карло двумя способами: «в лоб» и через замену переменных области интегрирования к параллелепипеду («коробке»), или каким-либо иным «разумным» методом (например, за счет выбора зависимых случайных величин).
+
+# Одномерные интегралы
+
+```{r}
+mc.loop <- function(f, D, pdf, rvs, n) {
+  accum <- 0
+  for (i in 1:n) {
+    y <- rvs(1, D[1], D[2])
+    accum <- accum + f(y) / pdf(y, D[1], D[2])
+  }
+  accum / n
+}
+
+mc.vect <- function(f, D, pdf, rvs, n) {
+  sum((function(...) {f(...) / pdf(..., D[1], D[2])})(rvs(n, D[1], D[2]))) / n
+}
+```
+
+```{r}
+f <- sin
+D <- c(0, pi)
+pdf <- dunif
+rvs <- runif
+n <- 10 * 10^6 # 10 * 10^6 = max for loop
+
+# system.time(mc.loop(f, D, pdf, rvs, n))    # 10 * 10^6: 41.356
+# system.time(mc.vect(f, D, pdf, rvs, n))    # 10 * 10^6: 1.268
+
+mc.vect(f, D, pdf, rvs, n)
+```
+
+For comparison: same function in Python with $n = 10^5$: 10.9 (!)
+
+# Многомерный интеграл
+
+Вычислим 
+\[
+J=\int_{D}f\d\lambda=\iiiint\limits _{\substack{x_{1}+x_{2}+x_{3}+x_{4}<1\\
+x_{i}>0,\ i\in1:4
+}
+}x_{1}^{p_{1}-1}x_{2}^{p_{2}-1}x_{3}^{p_{3}-1}x_{4}^{p_{4}-1}\exp\Biggl(10^{-3}\frac{x_{1}x_{2}x_{3}x_{4}}{1-x_{1}x_{2}x_{3}x_{4}}\Biggr)\d x_{1}\d x_{2}\d x_{3}\d x_{4},
+\]
+т.е. где $D$ --- 4-мерный симплекс. По методу МК, найдем оценку 
+\[
+\hat{J}_{n}=\frac{1}{n}\sum_{i=1}^{n}\frac{f(\xib_{i})}{p(\xib_{i})}.
+\]
+
+## Равномерное распределение на симплексе
+
+Пусть $\xib_{i}\sim\Pcal=\U(D)$. Оценка для равномерного рааспределения имеет вид
+
+\[
+\hat{J}_{n}=\frac{1}{n\cdot p_{\xib}}\sum_{i=1}^{n}f(\xib_{i}),
+\]
+
+где $p_{\xib} = 1 / \lambda(D).$
+
+```{r}
+mc.unif.vect <- function(f, rvs, pdf, n, d) {
+  1/(n * pdf) * sum(
+    apply(rvs(n, d), 1, f)
+  )
+}
+
+mc.unif.mat <- function(f, rvs, pdf, n, d) {
+  1/(n * pdf) * sum(f(rvs(n, d)))
+}
+
+mc.unif <- mc.unif.mat
+```
+
+Пусть $D$ --- $d$-мерный симплекс. Тогда 
+\[
+p_{\xib_{i}}(\mathbf{x})=\begin{cases}
+d! & \mathbf{x}\in D\\
+0 & \text{иначе.}
+\end{cases}
+\]
+Это частный случай распределения Дирихле $\Dir(\a_{1},\ldots,\a_{d+1})$
+с $\a_{i}=1\ \forall i\in1:(d+1).$ Поэтому нужно смоделировать $\Dir(1,\ldots,1)$.
+Однако известно, что если $\eta_{i}\sim\Gamma(k_{i},1)$, $i\in1:(d+1)$
+то 
+\[
+\xib=\left(\frac{\eta_{1}}{\sum_{i=1}^{d+1}\eta_{i}},\dots,\frac{\eta_{d}}{\sum_{i=1}^{d+1}\eta_{i}}\right)\sim\Dir(k_{1},\ldots,k_{d+1}).
+\]
+ Чтобы получить $\xib\sim\Dir(1,\ldots,1)$, достаточно в приведенном
+равенстве положить $\eta_{i}\sim\Gamma(1,1)=\Exp(1)$.
+
+
+```{r}
+runif.simplex <- function(n, d) {
+  # rdirichlet(n, rep(1, d+1))
+  Y <- t(replicate(n, rexp(d+1)))
+  Y[, 1:d] / rowSums(Y)
+}
+d <- 2
+n <- 1000
+D <- runif.simplex(n, d)
+head(D)
+plot(D, asp=1, pch=20, lwd=1)
+```
+
+### Вычисление данной $g_\mathbf{p}(\mathbf{x})$
+
+Для функции
+$$
+f(\mathbf{x}) = g_\mathbf{p}(\mathbf{x}) = x_{1}^{p_{1}-1}x_{2}^{p_{2}-1}x_{3}^{p_{3}-1}x_{4}^{p_{4}-1}\exp\Biggl(10^{-3}\frac{x_{1}x_{2}x_{3}x_{4}}{1-x_{1}x_{2}x_{3}x_{4}}\Biggr)
+$$
+находим
+
+```{r, message=FALSE}
+g.vect <- function(xx, pp) {
+  prod(xx^(pp-1)) * exp(10^(-3) * (prod(xx) / (1-prod(xx))))
+}
+
+require("matrixStats")
+
+g.mat <- function(X, pp) {
+  rp <- rowProds(X)
+  rowProds(X^(pp-1)) * exp(10^(-3) * (rp / (1-rp)))
+}
+
+g <- g.mat
+
+g.vect.05 <- function(xx) {
+  g.vect(xx, rep(0.5, 4))
+}
+
+g.05 <- function(X) {
+  g(X, rep(0.5, 4))
+}
+
+rvs <- runif.simplex
+d <- 4
+pdf <- factorial(d)
+n <- 1 * 10^6
+
+mc.unif(g.05, rvs, pdf, n, d)
+```
+
+```{r}
+system.time(mc.unif.vect(g.vect.05, rvs, pdf, n, d))
+system.time(mc.unif.mat(g.05, rvs, pdf, n, d))
+```
+
+```{r, eval=FALSE, include=FALSE}
+par(mfrow=c(2,2))
+for (p in c(-1,0,1,2)) {
+  g.vect.pp2 <- function(xx) {
+    g.vect(xx, rep(p, 2))
+  }
+  xx <- seq(0, 1, 0.1)
+  zz <- outer(xx, xx, FUN = function(xx, yy) apply(rbind(xx, yy), 2, g.vect.pp2))
+  contour(xx, xx, zz, main=p)
+}
+par(mfrow=c(1,1))
+```
+
+## Вычисление с плотностью Dirichlet
+
+Диспресия оценки тем меньше, чем больше пропорциональная зависимость
+$\left|f\right|$ от плотности $p$ выбранного распределения $\Pcal$
+--- т.е. в область, где значение $\left|f\right|$ велико, должно
+кидаться больше точек. В качестве кандидата выберем распределение
+Дирихле, чья плотность
+\[
+\frac{1}{B(\ab)}\prod_{i=1}^{d}x_{i}^{\a_{i}-1},\quad B(\ab)=\frac{\prod_{i=1}^{d}\Gamma(\a_{i})}{\Gamma\left(\sum_{i=1}^{d}\a_{i}\right)}
+\]
+ похожа на подынтегральную функцию 
+\[
+x_{1}^{p_{1}-1}x_{2}^{p_{2}-1}x_{3}^{p_{3}-1}x_{4}^{p_{4}-1}\exp\left\{ 10^{-3}\frac{x_{1}x_{2}x_{3}x_{4}}{1-x_{1}x_{2}x_{3}x_{4}}\right\} .
+\]
+
+### График $|f|$ в $\RR^{2}$ при разных $p_{1},p_{2}$
+
+```{r, fig.height=9, fig.width=9}
+library('binaryLogic')
+library('lattice')
+plot.f.pp <- function(pp) {
+  for (i in 1:length(pp)) {
+    g.abs.vect.pp2 <- function(xx) {
+      abs(g.vect(xx, rep(pp[i], 2)))
+    }
+    xx <- seq(0, 1, 0.1)
+    zz <- outer(xx, xx, FUN = function(xx, yy) apply(rbind(xx, yy), 2, g.abs.vect.pp2))
+    # print(zz)
+    pos <- rev(as.numeric(as.logical(as.binary((i - 1), n=2)))) + 1
+    print(levelplot(t(zz), xlab='', ylab='',
+                    main=paste(pp[i], pp[i], sep=', ')),
+          split=c(pos, 2, 2), more=(i != length(pp)))
+  }
+}
+plot.f.pp(c(-1.5, -1, -0.5, 0))
+plot.f.pp(c(0.5, 1, 1.5, 2))
+```
+
+```{r, eval=FALSE, include=FALSE}
+m <- matrix(1:9, 3, 3, byrow=TRUE)
+levelplot(m)
+apply(m, 2, rev)
+levelplot(apply(m, 2, rev))
+levelplot(t(apply(apply(m, 2, rev), 2, rev)))
+```
+
+### График плотности в $\RR^{2}$ при разных $p_{1},p_{2}$
+
+```{r, fig.height=10, fig.width=10}
+rdirichlet <- function(n, aa) {
+  d <- length(aa)
+  Y <- matrix(rgamma(d * n, aa), n, d, byrow=TRUE)  # faster than replicate
+  Y / rowSums(Y)
+}
+n <- 2000
+par(mfrow=c(2,2))
+for (p in c(0.5,1,1.5,2)) {
+  plot(rdirichlet(n, rep(p, 3))[,1:2], asp=1, pch=21, lwd=1,
+       main=paste(p, p, p, sep=', '))
+}
+par(mfrow=c(1,1))
+```
+
+### Выбор свободного параметра
+
+Значит, целесообразно использовать плотность $\xib\sim\Dir(\a_{1},\ldots,\a_{4})$.
+По факту, носителем $d$-мерного распределения Дирихле является $d-1$-мерный
+симплекс, вложенный в $\RR^{d}$. Поэтому, чтобы получить реализацию
+случайной величины на $\tilde{\xib}$ 4-мерном симплексе, нужно смоделировать
+$\xib\sim\Dir(\a_{1},\ldots,\a_{5})$ (и 5-ю координату отбросить);
+тогда 
+\[
+\hat{J}_{n}=\frac{1}{n}\sum_{i=1}^{n}\frac{f(\tilde{\xib}_{i})}{p(\xib_{i})}.
+\]
+
+$\a_{5}$ нужно выбрать так, чтобы плотность <<прощупывала>> области
+больших значений $\left|f\right|$.
+
+```{r, fig.height=10, fig.width=10}
+n <- 2000
+par(mfrow=c(2,2))
+for (p in c(0.5,1,2, 3)) {
+  plot(rdirichlet(n, c(0.5, 0.5, p))[,1:2], asp=1, pch=21, lwd=1,
+       main=paste(0.5, 0.5, p, sep=', '))
+}
+par(mfrow=c(1,1))
+```
+
+### Вычислениие интеграла и сравнение плотностей с $p_{1}=\dots=p_{4}=0.5, n=10^{6}$
+
+```{r}
+ddirichlet <- function(X, aa) {
+  nz.idcs <- abs(rowSums(X) - 1) < 10e-16
+  dd <- numeric(nrow(X))
+  b <- prod(gamma(aa)) / gamma(sum(aa))
+  dd[nz.idcs] <- rowProds(X[nz.idcs,]^(aa-1)) / b
+  dd[!nz.idcs] <- 0
+  return(dd)
+}
+mc.dir <- function(f, rvs, pdf, n) {
+  xi <- rvs(n)
+  xi.proj <- xi[,-ncol(xi)]
+  1/n * sum(f(xi.proj) / pdf(xi))
+}
+```
+
+```{r}
+g.05 <- function(X) {
+  g(X, rep(0.5, 4))
+}
+g.15 <- function(X) {
+  g(X, rep(1.5, 4))
+}
+rvs.dir.05 <- function(n) rdirichlet(n, rep(0.5, 5))
+pdf.dir.05 <- function(xx) ddirichlet(xx, rep(0.5, 5))
+rvs.dir.15 <- function(n) rdirichlet(n, rep(1.5, 5))
+pdf.dir.15 <- function(xx) ddirichlet(xx, rep(1.5, 5))
+rvs.dir.05.15 <- function(n) rdirichlet(n, c(rep(0.5, 4), 1.5))
+pdf.dir.05.15 <- function(xx) ddirichlet(xx, c(rep(0.5, 4), 1.5))
+rvs.unif.simpl <- runif.simplex
+pdf.unif.simpl <- factorial(4)
+```
+
+#### Равномерная плотность
+
+```{r}
+n <- 1 * 10^6
+mc.unif(g.05, rvs.unif.simpl, pdf.unif.simpl, n, 4)
+```
+
+#### Дирихле
+
+```{r}
+n <- 1 * 10^6
+mc.dir(g.05, rvs.dir.05, pdf.dir.05, n)
+mc.dir(g.05, rvs.dir.05.15, pdf.dir.05.15, n)
+```
+
+## Сравнение дисперсий
+
+```{r}
+mc.unif.var <- function(f, rvs, pdf, n, d) {
+  ss <- f(rvs(n, d)) / pdf
+  J.hat <- 1/n * sum(ss)
+  s.2 <- 1/n * sum(ss^2) - J.hat^2
+  return(c(J.hat, s.2))
+}
+
+mc.dir.var <- function(f, rvs, pdf, n) {
+  xi <- rvs(n)
+  xi.proj <- xi[,-ncol(xi)]
+  ss <- f(xi.proj) / pdf(xi)
+  J.hat <- 1/n * sum(ss)
+  s.2 <- 1/n * sum(ss^2) - J.hat^2
+  return(c(J.hat, s.2))
+}
+```
+
+```{r}
+n <- 1 * 10^6
+mc.unif.var(g.05, rvs.unif.simpl, pdf.unif.simpl, n, 4)
+mc.dir.var(g.05, rvs.dir.05, pdf.dir.05, n)
+mc.unif.var(g.15, rvs.unif.simpl, pdf.unif.simpl, n, 4)
+mc.dir.var(g.15, rvs.dir.15, pdf.dir.15, n)
+```
+
+## Выборочная дисперсия оценок
+
+```{r}
+nn <- cumprod(rep(10, 5))[2:5]
+X <- matrix(0, length(nn), 2, byrow=TRUE)
+rownames(X) <- nn
+colnames(X) <- c('unif', 'dir')
+for (k in 1:length(nn)) {
+  cat(nn[k], '...\n')
+  X[k,1] <- var(replicate(100, mc.unif.var(g.05, rvs.unif.simpl, pdf.unif.simpl, nn[k], 4)[1]))
+  X[k,2] <- var(replicate(100, mc.dir.var(g.05, rvs.dir.05, pdf.dir.05, nn[k])[1]))
+}
+```
+
+```{r}
+print(X)
+matplot(log(as.numeric(rownames(X))), X, type='b', pch=1:2, axes=FALSE)
+legend('topright', legend=colnames(X), col=1:2, pch=1:2)
+axis(1, at=log(as.numeric(rownames(X))), labels=rownames(X))
+axis(2, at=floor(min(X):max(X)), labels=floor(min(X):max(X)))
+box()
+
+# plot(X[,1], type='b', col='blue')
+# lines(X[,2], type='b', col='red')
+# axis(1, c(1,2,3,4), nn)
+# axis(2, seq(0, 2.5, by=0.5))
+# dotchart(X)
+```
+
+## Доверительные интервалы
+
+```{r}
+ci <- function(mc.res, gamma, n) {
+  a <- sqrt(mc.res[2]) * qnorm((1 + gamma) / 2) / sqrt(n)
+  c(mc.res[1] - a, mc.res[1] + a)
+}
+```
+
+```{r}
+n <- 1 * 10^6
+ci(mc.unif.var(g.15, rvs.unif.simpl, pdf.unif.simpl, n, 4), 0.95, n)
+ci(mc.dir.var(g.15, rvs.dir.15, pdf.dir.15, n), 0.95, n)
+```

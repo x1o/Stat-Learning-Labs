@@ -1,0 +1,304 @@
+---
+title: "M-оценки и ОМП"
+author: "Dmitry Zotikov"
+date: "March 6, 2017"
+output:
+  html_document:
+    md_extensions: +latex_macros
+---
+
+<!-- Completed: 2017-04-04 -->
+
+\newcommand{\E}{\mathsf{E}}
+\newcommand{\D}{\mathsf{D}}
+\newcommand{\P}{\mathsf{P}}
+\newcommand{\Pcal}{\mathcal{P}}
+\newcommand{\Q}{\mathcal{Q}}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\toP}{\xrightarrow{\P}}
+\newcommand{\N}{\mathrm{N}}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\A}{\mathscr{A}}
+\newcommand{\th}{\theta}
+\newcommand{\toas}{\xrightarrow{{\rm a.s.}}}
+\newcommand{\toP}{\xrightarrow{\P}}
+\newcommand{\tod}{\xrightarrow{\mathrm{d}}}
+\newcommand{\iid}{\mathrm{i.i.d.}}
+\newcommand{\T}{\mathrm{T}}
+\newcommand{\L}{\mathcal{L}}
+\newcommand{\dd#1#2}{\frac{\mathrm{d}#1}{\mathrm{d}#2}}
+\newcommand{\a}{\alpha}
+\newcommand{\b}{\beta}
+\newcommand{\t}{\mathrm{t}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\d}{\,\mathrm{d}}
+\newcommand{\U}{\mathrm{U}}
+\newcommand{\thb}{\boldsymbol{\theta}}
+\newcommand{\I}{\mathrm{I}}
+\newcommand{\II}{\mathrm{II}}
+\newcommand{\ein}{\mathbf{1}}
+\newcommand{\pv}{p\text{-value}}
+\newcommand{\MLE}{\mathrm{MLE}}
+\newcommand{\indep}{\perp\!\!\!\perp}
+\newcommand{\xib}{\boldsymbol{\xi}}
+\newcommand{\Pscr}{\mathscr{P}}
+\newcommand{\m}{\mathsf{m}}
+\newcommand{\cdf}{\mathrm{cdf}}
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, include=FALSE}
+require(bbmle)
+```
+
+```{r, include=FALSE}
+require(emdbook)
+set.seed(1001)
+x1 <- rbetabinom(n=1000, prob=0.1, size=50, theta=10)
+mllk <- function(prob, size, theta) {
+  -sum(dbetabinom(x1, prob, size, theta, log=TRUE))
+}
+m0 <- mle2(mllk, start=list(prob=0.2, theta=9), data=list(size=50))
+## requires log=TRUE, x as the first argument:
+# m0f <- mle2(x1~dbetabinom(prob, size=50, theta),
+#             start=list(prob=0.2, theta=9), data=data.frame(x1))  
+# m0cf <- mle2(x1~dbetabinom(prob=plogis(lprob), size=50, theta=exp(ltheta)),
+#              start=list(lprob=0, ltheta=2), data=data.frame(x1))
+summary(m0)
+p0 <- profile(m0)
+confint(p0)
+par(mfrow=c(1, 2))
+plot(p0, plot.confstr=TRUE)  # sqrt(deviance difference == 2 * mllk - best fit)
+```
+
+```{r, eval=FALSE, include=FALSE}
+set.seed(1)   # wouldn't converge without lower bound on sigma
+xx <- rnorm(100, 3, 2)
+hist(xx)
+mllk.norm <- function(mu, sigma, x) {
+  # sigma <- exp(sigma)
+  -sum(dnorm(x, mu, sigma, log=TRUE))
+}
+m.norm <- mle2(mllk.norm,
+               start=list(mu=0, sigma=1),
+               data=list(x=xx),
+               method='L-BFGS-B',
+               lower=c(sigma=0))
+summary(m.norm)
+r <- profile(m.norm)
+confint(r)
+plot(r)
+```
+
+# Интервальное цензурирование 1-го типа
+
+$\xi\sim\Gamma(k,\theta)$, $\tau\sim\mathcal{P}$, $\xi\indep\tau$,
+$\delta=\mathbf{1}_{\left\{ \xi<\tau\right\} }$, $\eta=(\tau,\delta)$.
+
+Исследовать зависимость ширины доверительного интервала для оценок параметров от объема выборки.
+
+Пусть $\xi \sim \mathrm{Gamma}(3,1)$ и $\tau \sim \mathrm{N}(2, 1)$.
+
+## Выбор плотности для $\xi$ и $\tau$.
+
+```{r}
+f <- function(x) dnorm(x, 2, 1)
+g <- function(x) dgamma(x, 3, 1)
+
+curve(f, from=-2, to=10)
+curve(g, from=-2, to=10, add=TRUE, col='red')
+legend("topright", legend = c("N(2, 1)", 'Gamma(3, 1)'), bty = "n",
+       col = c('black', "red"), lty = c(1))
+```
+
+
+```{r, fig.width=10, fig.height=10, include=FALSE}
+par(mfrow=c(4, 4))
+for (th in 1:2) {
+  for (k in 1:4) {
+    k <- 2*k - 1
+    plot(function(x) dgamma(x, k, th), 0, 10,
+         main=paste("k =", k, ", theta =", th))
+  }
+}
+for (k in 1:2) {
+  for (th in 1:4) {
+    th <- 2*th- 1
+    plot(function(x) dgamma(x, k, th), 0, 10,
+         main=paste("k =", k, ", theta =", th))
+  }
+}
+par(mfrow=c(1,1))
+```
+
+```{r}
+set.seed(1)
+```
+
+## Моделирование $\eta=(\tau,\delta)$
+
+```{r}
+xi.rvs <- rgamma
+xi.cdf <- pgamma
+mean.0 <- 2
+sd.0 <- 1
+shape.0 <- 3
+rate.0 <- 1
+tau.rvs <- function(n) rnorm(n, mean.0, sd.0)
+tau.pdf <- function(x) dnorm(x, mean.0, sd.0)
+
+eta.rvs <- function(n, shape, rate, tau.rvs) {
+  tt <- tau.rvs(n)
+  xx <- xi.rvs(n, shape, rate)
+  dd <- as.numeric(xx < tt)
+  cbind(tt, dd)
+}
+
+X <- eta.rvs(1000, shape.0, rate.0, tau.rvs)
+head(X)
+```
+
+## Совместная плотность
+
+\[
+p_{(\tau,\delta)}(t,d)=p_{\delta\mid\tau}(d\mid t)\underbrace{p_{\tau}(t)}_{\mathrm{pdf}_{\tau}(t)}.
+\]
+ Пусть $d=0$, тогда $d=\mathbf{1}_{\left\{ \xi<\tau\right\} }=0\iff\xi>\tau$
+и 
+\[
+p_{\delta\mid\tau}(0\mid t)=\P(\xi>\tau\mid\tau=t)=\P(\xi>t)=1-\P(\xi<t)=1-\mathrm{pdf}_{\xi}(t).
+\]
+Аналогично, $d=1$, тогда $d=\mathbf{1}_{\left\{ \xi<\tau\right\} }=1\iff\xi<\tau$
+и 
+\[
+p_{\delta\mid\tau}(1\mid t)=\P(\xi<\tau\mid\tau=t)=\P(\xi<t)=\mathrm{pdf}_{\xi}(t).
+\]
+Наконец, 
+\[
+p_{(\tau,\delta)}(t,d)=\left(1-\mathrm{pdf}_{\xi}(t)\right) p_{\tau}(t)\mathbf{1}_{\left\{ 0\right\} }(d)+\mathrm{pdf}_{\xi}(t) p_{\tau}(t)\mathbf{1}_{\left\{ 1\right\} }(d).
+\]
+
+
+Чтобы избавиться от плотности $p_{\tau}$ в выражении для совместной
+плотности, формально, перепишем последнюю как производную Радона--Никодима
+относительно меры $\Pcal$ --- распределения $\tau$. Пусть $\Q$
+--- совместное распределение $(\tau,\delta)$; $\Pcal\prec\lambda,\ \Q\prec\lambda$,
+т.е. $\d\Q=p_{\tau,\delta}\d\lambda$, $\d\Pcal=p_{\tau}\d\lambda$,
+значит существует производная Радона--Никодима $\d\Q / \d\Pcal$ и 
+\[
+\Q(A)=\int_{A}\d\Q=\int_{A}\frac{\d\Q}{\d\Pcal}\d\Pcal=\int_{A}\frac{p_{\tau,\delta}}{p_{\tau}}\d\Pcal=\int_{A}p_{\tau\mid\delta}\d\Pcal
+\]
+ с другой стороны, 
+\[
+\Q(A)=\int_{A}\d\Q=\int_{A}p_{\tau,\delta}\d\lambda.
+\]
+Поэтому 
+$$\begin{eqnarray*}
+\cdf_{(\tau,\delta)}(t_{0},d_{0}) & = & \int_{-\infty}^{t_{0}}\left(p_{\tau,\delta}(t,0)\ein_{\left\{ 0\right\} }(d_{0})+p_{\tau,\delta}(t,1)\ein_{\left\{ 1\right\} }(d_{0})\right)\,\lambda(\mathrm{d}t)\\
+ & = & \int_{-\infty}^{t_{0}}\left(p_{\delta\mid\tau}(0\mid t)p_{\tau}(t)\ein_{\left\{ 0\right\} }(d_{0})+p_{\delta\mid\tau}(1\mid t)p_{\tau}(t)\ein_{\left\{ 1\right\} }(d_{0})\right)\,\lambda(\mathrm{d}t)\\
+ & = & \int_{-\infty}^{t_{0}}\left(p_{\delta\mid\tau}(0\mid t)\ein_{\left\{ 0\right\} }(d_{0})+p_{\delta\mid\tau}(1\mid t)\ein_{\left\{ 1\right\} }(d_{0})\right)\,\Pcal(\mathrm{d}t).
+\end{eqnarray*}$$
+
+
+Неформально, нужно поделить $p_{\tau,\delta}$ на $p_{\tau}$, потому
+что функция правдоподобия записывается для оценки параметров $\Gamma(k,\th)$,
+а $\tau$ от этих параметров не зависит, значит $p_{\tau}$ на точку
+максимума ФП не влияет.
+
+```{r}
+eta.pdf <- function(X, shape, rate) {
+  # g <- tau.pdf(X[,1])
+  F <- xi.cdf(X[,1], shape, rate)
+  # g * (1 - F) * (1 - X[,2]) + g * F * X[,2]
+  (1 - F) * (1 - X[,2]) + F * X[,2]
+}
+```
+
+## Оценка и построение доверительных интервалов
+
+Оценим параметры $k, \theta$ распределения $\xi$.  Для модельных данных $k_0 = 3$, $\theta_0 = 1$
+
+```{r}
+mllk <- function(shape, rate, X) {
+  -sum(log(eta.pdf(X, shape, rate)))
+}
+
+# eps <-.Machine$double.eps * 1e10
+eps <- 10^-5
+
+m <- mle2(mllk,
+          start = list(shape=eps, rate=eps),
+          data=list(X=X),
+          method='L-BFGS-B',
+          lower=c(shape=eps, rate=eps))
+
+summary(m)
+r <- profile(m)
+confint(r)
+plot(r)
+```
+
+<!-- Означает ли если $z$ --- signed square-root of the deviance difference from the minimum, то что такое z-value? Pr(z)? -->
+
+<!-- Что значат большие интервалы? (От чего зависит ширина) -->
+
+<!-- Кривые линии профиля означают недостаточную выборку? -->
+
+<!-- Значат ли кривые линия профиля, что невозможно точно построить доверительный интервал? -->
+
+<!-- Где можно больше почитать про профили? -->
+
+<!-- В сравнении с д.и. по Гессиану and the like из Zucchini -->
+
+## Исследование зависимости ширины доверительного интервала для оценок параметров от объема выборки
+
+Построим график зависимости ширины доверительного интервала от объема выборки
+
+```{r, fig.height=10}
+set.seed(2)
+# nn <- cumprod(rep(10, 4))
+nn <- c(100, 500, 1000, 2000, 5000, 10000, 20000, 30000)
+# nn <- seq(1e2, 1e5, length.out=10)
+par(mfrow=c(3, 2))
+CI <- matrix(0, length(nn), 2)
+for (i in 1:length(nn)) {
+  X <- eta.rvs(nn[i], shape.0, rate.0, tau.rvs)
+  m <- mle2(mllk,
+            start = list(shape=eps, rate=1),
+            data=list(X=X),
+            method='L-BFGS-B',
+            lower=c(shape=eps, rate=eps))
+  r <- profile(m)
+  CI[i,] <- confint(r)[,2] - confint(r)[,1]
+  if (nn[i] %in% c(100, 1000, 10000)) {
+    plot(r)
+  }
+}
+```
+
+```{r, fig.width=10}
+par(mfrow=c(1, 2))
+matplot(nn, CI, type='b', pch=c(1,2), col=c('blue'))
+matplot(log(nn), log(CI), type='b', pch=c(1,2), col=c('blue'))
+par(mfrow=c(1,1))
+```
+
+Получилась прямая $$\log(f(n))=a\log(n)+b,$$ откуда $$f(n)=n^{a}\exp(b).$$  Оценив параметры $a$, $b$ по данным, получим (например, для параметра $k$):
+
+```{r}
+plot(log(nn), log(CI[,1]), type='b', col='blue')
+linreg <- lsfit(log(nn), log(CI[,1]))
+abline(linreg, col='red')
+linreg$coefficients
+```
+
+Таким образом, $a = -0.5$, $b = 3.9$.  Значит, ширина доверительного интервала зависит обратно пропорционально от квадратного корня объема выборки.
+
+```{r}
+plot(nn, CI[,1], type='b', col='blue', ylim=c(0, max(CI[,1])))
+par(new=TRUE)
+plot(nn, 1/sqrt(nn) * exp(3.9), type='b', col='red', ylim=c(0, max(CI[,1])), axes=FALSE, ylab='', xlab='')
+```

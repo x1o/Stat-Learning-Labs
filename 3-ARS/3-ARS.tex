@@ -1,0 +1,417 @@
+%% LyX 2.1.4 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[russian]{scrartcl}
+\usepackage[T2A,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper]{geometry}
+\geometry{verbose,tmargin=2cm,bmargin=2.5cm,lmargin=2cm,rmargin=2cm}
+\usepackage{color}
+\usepackage{babel}
+\usepackage{latexsym}
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{esint}
+\usepackage[unicode=true,pdfusetitle,
+ bookmarks=true,bookmarksnumbered=false,bookmarksopen=true,bookmarksopenlevel=1,
+ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=true]
+ {hyperref}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+\DeclareRobustCommand{\cyrtext}{%
+  \fontencoding{T2A}\selectfont\def\encodingdefault{T2A}}
+\DeclareRobustCommand{\textcyr}[1]{\leavevmode{\cyrtext #1}}
+\AtBeginDocument{\DeclareFontEncoding{T2A}{}{}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+  \theoremstyle{plain}
+  \newtheorem*{prop*}{\protect\propositionname}
+  \theoremstyle{plain}
+  \newtheorem*{lyxalgorithm*}{\protect\algorithmname}
+  \theoremstyle{remark}
+  \newtheorem*{claim*}{\protect\claimname}
+  \theoremstyle{remark}
+  \newtheorem*{rem*}{\protect\remarkname}
+
+\@ifundefined{date}{}{\date{}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+%\usepackage{nicefrac}
+%\usepackage{colortbl}
+%\usepackage[noend]{algpseudocode}
+%\usepackage[all]{xy}
+\usepackage{mathrsfs}
+
+%\usepackage[columns=1,itemlayout=singlepar,totoc=true]{idxlayout}
+
+%\@addtoreset{chapter}{part}
+\DeclareMathOperator{\Int}{Int}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\cdf}{cdf}
+\DeclareMathOperator{\ecdf}{ecdf}
+\DeclareMathOperator{\qnt}{qnt}
+\DeclareMathOperator{\pdf}{pdf}
+\DeclareMathOperator{\pmf}{pmf}
+\DeclareMathOperator{\dom}{dom}
+\DeclareMathOperator{\bias}{bias}
+\DeclareMathOperator{\MSE}{MSE}
+\DeclareMathOperator{\med}{med}
+\DeclareMathOperator{\Exp}{Exp}
+\DeclareMathOperator{\Bin}{Bin}
+\DeclareMathOperator{\Ber}{Ber}
+\DeclareMathOperator{\Geom}{Geom}
+\DeclareMathOperator{\Pois}{Pois}
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\cov}{cov}
+\DeclareMathOperator{\cor}{cor}
+\DeclareMathOperator{\sign}{sign}
+\DeclareMathOperator{\Lin}{Lin}
+\DeclareMathOperator{\SE}{SE}
+\DeclareMathOperator{\SD}{SD}
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator{\supp}{supp}
+
+\newcommand{\bigperp}{%
+  \mathop{\mathpalette\bigp@rp\relax}%
+  \displaylimits
+}
+
+\newcommand{\bigp@rp}[2]{%
+  \vcenter{
+    \m@th\hbox{\scalebox{\ifx#1\displaystyle2.1\else1.5\fi}{$#1\perp$}}
+  }%
+}
+
+\newcommand{\bignparallel}{%
+  \mathop{\mathpalette\bignp@rp\relax}%
+  \displaylimits
+}
+
+\newcommand{\bignp@rp}[2]{%
+  \vcenter{
+    \m@th\hbox{\scalebox{\ifx#1\displaystyle2.1\else1.5\fi}{$#1\nparallel$}}
+  }%
+}
+
+\AtBeginDocument{
+  \def\labelitemii{\(\Diamond\)}
+  \def\labelitemiii{\(\Box\)}
+}
+
+\makeatother
+
+  \providecommand{\algorithmname}{Алгоритм}
+  \providecommand{\claimname}{Утверждение}
+  \providecommand{\propositionname}{Предложение}
+  \providecommand{\remarkname}{Замечание}
+
+\begin{document}
+\global\long\def\N{\mathrm{N}}
+\global\long\def\P{\mathsf{P}}
+\global\long\def\E{\mathsf{E}}
+\global\long\def\D{\mathsf{D}}
+\global\long\def\O{\Omega}
+\global\long\def\F{\mathcal{F}}
+\global\long\def\K{\mathsf{K}}
+\global\long\def\A{\mathscr{A}}
+\global\long\def\Pcal{\mathcal{P}}
+\global\long\def\th{\theta}
+\global\long\def\toas{\xrightarrow{{\rm a.s.}}}
+\global\long\def\toP{\xrightarrow{\P}}
+\global\long\def\tod{\xrightarrow{\mathrm{d}}}
+\global\long\def\iid{\mathrm{i.i.d.}}
+\global\long\def\T{\mathrm{T}}
+\global\long\def\L{\mathcal{L}}
+\global\long\def\dd#1#2{\frac{\mathrm{d}#1}{\mathrm{d}#2}}
+\global\long\def\a{\alpha}
+\global\long\def\b{\beta}
+\global\long\def\t{\mathrm{t}}
+\global\long\def\RR{\mathbb{R}}
+\global\long\def\d{\,\mathrm{d}}
+\global\long\def\U{\mathrm{U}}
+\global\long\def\thb{\boldsymbol{\theta}}
+\global\long\def\I{\mathrm{I}}
+\global\long\def\II{\mathrm{II}}
+\global\long\def\ein{\mathbf{1}}
+\global\long\def\pv{p\text{-value}}
+\global\long\def\MLE{\mathrm{MLE}}
+\global\long\def\indep{\perp\!\!\!\perp}
+\global\long\def\xib{\boldsymbol{\xi}}
+\global\long\def\Pscr{\mathscr{P}}
+\global\long\def\m{\mathsf{m}}
+\global\long\def\X{\mathfrak{X}}
+\global\long\def\Q{\mathcal{Q}}
+
+
+
+\title{Моделирование методом отбора \\
+(Rejection Sampling)}
+
+
+\date{Tue 07 Mar 2017}
+
+
+\author{422 группа}
+
+\maketitle
+\tableofcontents{}
+
+
+\section{Схема метода}
+
+
+\subsection{Мотивация}
+
+Пусть $p(x)=\pdf_{\Pcal}(x)$, $H$ --- подграфик.
+\begin{prop*}
+Если $\left(\xi_{1},\xi_{2}\right)\sim\U(H)$, то $\xi_{1}\sim\Pcal$.\end{prop*}
+\begin{proof}
+Действительно,
+\[
+\P(\xi_{1}<z)=\int_{-\infty}^{z}\d x\int_{0}^{p(x)}\d y=\int_{-\infty}^{z}p(x)\d x.
+\]
+\end{proof}
+\begin{lyxalgorithm*}
+Пусть $g(x)$ --- мажоранта, $\left|\supp\Pcal\right|<\infty$.
+\begin{enumerate}
+\item $x\gets\U(\supp\Pcal)$, $y\gets\U(0,g(x))$
+\item Если $y<p(x)$, $\xi\gets x$, конец; иначе 1.
+\end{enumerate}
+\end{lyxalgorithm*}
+
+\begin{lyxalgorithm*}[Частный случай]
+Пусть $p(x)$ сосредоточена на $\left[0,1\right]$, $g(x)\equiv M$.
+\begin{enumerate}
+\item Для $t\in1,2,\ldots$
+\begin{eqnarray*}
+\a_{1}^{(t)} & \sim & \U(0,1)\\
+\a_{2}^{(t)} & \sim & \U(0,1).
+\end{eqnarray*}
+
+\item Если 
+\[
+p(\a_{1}^{(t)})\geq M\a_{2}^{(t)},
+\]
+ $\xi\gets\a_{1}^{(t)},$ конец; иначе 1.
+\end{enumerate}
+\end{lyxalgorithm*}
+
+\subsection{Формальный алгоритм}
+
+Пусть $\Q$ --- мажорирующее распределение, т.е. $p(x)\leq Mq(x)=g(x)\ \forall x$
+и существует производная Радона--Никодима $r=\d\Pcal/\d\Q\leq M$.
+\begin{lyxalgorithm*}[Общий]
+~
+\begin{enumerate}
+\item Для $t\in1,2,\ldots$
+\begin{eqnarray*}
+\eta^{(t)} & \sim & \Q\\
+\a^{(t)} & \sim & \U(0,1).
+\end{eqnarray*}
+
+\item Если 
+\[
+r(\eta^{(t)})\geq M\a^{(t)},
+\]
+ или (поскольку $r=p/q$) что то же самое, 
+\[
+\frac{p(\eta^{(t)})}{g(\eta^{(t)})}\geq\a^{(t)},
+\]
+ то $\tau=t$; $\xi\gets\eta^{(\tau)}$; конец; иначе 1.
+\end{enumerate}
+\end{lyxalgorithm*}
+\begin{claim*}
+Справедливо:
+\begin{enumerate}
+\item $\tau-1\sim\Geom(1/M)$;
+\item $\xi:=\eta_{\tau}\sim\Pcal$;
+\item $\tau\indep\eta_{\tau}$.
+\end{enumerate}
+\end{claim*}
+
+\paragraph{Трудоемкость}
+
+По смыслу, $p=\pdf_{\Pcal}$ сложная в вычислении\footnote{Например, в случае условного распределения --- тогда это интеграл
+$h(x)=\int\ell(x,y)\d y$.}, $q=\pdf_{\Q}$ простая. Чтобы получить одну реализацию нужной случайной
+величины $\eta_{\tau}$, нужно $\tau$ раз вычислить $r$; в среднем
+это, поскольку $\tau-1\sim\Geom(1/M)$, 
+\[
+\E(\tau-1)=\E(\tau)-1=\frac{1-1/M}{1/M}=M-1\implies\E(\tau)=M.
+\]
+Но $M$ --- то, насколько одна плотность подогнана под другую ($M=p/q=1$
+соответствует с случаю $p=q$). 
+
+Так что важно правильно выбрать мажорирующее распределение, ведь когда
+отвергается величина $r(\eta^{(t)})$ процессорные такты, потраченные
+на её вычисление, пропадают.
+
+
+
+
+\subsection{Трюки}
+
+Следующие трюки позволяют выбирать мажорирующую плотность так, что
+$M\to1$.
+\begin{description}
+\item [{Rejection~with~squeezing}] Пусть умеем строить не только мажорнату
+$g_{u}$, но и миноранту $g_{\ell}$. Для отбора нужно брать только
+те, что ниже $p$; значит, сначала вычислим миноранту, и если значение
+ниже нее, то принимать значение.
+\item [{Adaptive~Rejection~Sampling~(ARS)}] См. далее.
+\end{description}
+
+\section{Адаптивный метод отбора }
+
+(Рис. 1) Нужно, чтобы
+\begin{enumerate}
+\item $p$ была непрерывно дифференцируема на связном множестве $D$.
+\item $h(x)=\log p(x)$ была бы выпукла.
+\end{enumerate}
+Большая часть стандартных плотностей этим требованиям удовлетворяют;
+интегралы тоже, потому что неравенство Єнсена.
+
+
+\subsection{Мажоранта}
+
+Мажоранту можно построить кусочно-линейную --- по касательным. Пусть
+выбрано разбиение $x_{1}\leq\dots\leq x_{k}$. Пусть также $z_{1},\ldots,z_{k-1}$
+--- точки пересечения касательных: 
+\begin{eqnarray*}
+z_{j} & = & \frac{h(x_{j+1})-h(x_{j})-x_{j+1}h'(x_{j+1})+x_{j}h'(x_{j})}{h'(x_{j})-h'(x_{j+1})},\quad j\in1:(k-1)\\
+z_{0} & = & -\infty\text{ или }\inf D\\
+z_{k} & = & +\infty\text{ или }\sup D.
+\end{eqnarray*}
+ Тогда можно задать кусочно-линейную мажоранту 
+\[
+u(x)=h(x_{j})+h'(x_{j})(x-x_{j}),\quad x\in(z_{j-1},z_{j}],\ j\in1:k.
+\]
+Потенциировав, получают $\exp u(x)$ --- мажоранту исходного распределения
+$\Q$, каковая мажоранта задает кусочно-экспоненциальную плотность
+\[
+s(x)=\frac{\exp u(x)}{C},\quad C=\int_{D}\exp u(w)\d w,
+\]
+ где 
+\begin{eqnarray*}
+\int_{D}\exp u(w)\d w & = & \sum_{j=1}^{k}\int_{z_{j-1}}^{z_{j}}\exp\left\{ h(x_{j})+h'(x_{j})(w-x_{j})\right\} \d w\\
+ & = & \sum_{j=1}^{k}\exp\left\{ h(x_{j})-h'(x_{j})x_{j}\right\} \int_{z_{j-1}}^{z_{j}}\exp\left\{ h'(x_{j})w\right\} \d w\\
+ & = & \sum_{j=1}^{k}\frac{1}{h'(x_{j})}\exp\left\{ h(x_{j})-h'(x_{j})x_{j}\right\} \left(\exp\left\{ h'(x_{j})z_{j}\right\} -\exp\left\{ h'(x_{j})z_{j-1}\right\} \right)\\
+ & = & \sum_{j=1}^{k}\frac{1}{h'(x_{j})}\left(\exp\left\{ h(x_{j})+h'(x_{j})(z_{j}-x_{j})\right\} -\exp\left\{ h(x_{j})+h'(x_{j})(z_{j-1}-x_{j})\right\} \right)\\
+ & = & \sum_{j=1}^{k}\frac{1}{h'(x_{j})}\left(\exp u(z_{j})-\exp u(z_{j-1})\right).
+\end{eqnarray*}
+
+
+
+\subsubsection{Моделирование кусочно-экспоненциальной плотности}
+
+Функция распределения кусочно-экспоненциальной плотности $\Q$ есть
+\[
+F_{\Q}(z)=\int_{-\infty}^{z}s(x)\d x=\frac{1}{C}\left(\sum_{j=1}^{i:z_{i}\geq z}\frac{1}{h'(x_{j})}\left(\exp u(z_{j})-\exp u(z_{j-1})\right)+\exp u(z)-\exp u(z_{i})\right).
+\]
+
+\begin{lyxalgorithm*}[Моделирование $\eta\sim\Q$]
+~
+\begin{enumerate}
+\item $\a\sim\U(0,1)$
+\item $z_{i}\gets\max\left\{ z_{j}:F_{\Q}(z_{j})<\a\right\} $
+\item 
+\[
+\eta\gets z_{i}+\frac{1}{h'(x_{i+1})}\log\left[1+\frac{h'(x_{i+1})C(\a-F_{\Q}(z_{i}))}{\exp u(z_{i})}\right].
+\]
+
+\end{enumerate}
+\end{lyxalgorithm*}
+
+\subsection{Миноранта}
+
+Миноранта --- из хорд составленная. Тогда для $x\in[x_{j},x_{j+1}]$
+миноранта задается как 
+\[
+\ell(x)=\frac{(x_{j+1}-x)h(x_{j})+(x-x_{j})h(x_{j+1})}{x_{j+1}-x_{j}},\quad j\in1:(k-1).
+\]
+ Для $x<x_{1}$ или $x>x_{k}$ $\ell(x):=-\infty$. 
+\begin{claim*}
+Раз $h$ выпукла, то автоматически $e^{\ell(x)}\leq p(x)\leq e^{u(x)}$.
+\end{claim*}
+
+\subsection{Алгоритм}
+\begin{lyxalgorithm*}
+Таким образом,
+\begin{enumerate}
+\item Инициализация:
+
+\begin{enumerate}
+\item Выберем $T_{k}=\left\{ x_{1},\ldots,x_{k}\right\} $ --- количество
+начальных точек.
+
+\begin{rem*}
+Нужно выбрать по крайней мере по разным сторонам от моды --- $h'(x_{1})>0,\ h'(x_{k})<0$,
+чтобы можно было построить мажоранту (минимум две; три с третьей в
+моде уже гораздо лучше). 
+\end{rem*}
+\item Посчитаем $h(x_{1}),\ldots,h(x_{k})$, $h'(x_{1}),\ldots,h'(x_{k})$,
+$z_{1},\ldots,z_{k-1}$. Посчитаем $u_{j},\ell_{j},s_{j}$.
+\end{enumerate}
+\item Моделирование (отбор):
+
+\begin{enumerate}
+\item $\eta\gets\Q$, $\a\gets\U[0,1]$.
+\item если 
+\[
+\a\leq\exp\left\{ \ell(\eta)-u(\eta)\right\} ,
+\]
+то $\xi\gets\eta$; конец.
+\item если 
+\[
+\a\leq\exp\left\{ h(\eta)-u(\eta)\right\} ,
+\]
+ то $\xi\gets\eta$; конец.
+\end{enumerate}
+\item Хочется переиспользовать вычисленное значение $h$ (потому что она
+дорогая) --- вычислим производную $h'\gets h'(\eta)$, $T_{k+1}\gets T_{k}\cup\left\{ \eta\right\} $
+и переупорядочим $T_{k+1}$. По полученному можно пересчитать $u_{j+1},\ell_{j+1},s_{j+1}$.
+
+\begin{rem*}
+Если дошли до этого шага, значит находимся с большой вероятностью
+в месте большого зазора мажоранты и $h$; значит добавление точки
+в данном месте очень хорошо этот зазор уменьшает.
+\end{rem*}
+\end{enumerate}
+\end{lyxalgorithm*}
+Данный алгоритм хорошо аппроксимирует исходную плотностью кусочно-экспоненциальным
+распределением, так что $M\to1$.
+\begin{rem*}
+Если функция оказывается выпуклой после монотонного преобразования,
+то плотность будет не кусочно-экспоненциальная, а кусочно-какая-то.
+\end{rem*}
+
+\begin{rem*}
+Если плотность вогнутая, то поменяются хорды и касательные (плюс нужно
+будет разбираться с асимптотами).
+\end{rem*}
+
+\begin{rem*}
+Любую хорошую функцию можно разложить на выпуклую и вогнутую части.
+Тогда можно посчитать как смесь, для чего необходимо почти всегда
+знание интегралов компонентов смести.
+\end{rem*}
+
+\subsection{ARS с ушами}
+
+Пусть не умеем считать производную. Тогда мажоранту можно делать из
+ушей продолжением хорд (Рис. 2). Пусть $L_{ij}(x)$ --- прямая, соединяющая
+$(x_{i},h(x_{i}))$ и $(x_{j},h(x_{j})).$ Тогда на $x_{i}\leq x\leq x_{i+1}$,
+$u_{k}(x)=\min(L_{i-1,i}(x),L_{i+1,i+2}(x))$. Крайние интервалы нужно,
+понятно, обрабатывать отдельно.
+
+
+\paragraph{Adaptive Rejection Metropolis Sampling}
+
+Пусть есть функция с особенностью --- перегибом. Тогда в окрестности
+перегиба значение мажоранты будет меньше значения функции. Стандартный
+трюк --- отказаться от независимости и в качестве результата выдавать
+предыдущий результат.
+\end{document}

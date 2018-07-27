@@ -1,0 +1,224 @@
+---
+title: "SVM"
+output: html_notebook
+---
+
+```{r}
+library(e1071)
+```
+
+# Pre-process data
+
+```{r}
+str.to.char <- function(s) {
+  unlist(strsplit(s, ''))
+}
+promoters <- read.csv('Promoters/promoters.data.txt',
+                      header = FALSE, as.is = 3, strip.white = TRUE)[,c(1,3)]
+str(head(promoters))
+bp.to.vec <- function(bp) {
+  alphabet <- c('a', 'c', 'g', 't')
+  paste(as.character(as.numeric(alphabet == bp)), collapse='')
+}
+dna.to.bin.vec <- function(dna) {
+  as.numeric(str.to.char(paste((sapply(str.to.char(dna), bp.to.vec)), collapse='')))
+}
+dna.length <- nchar(promoters[1,2])
+promoters.bin <- cbind(
+  promoters[1],
+  as.data.frame(
+    matrix(unlist(lapply(promoters[,2], dna.to.bin.vec)), nrow(promoters), dna.length*4, byrow=TRUE)))
+names(promoters.bin)[1] <- 'is.promoter'
+promoters.bin
+```
+
+## Split the data into training / validation / test sets
+
+Training / validation / test = 0.75 / 0.25 / 0.25
+
+```{r}
+set.seed(2)
+index <- 1:nrow(promoters.bin)
+test.index <- sample(index, trunc(length(index) / 4))
+test.set <- promoters.bin[test.index,]
+train.set <- promoters.bin[-test.index,]
+```
+
+```{r}
+kernel.params <- list('linear'=list(cost=2^(-10:5)),
+                      'polynomial'=list(degree=1:3,
+                                        gamma=10^(-3:1),
+                                        coef0=c(-2,0,2),
+                                        cost=10^(-3:3)),
+                      'sigmoid'=list(coef0=seq(-8, 8, by=2),
+                                     gamma=2^(-5:3),
+                                     cost=2^(-3:3)),
+                      'radial'=list(gamma=2^(-5:3),
+                                    cost=10^(-3:3)))
+svm.tune.results <- list()
+for (kernel in c('linear', 'polynomial', 'sigmoid', 'radial')) {
+  cat(' *', kernel, 'kernel\n')
+
+  tc.res <- list()
+  for (tc in list(tune.control(sampling='fix', fix=2/3),
+                  tune.control(sampling='cross', cross=2),
+                  tune.control(sampling='cross', cross=5),
+                  tune.control(sampling='cross', cross=10))) {
+    cat(tc$sampling, ' (', tc$fix, ', ', tc$cross, ')...\n', sep='')
+    set.seed(1)
+    tune.res <- tune(svm, is.promoter ~ ., data=train.set,
+                     kernel=kernel,
+                     ranges=kernel.params[[kernel]],
+                     tunecontrol=tc)
+    tc.res[[length(tc.res)+1]] <- tune.res
+  }
+  svm.tune.results[[kernel]] <- tc.res
+}
+```
+
+```{r}
+svm.res.matr <- matrix(0, 8, 4)
+kernels <- c('linear', 'polynomial', 'sigmoid', 'radial')
+rownames(svm.res.matr) <- 1:8
+for (k in 1:4) {
+  kernel <- kernels[k]
+  for (i in 1:4) {
+    # 0, 2, 5, 10
+    tune.res <- svm.tune.results[[kernel]][[i]]
+    svm.res.matr[2*(k-1) + 1, i] <- 1 - tune.res$best.performance
+    rownames(svm.res.matr)[2*(k-1) + 1] <- paste(kernel, ':', 've', collapse='')
+    model <- tune.res$best.model
+    svm.res.matr[2*(k-1) + 2, i] <- mean(test.set[,1] == predict(model, test.set[-1]))
+    rownames(svm.res.matr)[2*(k-1) + 2] <- paste(kernel, ':', 'te', collapse='')
+  }
+}
+colnames(svm.res.matr) <- c('fix=2/3', 'cross=2', 'cross=5', 'cross=10')
+```
+
+```{r}
+matplot(t(svm.res.matr), type='b',
+        lty=c('dashed', 'solid'),
+        pch=c(0,15,1,16,2,17,4,18), col=c(1,1,2,2,3,3,4,4),
+        xaxt='n',
+        ylab='Accuracy', xlab='k-fold CV')
+axis(1, at=1:4, labels=c(0, 2, 5, 10))
+legend("bottomright", legend = rownames(svm.res.matr),
+       col=c(1,1,2,2,3,3,4,4), pch=c(0,15,1,16,2,17,4,18),
+       lty=c('dashed', 'solid'), ncol=2)
+```
+
+```{r}
+matplot(t(svm.res.matr[(1:4)*2,]), type='b',
+        lty=c('solid'), pch=(0:3)+15, col=1:4,
+        xaxt='n',
+        ylab='Accuracy', xlab='k-fold CV')
+axis(1, at=1:4, labels=c(0, 2, 5, 10))
+legend("bottomright", legend = rownames(svm.res.matr)[(1:4)*2],
+       lty=c('solid'), pch=(0:3)+15, col=1:4, ncol=2)
+```
+
+
+## Linear
+
+CV
+
+```{r}
+set.seed(1)
+tune.res <- tune.svm(is.promoter ~ ., data=train.set,
+                     kernel='linear',
+                     tunecontrol=tune.control(sampling='cross', cross=10),
+                     cost=2^(-10:5))
+# plot(tune.res)
+# summary(tune.res)
+tune.res
+model <- tune.res$best.model
+model
+mean(test.set[,1] == predict(model, test.set[-1]))
+table(predict(model, test.set), test.set[,1])
+```
+
+## Polynomial
+
+```{r}
+set.seed(1)
+tune.res <- tune.svm(is.promoter ~ ., data=train.set,
+                     kernel='polynomial',
+                     tunecontrol=tune.control(sampling='cross', cross=2),
+                     degree=1:3, gamma=10^(-3:1), coef0=c(-2,0,2), cost=10^(-3:3))
+# summary(tune.res)
+tune.res
+model <- tune.res$best.model
+mean(test.set[,1] == predict(model, test.set))
+table(predict(model, test.set), test.set[,1])
+```
+
+## Sigmoid 
+
+Fixed
+
+```{r}
+tune.res <- tune.svm(is.promoter ~ ., data=train.set,
+                     kernel='sigmoid',
+                     tunecontrol=tune.control(sampling='fix', fix=2/3),
+                     coef0=seq(-10, 10, by=2), gamma=2^(-1:4), cost=2^(-2:13))
+# plot(tune.res)
+# summary(tune.res)
+tune.res
+mean(test.set[,1] == predict(svm(is.promoter ~ ., data=train.set,
+                                 gamma=1, coef0=6, cost=1), test.set))
+```
+
+CV
+
+```{r}
+tune.res <- tune.svm(is.promoter ~ ., data=train.set,
+                     kernel='sigmoid',
+                     tunecontrol=tune.control(sampling='cross', cross=2),
+                     coef0=seq(-10, 10, by=2), gamma=2^(-1:4), cost=2^(-2:10))
+# plot(tune.res)
+# summary(tune.res)
+tune.res
+model <- tune.res$best.model
+mean(test.set[,1] == predict(model, test.set))
+```
+
+
+## RBF
+
+Fixed validation set
+
+```{r}
+set.seed(1)
+tune.res <- tune.svm(is.promoter ~ ., data=train.set,
+                     tunecontrol=tune.control(sampling='fix', fix=2/3),
+                     gamma=2^(-1:4), cost=2^(-2:13))
+plot(tune.res)
+summary(tune.res)
+tune.res
+mean(test.set[,1] == predict(svm(is.promoter ~ ., data=train.set, gamma=0.5, cost=0.25), test.set))
+```
+
+10-fold CV
+
+```{r}
+tune.res <- tune.svm(is.promoter ~ ., data=train.set,
+                     tunecontrol=tune.control(sampling='cross', cross=10),
+                     gamma=2^(-1:4), cost=2^(-2:13))
+plot(tune.res)
+summary(tune.res)
+tune.res
+mean(test.set[,1] == predict(svm(is.promoter ~ ., data=train.set, gamma=1, cost=0.25), test.set))
+```
+
+Leave-one-out CV
+
+```{r}
+tune.res <- tune.svm(is.promoter ~ ., data=train.set,
+                     tunecontrol=tune.control(sampling='cross', cross=nrow(train.set)),
+                     gamma=2^(-1:3), cost=10^(-2:3))
+plot(tune.res)
+summary(tune.res)
+tune.res
+mean(test.set[,1] == predict(svm(is.promoter ~ ., data=train.set, gamma=0.5, cost=0.01), test.set))
+```
+

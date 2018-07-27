@@ -1,0 +1,743 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass scrartcl
+\begin_preamble
+%\usepackage{nicefrac}
+%\usepackage{colortbl}
+%\usepackage[noend]{algpseudocode}
+%\usepackage[all]{xy}
+\usepackage{mathrsfs}
+
+%\usepackage[columns=1,itemlayout=singlepar,totoc=true]{idxlayout}
+
+%\@addtoreset{chapter}{part}
+\DeclareMathOperator{\Int}{Int}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Err}{Err}
+\DeclareMathOperator{\cov}{cov}
+\DeclareMathOperator*{\mean}{mean}
+
+
+
+\newcommand{\bigperp}{%
+  \mathop{\mathpalette\bigp@rp\relax}%
+  \displaylimits
+}
+
+\newcommand{\bigp@rp}[2]{%
+  \vcenter{
+    \m@th\hbox{\scalebox{\ifx#1\displaystyle2.1\else1.5\fi}{$#1\perp$}}
+  }%
+}
+
+\newcommand{\bignparallel}{%
+  \mathop{\mathpalette\bignp@rp\relax}%
+  \displaylimits
+}
+
+\newcommand{\bignp@rp}[2]{%
+  \vcenter{
+    \m@th\hbox{\scalebox{\ifx#1\displaystyle2.1\else1.5\fi}{$#1\nparallel$}}
+  }%
+}
+\end_preamble
+\use_default_options true
+\begin_modules
+theorems-ams-bytype
+theorems-ams-extended-bytype
+theorems-chap-bytype
+\end_modules
+\maintain_unincluded_children false
+\begin_local_layout
+Format 49
+
+Style Solution
+        CopyStyle       "Proof"
+        LatexName       solution
+        Argument        1
+                LabelString   "Alternative Solution String"
+                Tooltip       "Alternative solution string"
+        EndArgument
+        LabelString     "Solution."
+        Preamble
+                \newenvironment{solution}
+                  {\renewcommand\qedsymbol{$\lrcorner$}
+                   \begin{proof}[\solutionname]}
+                  {\end{proof}}
+        EndPreamble
+        LangPreamble
+                \providecommand{\solutionname}{_(Solution)}
+        EndLangPreamble
+        BabelPreamble
+                \addto\captions$$lang{\renewcommand{\solutionname}{_(Solution)}}
+        EndBabelPreamble
+
+End
+\end_local_layout
+\language russian
+\language_package default
+\inputencoding utf8
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_math auto
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement h
+\paperfontsize default
+\spacing single
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen true
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder false
+\pdf_colorlinks true
+\pdf_backref false
+\pdf_pdfusetitle true
+\papersize a4paper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 2
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 2
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date true
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2.5cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language french
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\bullet 1 0 9 -1
+\bullet 2 0 26 -1
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\N}{\mathrm{N}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\P}{\mathsf{P}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\E}{\mathsf{E}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\D}{\mathsf{D}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\renewcommand{\O}{\Omega}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\F}{\mathcal{F}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\K}{\mathsf{K}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\A}{\mathscr{A}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\Pcal}{\mathcal{P}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\th}{\theta}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\toas}{\xrightarrow{{\rm a.s.}}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\toP}{\xrightarrow{\P}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\tod}{\xrightarrow{\mathrm{d}}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\iid}{\mathrm{i.i.d.}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\T}{\mathrm{T}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\L}{\mathcal{L}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\dd}[2]{\frac{\mathrm{d}#1}{\mathrm{d}#2}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\a}{\alpha}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\b}{\beta}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\t}{\mathrm{t}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\RR}{\mathbb{R}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\d}{\,\mathrm{d}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\U}{\mathrm{U}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\thb}{\boldsymbol{\theta}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\I}{\mathrm{I}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\II}{\mathrm{II}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\ein}{\mathbf{1}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\pv}{p\text{-value}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\MLE}{\mathrm{MLE}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\indep}{\perp\!\!\!\perp}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\xib}{\boldsymbol{\xi}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\Pscr}{\mathscr{P}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\m}{\mathsf{m}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\X}{\mathfrak{X}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\Q}{\mathcal{Q}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\beb}{\boldsymbol{\beta}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\xx}{\mathbf{x}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\renewcommand{\T}{\mathsf{T}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\H}{\mathcal{H}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\st}{\mathrm{subject\ to\ }}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\hh}{\mathbf{h}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\renewcommand{\RR}{\mathbb{R}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\yy}{\mathbf{y}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\Tcal}{\mathcal{T}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\eb}{\boldsymbol{\epsilon}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\Tau}{\mathcal{T}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\err}{\overline{\mathrm{err}}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\etab}{\boldsymbol{\eta}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\Ib}{\mathbf{I}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\bias}{\mathrm{bias}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\variance}{\mathrm{variance}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\Scal}{\mathcal{S}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\Vcal}{\mathcal{V}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Title
+Model Selection
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Модель 
+\begin_inset Formula 
+\[
+\etab=\mathbf{f}(\xib)+\eb,\quad\cov\eb=\sigma^{2}\Ib,\ \epsilon_{i}\indep\epsilon_{j}
+\]
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Itemize
+Функция потерь 
+\begin_inset Formula 
+\[
+L(f(\xib),\eta)=|f(\xib)-\eta|^{d},\quad d\in\{1,2\}.
+\]
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Itemize
+Пусть модель 
+\begin_inset Formula $\hat{f}$
+\end_inset
+
+ обучена на тренировочном множестве 
+\begin_inset Formula $\Tau$
+\end_inset
+
+; тогда хотелось бы знать её generalization (test, prediction) error 
+\begin_inset Formula 
+\[
+\Err_{\Tcal}=\E\left[L(\hat{f}(\xib),\eta)\mid\Tau\right]
+\]
+
+\end_inset
+
+ т.е.
+ ожидание функции потерь на генеральной совокупности или 
+\begin_inset Formula 
+\[
+\Err=\E\left[\Err_{\Tau}\right]=\E\left[L(\hat{f}(\xib),\eta)\right]
+\]
+
+\end_inset
+
+ т.е.
+ ожидание еще и по всем тренировочным выборкам.
+ Тогда из всех возможных моделей могли бы выбрать 
+\begin_inset Formula $\hat{f}$
+\end_inset
+
+, минимизирующую 
+\begin_inset Formula $\Err_{\Tau}$
+\end_inset
+
+ (или 
+\begin_inset Formula $\Err$
+\end_inset
+
+?)
+\end_layout
+
+\begin_layout Itemize
+Справедливо для квадратичной 
+\begin_inset Formula $L$
+\end_inset
+
+, 
+\begin_inset Formula 
+\begin{eqnarray*}
+\Err & = & \E\left[L(\hat{f}(\xib),\eta)\right]=\E\left[(\hat{f}(\xib)-\eta)^{2}\right]=\E\left[\left(\left(\hat{f}(\xib)-f(\xib)\right)+\epsilon\right)^{2}\right]\\
+ & = & \E\left[\left(\hat{f}(\xi)-f(\xi)\right)^{2}+2\epsilon\left(\hat{f}(\xi)-f(\xi)\right)+\epsilon^{2}\right]\\
+ & = & \E\left[\left(\hat{f}(\xi)-f(\xi)\right)^{2}\right]+\sigma^{2}.
+\end{eqnarray*}
+
+\end_inset
+
+Видно, что 
+\begin_inset Formula $\E\left[\left(\hat{f}(\xi)-f(\xi)\right)^{2}\right]$
+\end_inset
+
+ потенциально можно свести к 0, тогда как фиксированную 
+\begin_inset Formula $\sigma^{2}$
+\end_inset
+
+ --- нет.
+ Значит, нулевой ошибки для модели 
+\begin_inset Formula $\hat{f}$
+\end_inset
+
+ добиться физически невозможно (её минимальной величиной и будет 
+\begin_inset Formula $\sigma^{2}$
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Itemize
+Для 
+\begin_inset Formula $\xx_{0}\not\in\Tau$
+\end_inset
+
+, и квадратичной функции потерь справедливо
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+http://robjhyndman.com/hyndsight/files/2015/08/2-biasvardecomp.pdf
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ разложение 
+\begin_inset Formula 
+\begin{eqnarray*}
+\Err(\xx_{0}) & = & \E\left[L(\hat{f}(\xx_{0}),\eta)\mid\xib=\xx_{0}\right]=\sigma^{2}+\underbrace{(\E\hat{f}(\xx_{0})-f(\xx_{0}))^{2}}_{\bias^{2}}+\underbrace{\E(\hat{f}(\xx_{0})-\E\hat{f}(\xx_{0}))^{2}}_{\D\hat{f}(\xx_{0})=\variance}
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Description
+bias показывает, насколько ожидание модели отличается от истинного значения,
+\end_layout
+
+\begin_layout Description
+variance показывает, насколько изменится оценка 
+\begin_inset Formula $\hat{f}$
+\end_inset
+
+, если изменится тренировочная выборка 
+\begin_inset Formula $\Tau$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+С ростом гибкости модели уменьшаяется смещение, но растет разброс (модель
+ начинает аппроксимировать шум 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+) и наоборот.
+ Стоит задача по тренировочной выборке подобрать такую гибкость модели,
+ что 
+\begin_inset Formula $\Err_{\Tau}$
+\end_inset
+
+ минимальна.
+ Эмпирический способ это сделать --- в противовес аналитическим методам
+ вроде информационных критериев --- для модели с заданной гибкости оценить
+ 
+\begin_inset Formula $\Err_{\Tau}$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Пусть 
+\begin_inset Formula $\Scal$
+\end_inset
+
+ --- test set; величина 
+\begin_inset Formula 
+\[
+\widehat{\Err}_{\Tau}(\Scal)=\frac{1}{\left|\Scal\right|}\sum_{\left(\xx_{i},y_{i}\right)\in\Scal}L(\hat{f}(\xx_{i}),y_{i})=\mean_{\Scal}L
+\]
+
+\end_inset
+
+ будет иметь играть роль оценки 
+\begin_inset Formula $\Err_{\Tau}$
+\end_inset
+
+ (model assessment).
+\end_layout
+
+\begin_layout Itemize
+Для нахождения оптимальной гибкости могли бы непосредственно посчитать training
+ error 
+\begin_inset Formula 
+\[
+\err_{\Tau}=\frac{1}{N}\sum_{i=1}^{N}L\left(\hat{f}(\xx_{i}),y_{i}\right)=\mean_{\Tau}L.
+\]
+
+\end_inset
+
+Однако 
+\begin_inset Formula $\err_{\Tau}$
+\end_inset
+
+ будет убывать с увеличением гибкости модели, в то время, как 
+\begin_inset Formula $\Err_{\Tau}$
+\end_inset
+
+ с какого-то момента начнет расти.
+\end_layout
+
+\begin_layout Itemize
+Поэтому тренировочную выборку следует разделить на собственно тренировочную
+ (по которой строится модель) и валидационную 
+\begin_inset Formula $\Vcal$
+\end_inset
+
+, по которой оценивать 
+\begin_inset Formula $\Err_{\Tau}$
+\end_inset
+
+.
+ Изменением гипер-параметров модели (регулирующих гибкость), минимизировать
+ 
+\begin_inset Formula 
+\[
+\widehat{\Err}_{\Tau}(\Vcal)=\mean_{\Vcal}L.
+\]
+
+\end_inset
+
+ Так осуществляется задача model selection.
+\end_layout
+
+\begin_layout Itemize
+Если выборка мала и мало 
+\begin_inset Formula $\Vcal$
+\end_inset
+
+, следует воспользоваться 
+\begin_inset Formula $K$
+\end_inset
+
+-fold cross-validation: случайным образом разбить 
+\begin_inset Formula $\Tau$
+\end_inset
+
+ на 
+\begin_inset Formula $\Tau_{1},\ldots,\Tau_{K}$
+\end_inset
+
+, затем обучать модель 
+\begin_inset Formula $\hat{f}^{(-k)}$
+\end_inset
+
+ на 
+\begin_inset Formula $\Tcal\setminus\Tcal_{k}$
+\end_inset
+
+, а валидировать на 
+\begin_inset Formula $\Tau_{k}$
+\end_inset
+
+; результаты затем усреднить:
+\begin_inset Formula 
+\[
+\frac{1}{K}\sum_{k=1}^{K}\left(\frac{1}{\left|\Tau_{k}\right|}\sum_{\left(\xx_{i},y_{i}\right)\in\Tau_{k}}\left|\hat{f}^{(-k)}(\xx_{i})-y_{i}\right|^{d}\right)=\mean_{\left\{ \Tau_{1},\ldots,\Tau_{K}\right\} }\left(\mean_{\Tau_{k}}L_{k}\right).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+При 
+\begin_inset Formula $K=N$
+\end_inset
+
+ тренировочные выборки почти не отличаются друг от дружки, поэтому, по сравнению
+ с другими вариантами, разброс будет большим как среднее скоррелированных
+ величин, а смещение малым.
+\end_layout
+
+\begin_layout Itemize
+При 
+\begin_inset Formula $K\to1$
+\end_inset
+
+, наборот, разброс падает, смещение растет.
+\end_layout
+
+\end_deeper
+\end_body
+\end_document

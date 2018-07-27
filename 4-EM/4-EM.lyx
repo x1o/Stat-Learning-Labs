@@ -1,0 +1,1736 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass scrartcl
+\begin_preamble
+%\usepackage{nicefrac}
+%\usepackage{colortbl}
+%\usepackage[noend]{algpseudocode}
+%\usepackage[all]{xy}
+\usepackage{mathrsfs}
+
+%\usepackage[columns=1,itemlayout=singlepar,totoc=true]{idxlayout}
+
+%\@addtoreset{chapter}{part}
+\DeclareMathOperator{\Int}{Int}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Mult}{Mult}
+\DeclareMathOperator{\pdf}{pdf}
+\DeclareMathOperator{\cov}{cov}
+\DeclareMathOperator*{\argmax}{argmax}
+
+\newcommand{\bigperp}{%
+  \mathop{\mathpalette\bigp@rp\relax}%
+  \displaylimits
+}
+
+\newcommand{\bigp@rp}[2]{%
+  \vcenter{
+    \m@th\hbox{\scalebox{\ifx#1\displaystyle2.1\else1.5\fi}{$#1\perp$}}
+  }%
+}
+
+\newcommand{\bignparallel}{%
+  \mathop{\mathpalette\bignp@rp\relax}%
+  \displaylimits
+}
+
+\newcommand{\bignp@rp}[2]{%
+  \vcenter{
+    \m@th\hbox{\scalebox{\ifx#1\displaystyle2.1\else1.5\fi}{$#1\nparallel$}}
+  }%
+}
+\end_preamble
+\use_default_options true
+\begin_modules
+theorems-ams-bytype
+theorems-ams-extended-bytype
+theorems-chap-bytype
+\end_modules
+\maintain_unincluded_children false
+\begin_local_layout
+Format 49
+
+Style Solution
+        CopyStyle       "Proof"
+        LatexName       solution
+        Argument        1
+                LabelString   "Alternative Solution String"
+                Tooltip       "Alternative solution string"
+        EndArgument
+        LabelString     "Solution."
+        Preamble
+                \newenvironment{solution}
+                  {\renewcommand\qedsymbol{$\lrcorner$}
+                   \begin{proof}[\solutionname]}
+                  {\end{proof}}
+        EndPreamble
+        LangPreamble
+                \providecommand{\solutionname}{_(Solution)}
+        EndLangPreamble
+        BabelPreamble
+                \addto\captions$$lang{\renewcommand{\solutionname}{_(Solution)}}
+        EndBabelPreamble
+
+End
+\end_local_layout
+\language russian
+\language_package default
+\inputencoding utf8
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_math auto
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement h
+\paperfontsize default
+\spacing single
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen true
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder false
+\pdf_colorlinks true
+\pdf_backref false
+\pdf_pdfusetitle true
+\papersize a4paper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 2
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 2
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date true
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2.5cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language french
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\bullet 1 0 25 -1
+\bullet 2 0 26 -1
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\N}{\mathrm{N}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\P}{\mathsf{P}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\E}{\mathsf{E}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\D}{\mathsf{D}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\renewcommand{\O}{\Omega}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\F}{\mathcal{F}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\K}{\mathsf{K}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\A}{\mathscr{A}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\Pcal}{\mathcal{P}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\th}{\theta}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\toas}{\xrightarrow{{\rm a.s.}}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\toP}{\xrightarrow{\P}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\tod}{\xrightarrow{\mathrm{d}}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\iid}{\mathrm{i.i.d.}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\T}{\mathsf{T}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\L}{\mathsf{L}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\dd}[2]{\frac{\mathrm{d}#1}{\mathrm{d}#2}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\a}{\alpha}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\b}{\beta}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\t}{\mathrm{t}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\RR}{\mathbb{R}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\d}{\,\mathrm{d}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\U}{\mathrm{U}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\thb}{\boldsymbol{\theta}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\I}{\mathrm{I}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\II}{\mathrm{II}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\ein}{\mathbf{1}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\pv}{p\text{-value}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\MLE}{\mathrm{MLE}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\indep}{\perp\!\!\!\perp}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\xib}{\boldsymbol{\xi}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\Pscr}{\mathscr{P}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\m}{\mathsf{m}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\X}{\mathfrak{X}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\Q}{\mathcal{Q}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\AIC}{\mathrm{AIC}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\BIC}{\mathrm{BIC}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\etab}{\boldsymbol{\eta}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\renewcommand{\xib}{\boldsymbol{\xi}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\y}{\mathbf{y}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\Y}{\mathbf{Y}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\Sb}{\boldsymbol{\Sigma}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\mub}{\boldsymbol{\mu}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\bz}{\boldsymbol{\zeta}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\w}{\mathbf{w}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\p}{\mathbf{p}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Title
+EM-алгоритм
+\end_layout
+
+\begin_layout Section
+Мотивация
+\end_layout
+
+\begin_layout Standard
+Пусть 
+\begin_inset Formula 
+\[
+\etab\sim\Mult_{4}(n,\mathbf{p}),\quad\mathbf{p}=\left(\frac{1}{2}+\frac{\th}{4},\frac{1-\th}{4},\frac{1-\th}{4},\frac{\th}{4}\right)
+\]
+
+\end_inset
+
+с плотностью 
+\begin_inset Formula 
+\[
+q_{\th}(\mathbf{y})=\frac{n!}{y_{1}!y_{2}!y_{3}!y_{4}!}\left(\frac{1}{2}+\frac{\th}{4}\right)^{y_{1}}\left(\frac{1-\th}{4}\right)^{y_{2}+y_{3}}\left(\frac{\th}{4}\right)^{y_{4}}.
+\]
+
+\end_inset
+
+Выборка 
+\begin_inset Formula $\mathbf{Y}=\left(\y_{1},\ldots,\y_{N}\right)$
+\end_inset
+
+; по ОМП, 
+\begin_inset Formula 
+\begin{eqnarray*}
+\log q_{\th}(\Y) & \propto & \sum_{i=1}^{N}y_{1}^{(i)}\log\left(\frac{1}{2}+\frac{\th}{4}\right)+y_{2}^{(i)}\log\frac{1-\th}{4}+y_{3}^{(i)}\log\frac{1-\th}{4}+y_{4}^{(i)}\log\frac{\th}{4}\\
+\frac{\partial\log q_{\th}(\Y)}{\partial\th} & \propto & \sum_{i=1}^{N}y_{1}^{(i)}\frac{1/4}{1/2+\th/4}-(y_{2}^{(i)}+y_{3}^{(i)})\frac{1}{1-\th}+y_{4}^{(i)}\frac{1}{\th}\\
+ & = & \sum_{i=1}^{N}\frac{y_{1}^{(i)}}{2+\th}+\frac{y_{2}^{(i)}+y_{3}^{(i)}}{\th-1}+\frac{y_{4}^{(i)}}{\th}.
+\end{eqnarray*}
+
+\end_inset
+
+Получили кубическое
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+На самом деле квадратное.
+\end_layout
+
+\end_inset
+
+ уравнение относительно 
+\begin_inset Formula $\th$
+\end_inset
+
+ (могло быть и выше).
+\end_layout
+
+\begin_layout Standard
+С другой стороны, пусть
+\begin_inset Formula 
+\[
+\xib\sim\Mult_{5}(n,\mathbf{p}),\quad\mathbf{p}=\left(\frac{1}{2},\frac{\th}{4},\frac{1-\th}{4},\frac{1-\th}{4},\frac{\th}{4}\right).
+\]
+
+\end_inset
+
+ОМП для 
+\begin_inset Formula $\xib$
+\end_inset
+
+: 
+\begin_inset Formula 
+\begin{eqnarray*}
+p_{\th}(\mathbf{x}) & \propto & \left(\frac{1}{2}\right)^{x_{1}}\left(\frac{\th}{4}\right)^{x_{2}}\left(\frac{1-\th}{4}\right)^{x_{3}+x_{4}}\left(\frac{\th}{4}\right)^{x_{5}}\\
+\log p_{\th}(\mathbf{x}) & \propto & x_{1}\log\frac{1}{2}+x_{2}\log\frac{\th}{4}+(x_{3}+x_{4})\log\frac{1-\th}{4}+x_{5}\log\frac{\th}{4}\\
+\frac{\partial\log p_{\th}}{\partial\th} & \propto & \frac{x_{2}+x_{5}}{\th}-\frac{x_{3}+x_{4}}{1-\th}=0\iff\hat{\th}=\frac{x_{2}+x_{5}}{x_{2}+x_{3}+x_{4}+x_{5}}.
+\end{eqnarray*}
+
+\end_inset
+
+ Так что 
+\begin_inset Formula $\hat{\th}$
+\end_inset
+
+ находится достаточно просто.
+\end_layout
+
+\begin_layout Standard
+Исходную задачу оценки параметров 
+\begin_inset Formula $\etab$
+\end_inset
+
+ можно переформулировать через оценку параметров 
+\begin_inset Formula $\xib$
+\end_inset
+
+: 
+\begin_inset Formula 
+\[
+\etab=\left(\xi_{1}+\xi_{2},\xi_{3},\xi_{4},\xi_{5}\right).
+\]
+
+\end_inset
+
+В примерах выше тогда можно думать про 
+\begin_inset Formula $\mathbf{x}$
+\end_inset
+
+ как про полные данные, 
+\begin_inset Formula $\mathbf{y}$
+\end_inset
+
+ --- неполные данные (с 
+\begin_inset Quotes fld
+\end_inset
+
+пропусками
+\begin_inset Quotes frd
+\end_inset
+
+), причем 
+\begin_inset Formula 
+\[
+y_{1}=x_{1}+x_{2},\ y_{2}=x_{3},\ y_{3}=x_{4},\ y_{4}=x_{5}.
+\]
+
+\end_inset
+
+ А для полных данных функция правдоподобия, как было видно, будет иметь
+ более простой вид.
+\end_layout
+
+\begin_layout Standard
+Однако элемент выборки 
+\begin_inset Formula $x_{2}$
+\end_inset
+
+ не наблюдается.
+ Можно тогда посчитать мат.
+ ожидание: 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+FIXME
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula 
+\begin{eqnarray*}
+\E(\xib\mid\etab=\mathbf{y}) & = & (\E(\xi_{1}\mid\xi_{1}+\xi_{2}=y_{1}),\E(\xi_{2}\mid\xi_{1}+\xi_{2}=y_{1}),y_{2},y_{3},y_{4})=\\
+ & = & \left(y_{1}\frac{1/2}{1/2+\th/4},y_{1}\frac{\th/4}{1/2+\th/4},y_{2},y_{3},y_{4}\right).
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Но 
+\begin_inset Formula 
+\[
+\P(\xi_{1}=x\mid\xi_{1}+\xi_{2}=y_{1})=\frac{\P(\xi_{1}=x,\xi_{2}=y_{1}-x)}{\P(\xi_{2}=y_{1}-x)}=\frac{}{}
+\]
+
+\end_inset
+
+Пусть есть приближение 
+\begin_inset Formula $\hat{\th}^{(n)}.$
+\end_inset
+
+ Тогда 
+\begin_inset Formula 
+\[
+\hat{x}_{2}^{(n)}=\frac{\hat{\th}^{(n)}/4}{1/2+\hat{\th}^{(n)}/4}y_{1}
+\]
+
+\end_inset
+
+ и ОМП по полной выборке есть 
+\begin_inset Formula 
+\[
+\hat{\th}^{(n+1)}=\frac{\hat{x}_{2}^{(n)}+x_{5}}{\hat{x}_{2}^{(n)}+x_{3}+x_{4}+x_{5}}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Необходимо удостовериться, что оценка сойдется куда нужно.
+\end_layout
+
+\begin_layout Section
+EM-алгоритм
+\end_layout
+
+\begin_layout Subsection
+Формулировка
+\end_layout
+
+\begin_layout Standard
+Пусть 
+\begin_inset Formula $\eta\sim\Q(\th)$
+\end_inset
+
+ на 
+\begin_inset Formula $(\mathfrak{Y},\mathcal{B})$
+\end_inset
+
+ с плотностью 
+\begin_inset Formula $q_{\th}$
+\end_inset
+
+, 
+\begin_inset Formula $\th\in\Theta$
+\end_inset
+
+; 
+\begin_inset Formula $\mathbf{y}$
+\end_inset
+
+ --- 
+\emph on
+неполные
+\emph default
+ данные.
+ Пусть 
+\begin_inset Formula $\xi\sim\Pcal(\th)$
+\end_inset
+
+ на 
+\begin_inset Formula $(\X,\mathcal{A})$
+\end_inset
+
+ с плотностью 
+\begin_inset Formula $p_{\th}$
+\end_inset
+
+ такой, что относительно просто по 
+\emph on
+дополненной
+\emph default
+ выборке 
+\begin_inset Formula $\mathbf{x}$
+\end_inset
+
+ можем посчитать ФП, так что 
+\begin_inset Formula 
+\[
+\hat{\th}=\argmax_{\th\in\Theta}\log p_{\th}(\mathbf{x}),
+\]
+
+\end_inset
+
+ причем 
+\begin_inset Formula 
+\[
+\eta=T(\xi).
+\]
+
+\end_inset
+
+ Наблюдается 
+\begin_inset Formula $\eta$
+\end_inset
+
+, а 
+\begin_inset Formula $\xi$
+\end_inset
+
+ --- нет.
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+ 
+\begin_inset Formula $\mathbf{x}$
+\end_inset
+
+ не наблюдается, хотим научиться находить 
+\begin_inset Formula 
+\[
+\argmax_{\th}\log q_{\th}(\mathbf{x}).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Algorithm*
+Пусть 
+\begin_inset Formula $\hat{\th}^{(k)}$
+\end_inset
+
+ --- текущее приближение параметра.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Expectation: 
+\begin_inset Formula 
+\[
+Q^{(k)}(\th)=\E_{\hat{\th}^{(k)}}(\log p_{\th}(\mathbf{x})\mid T(\mathbf{x})=\mathbf{y}).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Maximization: 
+\begin_inset Formula 
+\[
+\hat{\th}^{(k+1)}=\argmax_{\th}Q^{(k)}(\th).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Remark*
+\begin_inset Formula $Q(\th)$
+\end_inset
+
+ в некоторых задачах считается относительно хорошо.
+ Кроме того, можем сами выбирать 
+\begin_inset Formula $T$
+\end_inset
+
+ (обычно проекция) и распределение полных данных 
+\begin_inset Formula $\xi$
+\end_inset
+
+.
+ Фиксировано только 
+\begin_inset Formula $\eta$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+EM алгоритм для распределений из экспоненциального семейства
+\end_layout
+
+\begin_layout Definition*
+
+\emph on
+Экспоненциальное семейство
+\emph default
+ есть семейство плотностей вида 
+\begin_inset Formula 
+\[
+p_{\th}(x)=\frac{b(x)}{a(\th)}\exp\left\{ \mathbf{c}^{\T}(\th)\mathbf{t}(x)\right\} ,
+\]
+
+\end_inset
+
+
+\begin_inset Formula $\mathbf{t}$
+\end_inset
+
+ --- достаточные статистики.
+\end_layout
+
+\begin_layout Standard
+Для таких плотностей 
+\begin_inset Formula 
+\begin{eqnarray*}
+Q^{(k)}(\th) & = & \E_{\hat{\th}^{(k)}}\left(\log b(x)-\log a(\th)+\mathbf{c}^{\T}(\th)\mathbf{t}(x)\mid\etab=\mathbf{y}\right)\\
+ & = & \E_{\hat{\th}^{(k)}}(\log b(x)\mid\etab=\mathbf{y})-\log a(\th)+\mathbf{c}^{\T}(\th)\E_{\hat{\th}^{(k)}}(\mathbf{t}(x)\mid\etab=\mathbf{y}),
+\end{eqnarray*}
+
+\end_inset
+
+так что всё, что нужно уметь делать --- считать 
+\begin_inset Formula 
+\[
+\E_{\hat{\th}^{(k)}}(\mathbf{t}(x)\mid T(\mathbf{x})=\mathbf{y}),
+\]
+
+\end_inset
+
+ тем более, что 
+\begin_inset Formula $\mathbf{t}(x)$
+\end_inset
+
+ часто --- суммы или суммы квадратов.
+\end_layout
+
+\begin_layout Subsection
+Свойства алгоритма
+\end_layout
+
+\begin_layout Itemize
+Не предполагая ничего дополнительно, можем доказать, что последовательность
+ 
+\begin_inset Formula $\hat{\th}^{(k)}$
+\end_inset
+
+ приводит к неуменьшению 
+\begin_inset Formula $\log p_{\th}(\mathbf{x})=\L(\th)$
+\end_inset
+
+: 
+\begin_inset Formula 
+\[
+\L(\hat{\th}^{(k)})\geq\L(\hat{\th}^{(k-1)})
+\]
+
+\end_inset
+
+по неравенству Єнсена.
+\end_layout
+
+\begin_layout Itemize
+Если требовать дополнительно, например, регулярность, то 
+\begin_inset Formula 
+\[
+\L(\hat{\th}^{(k)})>\L(\hat{\th}^{(k-1)})
+\]
+
+\end_inset
+
+ Но если разница пропорциональна 
+\begin_inset Formula $1/k$
+\end_inset
+
+, то ни к чему не сойдемся --- будем делать бесконечно мелкие шаги.
+ Может застрять в локальном максимуме или на плато.
+\end_layout
+
+\begin_layout Standard
+\SpecialChar \ldots{}
+EM-алгоритм в каждой точке функции правдоподобия строит наилучшие приближения\SpecialChar \ldots{}
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+FIXME
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+\SpecialChar \ldots{}
+MM-алгоритм (требование выполнения неравенства Єнсена.
+ для 
+\begin_inset Formula $\phi$
+\end_inset
+
+)\SpecialChar \ldots{}
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+FIXME
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Задача о разделении смеси
+\end_layout
+
+\begin_layout Subsection
+EM для нормальной смеси
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+FIXME: начальные приближения: разбить на 
+\begin_inset Formula $m$
+\end_inset
+
+ классов и в каждом посчитать свои 
+\begin_inset Formula $\mub,\Sb,\p$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Две компоненты
+\end_layout
+
+\begin_layout Standard
+Пусть дана выборка 
+\begin_inset Formula $\Y=\left(\y_{1},\ldots,\y_{N}\right)$
+\end_inset
+
+.
+ Зададим модель как смесь двух нормальных величин 
+\begin_inset Formula $\etab^{(1)}\sim\N(\mub^{(1)},\Sb^{(1)}),\ \etab^{(2)}\sim\N(\mub^{(2)},\Sb^{(2)})$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\etab=\etab^{(\zeta+1)}=(1-\zeta)\cdot\etab^{(1)}+\zeta\cdot\etab^{(2)},\quad\zeta\in\left\{ 0,1\right\} ,\P(\zeta)=p.
+\]
+
+\end_inset
+
+ Тогда плотность 
+\begin_inset Formula $\etab$
+\end_inset
+
+ есть 
+\begin_inset Formula 
+\[
+q(\mathbf{y})=(1-p)\phi^{(1)}(\mathbf{y})+p\phi^{(2)}(\mathbf{y}),\quad\phi^{(\ell)}=\pdf_{\N(\mub^{(\ell)},\Sb^{(\ell)})}
+\]
+
+\end_inset
+
+ Так что нужно оценить параметры 
+\begin_inset Formula $\thb=(p,\mub^{(1)},\mub^{(2)},\Sb^{(1)},\Sb^{(2)})$
+\end_inset
+
+ .
+ Логарифм ФП 
+\begin_inset Formula 
+\[
+\log\L_{q}(\thb)=\sum_{i=1}^{N}\log\left[(1-p)\phi^{(1)}(\y_{i})+p\phi^{(2)}(\y_{i})\right]
+\]
+
+\end_inset
+
+ может быть сложно максимизировать напрямую.
+\end_layout
+
+\begin_layout Standard
+Пусть для каждой точки 
+\begin_inset Formula $\y_{j}$
+\end_inset
+
+ известно, из какой она компоненты, т.е.
+ заданы пары 
+\begin_inset Formula $\left(\left(\y_{j},z_{j}\right)\right)_{j=1}^{N}=\mathbf{X}$
+\end_inset
+
+.
+ На этих (полных) данных, плотность есть 
+\begin_inset Formula 
+\[
+p(\mathbf{x})=\left[(1-p)\phi^{(1)}(\y)\right]^{1-z}\left[p\phi^{(2)}(\y)\right]^{z},
+\]
+
+\end_inset
+
+и логарифм (полной) ФП 
+\begin_inset Formula 
+\begin{eqnarray*}
+\log\L_{p}(\th) & = & \log\prod_{j=1}^{N}\left[(1-p)\phi^{(1)}(\y_{j})\right]^{1-z_{j}}\left[p\phi^{(2)}(\y_{j})\right]^{z_{j}}\\
+ & = & \sum_{j=1}^{N}(1-z_{j})\log\left[(1-p)\phi^{(1)}(\y_{j})\right]+z_{j}\log\left[p\phi^{(2)}(\y_{j})\right]\\
+ & = & \sum_{j=1}^{N}(1-z_{j})\log\phi^{(1)}(\y_{j})+z_{j}\log\phi^{(2)}(\y_{j})+\sum_{j=1}^{N}(1-z_{j})\log(1-p)+z_{j}\log p.
+\end{eqnarray*}
+
+\end_inset
+
+Находя максимум, можно показать, что 
+\begin_inset Formula 
+\[
+\hat{\mub}^{(\ell)}=\bar{\Y}^{(\ell)},\quad\hat{\Sb}^{(\ell)}=\widehat{\cov}\Y^{(\ell)},\quad\hat{p}=\sum_{j=1}^{N}z_{j}/N.
+\]
+
+\end_inset
+
+ где 
+\begin_inset Formula $\Y^{(\ell)}$
+\end_inset
+
+ --- часть данных, для которых 
+\begin_inset Formula $\ell$
+\end_inset
+
+-я компонента не нулевая.
+\end_layout
+
+\begin_layout Standard
+Вместо неизвестных 
+\begin_inset Formula $z_{j}$
+\end_inset
+
+ подставим 
+\begin_inset Formula 
+\begin{eqnarray*}
+\zeta_{j}(\thb) & = & \E_{\hat{\thb}_{k}}(z_{j}\mid\mbox{\Y})=\P_{\hat{\thb}_{k}}(z_{j}=1\mid\eta_{j}=\y_{j})=\frac{\P(\eta_{j}=\y_{j}\mid z_{j}=1)\P(z_{j}=1)}{\P(\eta_{j}=\y_{j})}\\
+ & = & \frac{\P(\eta_{j}=\y_{j}\mid z_{j}=1)\P(z_{j}=1)}{\P(\eta_{j}=\y_{j}\mid z_{j}=0)\P(z_{j}=0)+\P(\eta_{j}=\y_{j}\mid z_{j}=1)\P(z_{j}=1)}\\
+ & = & \frac{\phi^{(2)}(\y_{j})p}{\phi^{(1)}(\y_{j})(1-p)+\phi^{(2)}(\y_{j})p},\quad j\in1:N.
+\end{eqnarray*}
+
+\end_inset
+
+Тогда в обозначении 
+\begin_inset Formula 
+\begin{align*}
+w_{j}^{(1)} & :=\frac{1-\hat{\zeta}_{j}}{\sum_{j'=1}^{N}(1-\hat{\zeta}_{j'})} & w_{j}^{(2)} & :=\frac{\hat{\zeta}_{j}}{\sum_{j'=1}^{N}\hat{\zeta}_{j'}}
+\end{align*}
+
+\end_inset
+
+ оценки примут вид 
+\begin_inset Formula 
+\begin{align*}
+\hat{\mu}_{i}^{(\ell)} & =\sum_{j=1}^{N}w_{j}^{(\ell)}y_{ji} & \widehat{\cov}\left(\eta_{i_{1}}^{(\ell)},\eta_{i_{2}}^{(\ell)}\right) & =\sum_{j=1}^{N}w_{j}^{(\ell)}(y_{ji_{1}}-\hat{\mu}_{i_{1}}^{(\ell)})(y_{ji_{2}}-\hat{\mu}_{i_{2}}^{(\ell)}) & \hat{p} & =\sum_{i=1}^{N}\hat{\zeta}_{i}/N
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Векторизованная форма
+\end_layout
+
+\begin_layout Standard
+Пусть 
+\begin_inset Formula 
+\[
+\Y=\begin{pmatrix}\y_{1} & \dots & \y_{N}\end{pmatrix}^{\T}=\begin{pmatrix}y_{11} & \dots & y_{1d}\\
+\vdots & \ddots & \vdots\\
+y_{N1} & \dots & y_{Nd}
+\end{pmatrix},\quad\hat{\boldsymbol{\zeta}}=\begin{pmatrix}\hat{\zeta}_{1}\\
+\vdots\\
+\hat{\zeta}_{N}
+\end{pmatrix}.
+\]
+
+\end_inset
+
+Тогда, 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+TODO: vectorize 
+\begin_inset Formula $\hat{\Sb}$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+ в обозначении 
+\begin_inset Formula 
+\begin{align*}
+\w^{(1)} & =\frac{(\ein-\hat{\bz})}{\ein^{\T}(\ein-\hat{\bz})} & \w^{(2)} & =\frac{\hat{\bz}}{\ein^{\T}\hat{\bz}}
+\end{align*}
+
+\end_inset
+
+оценки примут вид 
+\begin_inset Formula 
+\begin{align*}
+\hat{\mub}^{(\ell)} & =\begin{pmatrix}\sum_{j=1}^{N}w_{j}^{(\ell)}y_{j1}\\
+\vdots\\
+\sum_{j=1}^{N}w_{j}^{(\ell)}y_{jd}
+\end{pmatrix}=\Y^{\T}\w^{(\ell)} & \hat{\Sb}^{(\ell)} & =\dots.
+\end{align*}
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Algorithm*
+Выбрать начальные значение 
+\begin_inset Formula $\hat{\mub}^{(\ell)}=\y_{j_{\ell}},j_{\ell}\in1:N$
+\end_inset
+
+, 
+\begin_inset Formula $\hat{\Sb}^{(\ell)}$
+\end_inset
+
+, 
+\begin_inset Formula $\hat{p}=1/2$
+\end_inset
+
+.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Expectation: Найти 
+\begin_inset Formula $\hat{\zeta}_{j},\quad j\in1:N$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Maximization: по формулам выше пересчитать 
+\begin_inset Formula $\hat{\mub}^{(\ell)},\hat{\Sb}^{(\ell)},\hat{p}$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Subsubsection
+Произвольное количество компонент
+\end_layout
+
+\begin_layout Standard
+Пусть 
+\begin_inset Formula 
+\[
+\etab=\etab^{(\zeta)},\quad\etab^{(\ell)}\sim\N(\mub^{(\ell)},\Sb^{(\ell)}),\ \zeta\in\left\{ 1,\ldots,m\right\} ,\P(\zeta=\ell)=p_{\ell}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Плотность 
+\begin_inset Formula $\etab$
+\end_inset
+
+ есть 
+\begin_inset Formula 
+\[
+q(\mathbf{y})=\sum_{\ell=1}^{m}p_{\ell}\phi^{(\ell)}(\mathbf{y}),\quad\phi^{(\ell)}=\pdf_{\N(\mub^{(\ell)},\Sb^{(\ell)})}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Логарифм ФП 
+\begin_inset Formula $\etab$
+\end_inset
+
+ 
+\begin_inset Formula 
+\[
+\log\L_{q}(\thb)=\sum_{j=1}^{N}\log\sum_{\ell=1}^{m}p_{\ell}\phi^{(\ell)}(\y_{j}).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Плотность 
+\begin_inset Formula $\xib$
+\end_inset
+
+:
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+FIXME
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+p(\mathbf{x})=\left[(1-p)\phi^{(1)}(\y)\right]^{1-z}\left[p\phi^{(2)}(\y)\right]^{z},
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Логарифм (полной) ФП 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+FIXME
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\begin{eqnarray*}
+\log\L_{p}(\th) & = & \log\prod_{j=1}^{N}\left[(1-p)\phi^{(1)}(\y_{j})\right]^{1-z_{j}}\left[p\phi^{(2)}(\y_{j})\right]^{z_{j}}\\
+ & = & \sum_{j=1}^{N}(1-z_{j})\log\left[(1-p)\phi^{(1)}(\y_{j})\right]+z_{j}\log\left[p\phi^{(2)}(\y_{j})\right]\\
+ & = & \sum_{j=1}^{N}(1-z_{j})\log\phi^{(1)}(\y_{j})+z_{j}\log\phi^{(2)}(\y_{j})+\sum_{j=1}^{N}(1-z_{j})\log(1-p)+z_{j}\log p.
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Оценка 
+\begin_inset Formula $z_{j}$
+\end_inset
+
+: 
+\begin_inset Formula 
+\[
+\zeta_{j}^{(\ell)}(\thb)=\P_{\hat{\thb}_{k}}(z_{j}=\ell\mid\eta_{j}=\y_{j})=\frac{\phi^{(\ell)}(\y_{j})p_{\ell}}{\sum_{\ell'=1}^{m}\phi^{(\ell')}(\y_{j})p_{\ell'}},\quad j\in1:N.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Веса:
+\begin_inset Formula 
+\[
+w_{j}^{(\ell)}:=\frac{\zeta_{j}^{(\ell)}}{\sum_{j'=1}^{N}\zeta_{j'}^{(\ell)}}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Оценки:
+\begin_inset Formula 
+\begin{align*}
+\hat{\mu}_{i}^{(\ell)} & =\sum_{j=1}^{N}w_{j}^{(\ell)}y_{ji} & \widehat{\cov}\left(\eta_{i_{1}}^{(\ell)},\eta_{i_{2}}^{(\ell)}\right) & =\sum_{j=1}^{N}w_{j}^{(\ell)}(y_{ji_{1}}-\hat{\mu}_{i_{1}}^{(\ell)})(y_{ji_{2}}-\hat{\mu}_{i_{2}}^{(\ell)}) & \hat{p}_{\ell} & =\frac{1}{N}\sum_{j=1}^{N}\hat{\zeta}_{j}^{(\ell)}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Векторизованная форма
+\end_layout
+
+\begin_layout Standard
+Пусть 
+\begin_inset Formula 
+\[
+\Y=\begin{pmatrix}\y_{1} & \dots & \y_{N}\end{pmatrix}^{\T}=\begin{pmatrix}y_{11} & \dots & y_{1d}\\
+\vdots & \ddots & \vdots\\
+y_{N1} & \dots & y_{Nd}
+\end{pmatrix},\quad\hat{\boldsymbol{\zeta}}^{(\ell)}=\begin{pmatrix}\hat{\zeta}_{1}^{(\ell)}\\
+\vdots\\
+\hat{\zeta}_{N}^{(\ell)}
+\end{pmatrix}.
+\]
+
+\end_inset
+
+Тогда, 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+TODO: vectorize 
+\begin_inset Formula $\hat{\Sb}$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+ в обозначении 
+\begin_inset Formula 
+\[
+\w^{(\ell)}=\frac{\hat{\bz}^{(\ell)}}{\ein^{\T}\hat{\bz}^{(\ell)}}
+\]
+
+\end_inset
+
+оценки примут вид 
+\begin_inset Formula 
+\begin{align*}
+\hat{\mub}^{(\ell)} & =\begin{pmatrix}\sum_{j=1}^{N}w_{j}^{(\ell)}y_{j1}\\
+\vdots\\
+\sum_{j=1}^{N}w_{j}^{(\ell)}y_{jd}
+\end{pmatrix}=\Y^{\T}\w^{(\ell)} & \hat{\Sb}^{(\ell)} & =\dots.
+\end{align*}
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Algorithm*
+Выбрать начальные значение 
+\begin_inset Formula $\hat{\mub}^{(\ell)}=\y_{j_{\ell}},j_{\ell}\in1:N$
+\end_inset
+
+, 
+\begin_inset Formula $\hat{\Sb}^{(\ell)}$
+\end_inset
+
+, 
+\begin_inset Formula $\hat{\p}=1/m$
+\end_inset
+
+.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Expectation: Найти 
+\begin_inset Formula $\hat{\boldsymbol{\zeta}}^{(\ell)},\quad\ell\in1:m$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Maximization: по формулам выше пересчитать 
+\begin_inset Formula $\hat{\mub}^{(\ell)},\hat{\Sb}^{(\ell)},\hat{\p}$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Remark*
+\begin_inset Formula $z_{j}$
+\end_inset
+
+ можно проинтерпретировать как апостериорные оценки принадлежности к той
+ или иной компоненты смеси.
+ \SpecialChar \ldots{}
+Bayesian / frequentist\SpecialChar \ldots{}
+
+\end_layout
+
+\begin_layout --Separator--
+
+\end_layout
+
+\begin_layout Remark*
+Пусть 
+\begin_inset Formula $\dim\etab=d$
+\end_inset
+
+, количество компонент 
+\begin_inset Formula $m$
+\end_inset
+
+; тогда количество параметров 
+\begin_inset Formula 
+\[
+(m-1)+md+m\cdot\frac{d(d+1)}{2}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout --Separator--
+
+\end_layout
+
+\begin_layout Remark*
+Хуже всего сходится ковариационная матрица (должна быть оценена вся сразу).
+ В качестве индикатора сходимости используют либо 
+\begin_inset Formula $-\log\L$
+\end_inset
+
+ либо сходимость ковариационной матрицы в себе.
+\end_layout
+
+\begin_layout --Separator--
+
+\end_layout
+
+\begin_layout Remark*
+\begin_inset Formula $\max_{\thb}\log\L=\infty$
+\end_inset
+
+ достигается в точке пространства параметров, где 
+\begin_inset Formula $\mub_{1}=\y_{i}$
+\end_inset
+
+, 
+\begin_inset Formula $\Sb=\mathbf{0}$
+\end_inset
+
+, однако 
+\begin_inset Quotes fld
+\end_inset
+
+хорошим
+\begin_inset Quotes frd
+\end_inset
+
+ решением это не является, поэтому ищут лишь подходящий локальный максимум.
+ Из всевозможных локальных максимумов выбирают такой (запуская алгоритм
+ несколько раз с разными начальными параметрами), что на нем величина 
+\begin_inset Formula $\log\L$
+\end_inset
+
+ наибольшая.
+\end_layout
+
+\begin_layout --Separator--
+
+\end_layout
+
+\begin_layout Remark*
+У 
+\begin_inset Formula $q$
+\end_inset
+
+ 2 глобальных максимума, так что оценки МП не вполне правомочны.
+ В общем случае 
+\begin_inset Formula $m$
+\end_inset
+
+ компонент, экстремумов 
+\begin_inset Formula $m!$
+\end_inset
+
+.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+И как с этим быть?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Model-based Clustering
+\end_layout
+
+\begin_layout Standard
+Пусть количество компонент 
+\begin_inset Formula $m$
+\end_inset
+
+ произвольно.
+ Задача:
+\end_layout
+
+\begin_layout Itemize
+Выбрать 
+\begin_inset Formula $m$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Выбрать подходящую структуру зависимости данных --- 
+\begin_inset Formula $\Sb$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Оценить параметры..
+\end_layout
+
+\begin_layout Paragraph
+Структура 
+\begin_inset Formula $\Sb$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Положительно определенную 
+\begin_inset Formula $\boldsymbol{\boldsymbol{\Sigma}}$
+\end_inset
+
+ можно 
+\begin_inset Quotes fld
+\end_inset
+
+привести к главным осям
+\begin_inset Quotes frd
+\end_inset
+
+ 
+\begin_inset Formula 
+\[
+\boldsymbol{\boldsymbol{\Sigma}}=\lambda\mathbf{D}^{\T}\mathbf{A}\mathbf{D},
+\]
+
+\end_inset
+
+ где 
+\begin_inset Formula $\mathbf{D}$
+\end_inset
+
+ --- ортогональная матрица поворота с количеством параметров 
+\begin_inset Formula 
+\[
+1+2+\dots+d-1-(d-1)=d(d+1)/2-1-(d-1)=d(d-1)/2,
+\]
+
+\end_inset
+
+
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ --- диагональная с 
+\begin_inset Formula $\tr\mathbf{A}=1$
+\end_inset
+
+ (количество параметров: 
+\begin_inset Formula $d-1$
+\end_inset
+
+).
+ Варианты
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\boldsymbol{\boldsymbol{\Sigma}}=\lambda\mathbf{I}$
+\end_inset
+
+, т.е.
+ все компоненты независимы и с одинаковой дисперсии, так что параметр вообще
+ один, либо
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Sb=\lambda\mathbf{A}$
+\end_inset
+
+ --- компоненты некоррелированы, но разная дисперсия, либо
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\boldsymbol{\boldsymbol{\Sigma}}=\lambda_{\ell}\mathbf{I}$
+\end_inset
+
+ (своя дисперсия в каждой компоненте), либо
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\boldsymbol{\boldsymbol{\Sigma}}=\lambda_{\ell}\mathbf{A}_{\ell}$
+\end_inset
+
+ и т.д.
+\end_layout
+
+\begin_layout Remark*
+В R --- 
+\family typewriter
+Mclust
+\family default
+.
+ Позволяет оценить параметры, когда выборка из смеси нормальных распределений,
+ задать модели для ковариационных матриц и выбрать наилучшую.
+ Любая модель задается аббревиатурой
+\end_layout
+
+\begin_deeper
+\begin_layout Description
+
+\family typewriter
+I
+\family default
+ Identity
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
+E
+\family default
+ Equal
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
+V
+\family default
+ Variate
+\end_layout
+
+\end_deeper
+\begin_layout Remark*
+Как признак меняется по разным компонентам смеси.
+ Можно думать об объеме (
+\begin_inset Formula $\lambda$
+\end_inset
+
+), форме (
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+) и ориентации (
+\begin_inset Formula $\mathbf{D}$
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Example*
+\begin_inset Formula $\boldsymbol{\boldsymbol{\Sigma}}_{\ell}=\lambda\mathbf{I}$
+\end_inset
+
+ соответствует 
+\family typewriter
+EII
+\family default
+.
+\end_layout
+
+\begin_layout --Separator--
+
+\end_layout
+
+\begin_layout Example*
+У 
+\family typewriter
+EVI
+\family default
+ 
+\begin_inset Formula 
+\[
+\underbrace{1}_{\lambda}+\underbrace{m(d-1)}_{\mathbf{A}_{\ell}}+\underbrace{0}_{\mathbf{D}=\mathbf{I}}+\underbrace{md}_{z_{\ell}}+\underbrace{(m-1)}_{p_{\ell}}
+\]
+
+\end_inset
+
+параметров
+\end_layout
+
+\begin_layout Section
+Information Criteria
+\end_layout
+
+\begin_layout Standard
+Чем более общая модель, тем выше 
+\begin_inset Formula $\log\L$
+\end_inset
+
+.
+ Напрямую сравнивать нельзя, но можем вычитать штраф за количество параметров
+ 
+\begin_inset Formula $f({\rm df})$
+\end_inset
+
+; тогда 
+\begin_inset Formula 
+\[
+\log\L(\th)-f({\rm df}).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition*
+\begin_inset Formula $\AIC=\log\L(\th)-{\rm df}.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+\begin_inset Formula $\AIC$
+\end_inset
+
+ работает только в случае, когда истинная модель содержится в пространстве
+ параметров.
+\end_layout
+
+\begin_layout Definition*
+\begin_inset Formula $\BIC=\log\L(\th)-{\rm df}/2\cdot\log N$
+\end_inset
+
+.
+\end_layout
+
+\end_body
+\end_document

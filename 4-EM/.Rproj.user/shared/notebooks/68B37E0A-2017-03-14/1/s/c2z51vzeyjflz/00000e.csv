@@ -1,0 +1,6 @@
+"0","for (ell in 2:5) {"
+"0","  set.seed(1)"
+"0","  M <- Mclust(YY, G=ell, modelNames='VVV')"
+"0","  plot(M, what='density', type = 'image', col = 'dodgerblue3', grid = 100)"
+"0","  # plot(M.2.VVV, what='density', type = 'persp')"
+"0","}"

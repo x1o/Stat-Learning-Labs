@@ -1,0 +1,1294 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass scrartcl
+\begin_preamble
+%\usepackage{nicefrac}
+%\usepackage{colortbl}
+%\usepackage[noend]{algpseudocode}
+%\usepackage[all]{xy}
+\usepackage{mathrsfs}
+
+%\usepackage[columns=1,itemlayout=singlepar,totoc=true]{idxlayout}
+
+%\@addtoreset{chapter}{part}
+\DeclareMathOperator{\Int}{Int}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\cdf}{cdf}
+\DeclareMathOperator{\ecdf}{ecdf}
+\DeclareMathOperator{\qnt}{qnt}
+\DeclareMathOperator{\pdf}{pdf}
+\DeclareMathOperator{\pmf}{pmf}
+\DeclareMathOperator{\dom}{dom}
+\DeclareMathOperator{\bias}{bias}
+\DeclareMathOperator{\MSE}{MSE}
+\DeclareMathOperator{\med}{med}
+\DeclareMathOperator{\Exp}{Exp}
+\DeclareMathOperator{\Bin}{Bin}
+\DeclareMathOperator{\Ber}{Ber}
+\DeclareMathOperator{\Geom}{Geom}
+\DeclareMathOperator{\Pois}{Pois}
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\cov}{cov}
+\DeclareMathOperator{\cor}{cor}
+\DeclareMathOperator{\sign}{sign}
+\DeclareMathOperator{\Lin}{Lin}
+\DeclareMathOperator{\SE}{SE}
+\DeclareMathOperator{\SD}{SD}
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator{\supp}{supp}
+
+\newcommand{\bigperp}{%
+  \mathop{\mathpalette\bigp@rp\relax}%
+  \displaylimits
+}
+
+\newcommand{\bigp@rp}[2]{%
+  \vcenter{
+    \m@th\hbox{\scalebox{\ifx#1\displaystyle2.1\else1.5\fi}{$#1\perp$}}
+  }%
+}
+
+\newcommand{\bignparallel}{%
+  \mathop{\mathpalette\bignp@rp\relax}%
+  \displaylimits
+}
+
+\newcommand{\bignp@rp}[2]{%
+  \vcenter{
+    \m@th\hbox{\scalebox{\ifx#1\displaystyle2.1\else1.5\fi}{$#1\nparallel$}}
+  }%
+}
+\end_preamble
+\use_default_options true
+\begin_modules
+theorems-ams-bytype
+theorems-ams-extended-bytype
+theorems-chap-bytype
+\end_modules
+\maintain_unincluded_children false
+\begin_local_layout
+Format 49
+
+Style Solution
+        CopyStyle       "Proof"
+        LatexName       solution
+        Argument        1
+                LabelString   "Alternative Solution String"
+                Tooltip       "Alternative solution string"
+        EndArgument
+        LabelString     "Solution."
+        Preamble
+                \newenvironment{solution}
+                  {\renewcommand\qedsymbol{$\lrcorner$}
+                   \begin{proof}[\solutionname]}
+                  {\end{proof}}
+        EndPreamble
+        LangPreamble
+                \providecommand{\solutionname}{_(Solution)}
+        EndLangPreamble
+        BabelPreamble
+                \addto\captions$$lang{\renewcommand{\solutionname}{_(Solution)}}
+        EndBabelPreamble
+
+End
+\end_local_layout
+\language russian
+\language_package default
+\inputencoding utf8
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_math auto
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement h
+\paperfontsize default
+\spacing single
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen true
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder false
+\pdf_colorlinks true
+\pdf_backref false
+\pdf_pdfusetitle true
+\papersize a4paper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 2
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 2
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date true
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2.5cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language french
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\bullet 1 0 25 -1
+\bullet 2 0 26 -1
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\N}{\mathrm{N}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\P}{\mathsf{P}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\E}{\mathsf{E}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\D}{\mathsf{D}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\renewcommand{\O}{\Omega}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\F}{\mathcal{F}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\K}{\mathsf{K}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\A}{\mathscr{A}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\Pcal}{\mathcal{P}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\th}{\theta}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\toas}{\xrightarrow{{\rm a.s.}}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\toP}{\xrightarrow{\P}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\tod}{\xrightarrow{\mathrm{d}}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\iid}{\mathrm{i.i.d.}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\T}{\mathrm{T}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\L}{\mathcal{L}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\dd}[2]{\frac{\mathrm{d}#1}{\mathrm{d}#2}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\a}{\alpha}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\b}{\beta}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\t}{\mathrm{t}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\RR}{\mathbb{R}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\d}{\,\mathrm{d}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\U}{\mathrm{U}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\thb}{\boldsymbol{\theta}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\I}{\mathrm{I}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\II}{\mathrm{II}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\ein}{\mathbf{1}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\pv}{p\text{-value}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\MLE}{\mathrm{MLE}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\indep}{\perp\!\!\!\perp}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\xib}{\boldsymbol{\xi}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\Pscr}{\mathscr{P}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\m}{\mathsf{m}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\X}{\mathfrak{X}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\Q}{\mathcal{Q}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Title
+Моделирование методом отбора 
+\begin_inset Newline newline
+\end_inset
+
+(Rejection Sampling)
+\end_layout
+
+\begin_layout Date
+Tue 07 Mar 2017
+\end_layout
+
+\begin_layout Author
+422 группа
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Схема метода
+\end_layout
+
+\begin_layout Subsection
+Мотивация
+\end_layout
+
+\begin_layout Standard
+Пусть 
+\begin_inset Formula $p(x)=\pdf_{\Pcal}(x)$
+\end_inset
+
+, 
+\begin_inset Formula $H$
+\end_inset
+
+ --- подграфик.
+\end_layout
+
+\begin_layout Proposition*
+Если 
+\begin_inset Formula $\left(\xi_{1},\xi_{2}\right)\sim\U(H)$
+\end_inset
+
+, то 
+\begin_inset Formula $\xi_{1}\sim\Pcal$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Действительно,
+\begin_inset Formula 
+\[
+\P(\xi_{1}<z)=\int_{-\infty}^{z}\d x\int_{0}^{p(x)}\d y=\int_{-\infty}^{z}p(x)\d x.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Algorithm*
+Пусть 
+\begin_inset Formula $g(x)$
+\end_inset
+
+ --- мажоранта, 
+\begin_inset Formula $\left|\supp\Pcal\right|<\infty$
+\end_inset
+
+.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $x\gets\U(\supp\Pcal)$
+\end_inset
+
+, 
+\begin_inset Formula $y\gets\U(0,g(x))$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Если 
+\begin_inset Formula $y<p(x)$
+\end_inset
+
+, 
+\begin_inset Formula $\xi\gets x$
+\end_inset
+
+, конец; иначе 1.
+\end_layout
+
+\end_deeper
+\begin_layout --Separator--
+
+\end_layout
+
+\begin_layout Algorithm*
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Частный случай
+\end_layout
+
+\end_inset
+
+Пусть 
+\begin_inset Formula $p(x)$
+\end_inset
+
+ сосредоточена на 
+\begin_inset Formula $\left[0,1\right]$
+\end_inset
+
+, 
+\begin_inset Formula $g(x)\equiv M$
+\end_inset
+
+.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Для 
+\begin_inset Formula $t\in1,2,\ldots$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{eqnarray*}
+\a_{1}^{(t)} & \sim & \U(0,1)\\
+\a_{2}^{(t)} & \sim & \U(0,1).
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Если 
+\begin_inset Formula 
+\[
+p(\a_{1}^{(t)})\geq M\a_{2}^{(t)},
+\]
+
+\end_inset
+
+ 
+\begin_inset Formula $\xi\gets\a_{1}^{(t)},$
+\end_inset
+
+ конец; иначе 1.
+\end_layout
+
+\end_deeper
+\begin_layout Subsection
+Формальный алгоритм
+\end_layout
+
+\begin_layout Standard
+Пусть 
+\begin_inset Formula $\Q$
+\end_inset
+
+ --- мажорирующее распределение, т.е.
+ 
+\begin_inset Formula $p(x)\leq Mq(x)=g(x)\ \forall x$
+\end_inset
+
+ и существует производная Радона--Никодима 
+\begin_inset Formula $r=\d\Pcal/\d\Q\leq M$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Algorithm*
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Общий
+\end_layout
+
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Для 
+\begin_inset Formula $t\in1,2,\ldots$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{eqnarray*}
+\eta^{(t)} & \sim & \Q\\
+\a^{(t)} & \sim & \U(0,1).
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Если 
+\begin_inset Formula 
+\[
+r(\eta^{(t)})\geq M\a^{(t)},
+\]
+
+\end_inset
+
+ или (поскольку 
+\begin_inset Formula $r=p/q$
+\end_inset
+
+) что то же самое, 
+\begin_inset Formula 
+\[
+\frac{p(\eta^{(t)})}{g(\eta^{(t)})}\geq\a^{(t)},
+\]
+
+\end_inset
+
+ то 
+\begin_inset Formula $\tau=t$
+\end_inset
+
+; 
+\begin_inset Formula $\xi\gets\eta^{(\tau)}$
+\end_inset
+
+; конец; иначе 1.
+\end_layout
+
+\end_deeper
+\begin_layout Claim*
+Справедливо:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $\tau-1\sim\Geom(1/M)$
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\xi:=\eta_{\tau}\sim\Pcal$
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\tau\indep\eta_{\tau}$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Paragraph
+Трудоемкость
+\end_layout
+
+\begin_layout Standard
+По смыслу, 
+\begin_inset Formula $p=\pdf_{\Pcal}$
+\end_inset
+
+ сложная в вычислении
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Например, в случае условного распределения --- тогда это интеграл 
+\begin_inset Formula $h(x)=\int\ell(x,y)\d y$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+, 
+\begin_inset Formula $q=\pdf_{\Q}$
+\end_inset
+
+ простая.
+ Чтобы получить одну реализацию нужной случайной величины 
+\begin_inset Formula $\eta_{\tau}$
+\end_inset
+
+, нужно 
+\begin_inset Formula $\tau$
+\end_inset
+
+ раз вычислить 
+\begin_inset Formula $r$
+\end_inset
+
+; в среднем это, поскольку 
+\begin_inset Formula $\tau-1\sim\Geom(1/M)$
+\end_inset
+
+, 
+\begin_inset Formula 
+\[
+\E(\tau-1)=\E(\tau)-1=\frac{1-1/M}{1/M}=M-1\implies\E(\tau)=M.
+\]
+
+\end_inset
+
+Но 
+\begin_inset Formula $M$
+\end_inset
+
+ --- то, насколько одна плотность подогнана под другую (
+\begin_inset Formula $M=p/q=1$
+\end_inset
+
+ соответствует с случаю 
+\begin_inset Formula $p=q$
+\end_inset
+
+).
+ 
+\end_layout
+
+\begin_layout Standard
+Так что важно правильно выбрать мажорирующее распределение, ведь когда отвергает
+ся величина 
+\begin_inset Formula $r(\eta^{(t)})$
+\end_inset
+
+ процессорные такты, потраченные на её вычисление, пропадают.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Таким образом, нужно уметь
+\end_layout
+
+\begin_layout Enumerate
+моделировать 
+\begin_inset Formula $\Q$
+\end_inset
+
+,
+\end_layout
+
+\begin_layout Enumerate
+вычислять 
+\begin_inset Formula $r=p/g$
+\end_inset
+
+,
+\end_layout
+
+\begin_layout Enumerate
+точно вычислять 
+\begin_inset Formula $M$
+\end_inset
+
+ (иначе будем чаще чем можно было бы выкидывать).
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Трюки
+\end_layout
+
+\begin_layout Standard
+Следующие трюки позволяют выбирать мажорирующую плотность так, что 
+\begin_inset Formula $M\to1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Description
+Rejection
+\begin_inset space ~
+\end_inset
+
+with
+\begin_inset space ~
+\end_inset
+
+squeezing Пусть умеем строить не только мажорнату 
+\begin_inset Formula $g_{u}$
+\end_inset
+
+, но и миноранту 
+\begin_inset Formula $g_{\ell}$
+\end_inset
+
+.
+ Для отбора нужно брать только те, что ниже 
+\begin_inset Formula $p$
+\end_inset
+
+; значит, сначала вычислим миноранту, и если значение ниже нее, то принимать
+ значение.
+\end_layout
+
+\begin_layout Description
+Adaptive
+\begin_inset space ~
+\end_inset
+
+Rejection
+\begin_inset space ~
+\end_inset
+
+Sampling
+\begin_inset space ~
+\end_inset
+
+(ARS) См.
+ далее.
+\end_layout
+
+\begin_layout Section
+Адаптивный метод отбора 
+\end_layout
+
+\begin_layout Standard
+(Рис.
+ 1) Нужно, чтобы
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $p$
+\end_inset
+
+ была непрерывно дифференцируема на связном множестве 
+\begin_inset Formula $D$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $h(x)=\log p(x)$
+\end_inset
+
+ была бы выпукла.
+\end_layout
+
+\begin_layout Standard
+Большая часть стандартных плотностей этим требованиям удовлетворяют; интегралы
+ тоже, потому что неравенство Єнсена.
+\end_layout
+
+\begin_layout Subsection
+Мажоранта
+\end_layout
+
+\begin_layout Standard
+Мажоранту можно построить кусочно-линейную --- по касательным.
+ Пусть выбрано разбиение 
+\begin_inset Formula $x_{1}\leq\dots\leq x_{k}$
+\end_inset
+
+.
+ Пусть также 
+\begin_inset Formula $z_{1},\ldots,z_{k-1}$
+\end_inset
+
+ --- точки пересечения касательных: 
+\begin_inset Formula 
+\begin{eqnarray*}
+z_{j} & = & \frac{h(x_{j+1})-h(x_{j})-x_{j+1}h'(x_{j+1})+x_{j}h'(x_{j})}{h'(x_{j})-h'(x_{j+1})},\quad j\in1:(k-1)\\
+z_{0} & = & -\infty\text{ или }\inf D\\
+z_{k} & = & +\infty\text{ или }\sup D.
+\end{eqnarray*}
+
+\end_inset
+
+ Тогда можно задать кусочно-линейную мажоранту 
+\begin_inset Formula 
+\[
+u(x)=h(x_{j})+h'(x_{j})(x-x_{j}),\quad x\in(z_{j-1},z_{j}],\ j\in1:k.
+\]
+
+\end_inset
+
+Потенциировав, получают 
+\begin_inset Formula $\exp u(x)$
+\end_inset
+
+ --- мажоранту исходного распределения 
+\begin_inset Formula $\Q$
+\end_inset
+
+, каковая мажоранта задает кусочно-экспоненциальную плотность 
+\begin_inset Formula 
+\[
+s(x)=\frac{\exp u(x)}{C},\quad C=\int_{D}\exp u(w)\d w,
+\]
+
+\end_inset
+
+ где 
+\begin_inset Formula 
+\begin{eqnarray*}
+\int_{D}\exp u(w)\d w & = & \sum_{j=1}^{k}\int_{z_{j-1}}^{z_{j}}\exp\left\{ h(x_{j})+h'(x_{j})(w-x_{j})\right\} \d w\\
+ & = & \sum_{j=1}^{k}\exp\left\{ h(x_{j})-h'(x_{j})x_{j}\right\} \int_{z_{j-1}}^{z_{j}}\exp\left\{ h'(x_{j})w\right\} \d w\\
+ & = & \sum_{j=1}^{k}\frac{1}{h'(x_{j})}\exp\left\{ h(x_{j})-h'(x_{j})x_{j}\right\} \left(\exp\left\{ h'(x_{j})z_{j}\right\} -\exp\left\{ h'(x_{j})z_{j-1}\right\} \right)\\
+ & = & \sum_{j=1}^{k}\frac{1}{h'(x_{j})}\left(\exp\left\{ h(x_{j})+h'(x_{j})(z_{j}-x_{j})\right\} -\exp\left\{ h(x_{j})+h'(x_{j})(z_{j-1}-x_{j})\right\} \right)\\
+ & = & \sum_{j=1}^{k}\frac{1}{h'(x_{j})}\left(\exp u(z_{j})-\exp u(z_{j-1})\right).
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Моделирование кусочно-экспоненциальной плотности
+\end_layout
+
+\begin_layout Standard
+Функция распределения кусочно-экспоненциальной плотности 
+\begin_inset Formula $\Q$
+\end_inset
+
+ есть
+\begin_inset Formula 
+\[
+F_{\Q}(z)=\int_{-\infty}^{z}s(x)\d x=\frac{1}{C}\left(\sum_{j=1}^{i:z_{i}\geq z}\frac{1}{h'(x_{j})}\left(\exp u(z_{j})-\exp u(z_{j-1})\right)+\exp u(z)-\exp u(z_{i})\right).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Algorithm*
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Моделирование 
+\begin_inset Formula $\eta\sim\Q$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $\a\sim\U(0,1)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $z_{i}\gets\max\left\{ z_{j}:F_{\Q}(z_{j})<\a\right\} $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula 
+\[
+\eta\gets z_{i}+\frac{1}{h'(x_{i+1})}\log\left[1+\frac{h'(x_{i+1})C(\a-F_{\Q}(z_{i}))}{\exp u(z_{i})}\right].
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Subsection
+Миноранта
+\end_layout
+
+\begin_layout Standard
+Миноранта --- из хорд составленная.
+ Тогда для 
+\begin_inset Formula $x\in[x_{j},x_{j+1}]$
+\end_inset
+
+ миноранта задается как 
+\begin_inset Formula 
+\[
+\ell(x)=\frac{(x_{j+1}-x)h(x_{j})+(x-x_{j})h(x_{j+1})}{x_{j+1}-x_{j}},\quad j\in1:(k-1).
+\]
+
+\end_inset
+
+ Для 
+\begin_inset Formula $x<x_{1}$
+\end_inset
+
+ или 
+\begin_inset Formula $x>x_{k}$
+\end_inset
+
+ 
+\begin_inset Formula $\ell(x):=-\infty$
+\end_inset
+
+.
+ 
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+На каждом отрезке 
+\begin_inset Formula $[z_{j-1},z_{j}]$
+\end_inset
+
+ нужно представить в виде смеси
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+?
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula 
+\[
+s_{j}(x)=\frac{e^{u_{j}(x)}}{\int_{D}e^{u_{j}(x)}\d x}=\frac{\int_{z_{j}}^{z_{j+1}}\overbrace{e^{u_{j}(x)}}^{p_{j}}\d x}{\int_{D}e^{u_{j}(x)}\d x}\cdot\frac{e^{u_{j}(x)}}{\int_{z_{j}}^{z_{j+1}}e^{u_{j}(x)}\d x}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $j\gets(p_{1},\ldots,p_{k})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\SpecialChar \ldots{}
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Claim*
+Раз 
+\begin_inset Formula $h$
+\end_inset
+
+ выпукла, то автоматически 
+\begin_inset Formula $e^{\ell(x)}\leq p(x)\leq e^{u(x)}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Алгоритм
+\end_layout
+
+\begin_layout Algorithm*
+Таким образом,
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Инициализация:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Выберем 
+\begin_inset Formula $T_{k}=\left\{ x_{1},\ldots,x_{k}\right\} $
+\end_inset
+
+ --- количество начальных точек.
+\end_layout
+
+\begin_deeper
+\begin_layout Remark*
+Нужно выбрать по крайней мере по разным сторонам от моды --- 
+\begin_inset Formula $h'(x_{1})>0,\ h'(x_{k})<0$
+\end_inset
+
+, чтобы можно было построить мажоранту (минимум две; три с третьей в моде
+ уже гораздо лучше).
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Посчитаем 
+\begin_inset Formula $h(x_{1}),\ldots,h(x_{k})$
+\end_inset
+
+, 
+\begin_inset Formula $h'(x_{1}),\ldots,h'(x_{k})$
+\end_inset
+
+, 
+\begin_inset Formula $z_{1},\ldots,z_{k-1}$
+\end_inset
+
+.
+ Посчитаем 
+\begin_inset Formula $u_{j},\ell_{j},s_{j}$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Моделирование (отбор):
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $\eta\gets\Q$
+\end_inset
+
+, 
+\begin_inset Formula $\a\gets\U[0,1]$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+если 
+\begin_inset Formula 
+\[
+\a\leq\exp\left\{ \ell(\eta)-u(\eta)\right\} ,
+\]
+
+\end_inset
+
+то 
+\begin_inset Formula $\xi\gets\eta$
+\end_inset
+
+; конец.
+\end_layout
+
+\begin_layout Enumerate
+если 
+\begin_inset Formula 
+\[
+\a\leq\exp\left\{ h(\eta)-u(\eta)\right\} ,
+\]
+
+\end_inset
+
+ то 
+\begin_inset Formula $\xi\gets\eta$
+\end_inset
+
+; конец.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Хочется переиспользовать вычисленное значение 
+\begin_inset Formula $h$
+\end_inset
+
+ (потому что она дорогая) --- вычислим производную 
+\begin_inset Formula $h'\gets h'(\eta)$
+\end_inset
+
+, 
+\begin_inset Formula $T_{k+1}\gets T_{k}\cup\left\{ \eta\right\} $
+\end_inset
+
+ и переупорядочим 
+\begin_inset Formula $T_{k+1}$
+\end_inset
+
+.
+ По полученному можно пересчитать 
+\begin_inset Formula $u_{j+1},\ell_{j+1},s_{j+1}$
+\end_inset
+
+.
+\end_layout
+
+\begin_deeper
+\begin_layout Remark*
+Если дошли до этого шага, значит находимся с большой вероятностью в месте
+ большого зазора мажоранты и 
+\begin_inset Formula $h$
+\end_inset
+
+; значит добавление точки в данном месте очень хорошо этот зазор уменьшает.
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+Данный алгоритм хорошо аппроксимирует исходную плотностью кусочно-экспоненциальн
+ым распределением, так что 
+\begin_inset Formula $M\to1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Remark*
+Если функция оказывается выпуклой после монотонного преобразования, то плотность
+ будет не кусочно-экспоненциальная, а кусочно-какая-то.
+\end_layout
+
+\begin_layout --Separator--
+
+\end_layout
+
+\begin_layout Remark*
+Если плотность вогнутая, то поменяются хорды и касательные (плюс нужно будет
+ разбираться с асимптотами).
+\end_layout
+
+\begin_layout --Separator--
+
+\end_layout
+
+\begin_layout Remark*
+Любую хорошую функцию можно разложить на выпуклую и вогнутую части.
+ Тогда можно посчитать как смесь, для чего необходимо почти всегда знание
+ интегралов компонентов смести.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+ARS с ушами
+\end_layout
+
+\begin_layout Standard
+Пусть не умеем считать производную.
+ Тогда мажоранту можно делать из ушей продолжением хорд (Рис.
+ 2).
+ Пусть 
+\begin_inset Formula $L_{ij}(x)$
+\end_inset
+
+ --- прямая, соединяющая 
+\begin_inset Formula $(x_{i},h(x_{i}))$
+\end_inset
+
+ и 
+\begin_inset Formula $(x_{j},h(x_{j})).$
+\end_inset
+
+ Тогда на 
+\begin_inset Formula $x_{i}\leq x\leq x_{i+1}$
+\end_inset
+
+, 
+\begin_inset Formula $u_{k}(x)=\min(L_{i-1,i}(x),L_{i+1,i+2}(x))$
+\end_inset
+
+.
+ Крайние интервалы нужно, понятно, обрабатывать отдельно.
+\end_layout
+
+\begin_layout Paragraph
+Adaptive Rejection Metropolis Sampling
+\end_layout
+
+\begin_layout Standard
+Пусть есть функция с особенностью --- перегибом.
+ Тогда в окрестности перегиба значение мажоранты будет меньше значения функции.
+ Стандартный трюк --- отказаться от независимости и в качестве результата
+ выдавать предыдущий результат.
+\end_layout
+
+\end_body
+\end_document

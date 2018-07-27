@@ -1,0 +1,266 @@
+%% LyX 2.1.4 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[russian]{scrartcl}
+\usepackage[T2A,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper]{geometry}
+\geometry{verbose,tmargin=2cm,bmargin=2.5cm,lmargin=2cm,rmargin=2cm}
+\usepackage{color}
+\usepackage{babel}
+\usepackage{latexsym}
+\usepackage{mathrsfs}
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{esint}
+\usepackage[unicode=true,pdfusetitle,
+ bookmarks=true,bookmarksnumbered=false,bookmarksopen=true,bookmarksopenlevel=1,
+ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=true]
+ {hyperref}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+\DeclareRobustCommand{\cyrtext}{%
+  \fontencoding{T2A}\selectfont\def\encodingdefault{T2A}}
+\DeclareRobustCommand{\textcyr}[1]{\leavevmode{\cyrtext #1}}
+\AtBeginDocument{\DeclareFontEncoding{T2A}{}{}}
+
+
+\@ifundefined{date}{}{\date{}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+%\usepackage{nicefrac}
+%\usepackage{colortbl}
+%\usepackage[noend]{algpseudocode}
+\usepackage[all]{xy}
+\usepackage{mathrsfs}
+
+%\usepackage[columns=1,itemlayout=singlepar,totoc=true]{idxlayout}
+
+%\@addtoreset{chapter}{part}
+\DeclareMathOperator{\Int}{Int}
+\DeclareMathOperator{\rk}{rk}
+
+\newcommand{\bigperp}{%
+  \mathop{\mathpalette\bigp@rp\relax}%
+  \displaylimits
+}
+
+\newcommand{\bigp@rp}[2]{%
+  \vcenter{
+    \m@th\hbox{\scalebox{\ifx#1\displaystyle2.1\else1.5\fi}{$#1\perp$}}
+  }%
+}
+
+\newcommand{\bignparallel}{%
+  \mathop{\mathpalette\bignp@rp\relax}%
+  \displaylimits
+}
+
+\newcommand{\bignp@rp}[2]{%
+  \vcenter{
+    \m@th\hbox{\scalebox{\ifx#1\displaystyle2.1\else1.5\fi}{$#1\nparallel$}}
+  }%
+}
+
+\AtBeginDocument{
+  \def\labelitemii{\(\Diamond\)}
+  \def\labelitemiii{\(\Box\)}
+}
+
+\makeatother
+
+\begin{document}
+\global\long\def\N{\mathrm{N}}
+\global\long\def\P{\mathsf{P}}
+\global\long\def\E{\mathsf{E}}
+\global\long\def\D{\mathsf{D}}
+\global\long\def\O{\Omega}
+\global\long\def\F{\mathcal{F}}
+\global\long\def\K{\mathsf{K}}
+\global\long\def\A{\mathscr{A}}
+\global\long\def\Pcal{\mathcal{P}}
+\global\long\def\th{\theta}
+\global\long\def\toas{\xrightarrow{{\rm a.s.}}}
+\global\long\def\toP{\xrightarrow{\P}}
+\global\long\def\tod{\xrightarrow{\mathrm{d}}}
+\global\long\def\iid{\mathrm{i.i.d.}}
+\global\long\def\T{\mathrm{T}}
+\global\long\def\L{\mathcal{L}}
+\global\long\def\dd#1#2{\frac{\mathrm{d}#1}{\mathrm{d}#2}}
+\global\long\def\a{\alpha}
+\global\long\def\b{\beta}
+\global\long\def\t{\mathrm{t}}
+\global\long\def\RR{\mathbb{R}}
+\global\long\def\d{\,\mathrm{d}}
+\global\long\def\U{\mathrm{U}}
+\global\long\def\thb{\boldsymbol{\theta}}
+\global\long\def\I{\mathrm{I}}
+\global\long\def\II{\mathrm{II}}
+\global\long\def\ein{\mathbf{1}}
+\global\long\def\pv{p\text{-value}}
+\global\long\def\MLE{\mathrm{MLE}}
+\global\long\def\indep{\perp\!\!\!\perp}
+\global\long\def\xib{\boldsymbol{\xi}}
+\global\long\def\Pscr{\mathscr{P}}
+\global\long\def\m{\mathsf{m}}
+
+
+
+\title{Вычисление интегралов методом Монте-Карло}
+
+
+\date{Tue 21 Feb 2017}
+
+
+\author{422 группа}
+
+\maketitle
+\tableofcontents{}
+
+
+\section{Общая схема}
+
+Пусть $\nu:\A\to\bar{\RR}$ --- конечный заряд на пространстве $(D,\A)$.
+Найдем $J=\nu(D)$. Для этого введем $\xi:(\Omega,\F,\P)\to(D,\A)$
+--- случайную величина с распределением $\Pcal=\Pcal_{\xi}$, причем
+$\nu\prec\Pcal$. 
+
+$$
+\xymatrix{
+    (D, \A) \ar[r]^{\nu}_{\Pcal_\xi} & (\overline{\RR}, \mathcal{B}) \\
+    (\Omega, \F, \P) \ar[u]^\xi \ar[ru]_{m \circ \xi = \eta}
+}
+$$
+
+Значит существует производная Радона-Никодима 
+\[
+m=\frac{\d\nu}{\d\Pcal}:D\to\bar{\RR},
+\]
+т.е. такая функция $m(x)$, что
+\[
+\int_{A}m\d\Pcal=\int_{A}\d\nu=\nu(A),\quad\forall A\in\A.
+\]
+$J$ может быть найдена как 
+\[
+J=\E m(\xi)=\int_{\Omega}m(\xi)\d\P=\int_{D}m(x)\d\Pcal=\int_{D}\frac{\d\nu}{\d\Pcal}\d\Pcal=\int_{D}\d\nu=\nu(D).
+\]
+ По ЗБЧ может быть найдена оценка $\hat{J}_{n}$: если $\xi_{1},\ldots,\xi_{n}$
+i.i.d., то 
+\[
+\hat{J}_{n}=\frac{1}{n}\sum_{i=1}^{n}m(\xi_{i})\toP\E m(\xi)=J.
+\]
+
+
+
+\section{Вычисление интеграла}
+
+Посчитаем интеграл 
+\[
+\nu(A)=\int_{A}f\d\lambda.
+\]
+Автоматически, $\d\nu=f\d\lambda$ и $\nu\prec\lambda$. Пусть также
+$\d\Pcal=p\d\lambda$, то есть $\Pcal\prec\lambda$. Таким образом,
+мера $\Pcal$ и заряд $\nu$ абсолютно непрерывны относительно третьей
+меры $\lambda$. Тогда для существования $m=\d\nu/\d\Pcal$ необходимо
+и достаточно, чтобы $\lambda\left\{ x:f(x)\neq0\,\&\,p(x)=0\right\} =0$,
+при этом 
+\[
+m(x)=\frac{\d\nu}{\d\Pcal}=\frac{f\d\lambda}{p\d\lambda}=\frac{f(x)}{p(x)}.
+\]
+ Таким образом, 
+\[
+\hat{J}_{n}=\frac{1}{n}\sum_{i=1}^{n}\frac{f(\xi_{i})}{p(\xi_{i})}.
+\]
+
+
+
+\section{Вычисление дисперсии}
+
+Так как 
+\[
+\D m(\xi)=\E m^{2}(\xi)-\left(\E m(\xi)\right)^{2}=\E m^{2}(\xi)-J^{2},
+\]
+ то
+\[
+s_{n}^{2}=\frac{1}{n}\sum_{i=1}^{n}m^{2}(\xi_{i})-\hat{J}_{n}^{2}.
+\]
+
+
+
+\section{Асимптотический доверительный интервал}
+
+Построение доверительного интервала 
+\[
+\P\left(\left|\hat{J}_{n}-J\right|\leq\epsilon\right)=1-\gamma.
+\]
+ По ЦПТ, 
+\[
+\frac{\sum\xi_{i}-\sum\E\xi_{i}}{\sqrt{\sum_{i}\D\xi_{i}}}=\frac{\sum\xi_{i}-n\mu}{\sqrt{n\sigma^{2}}}=\sqrt{n}\frac{1/n\cdot\sum\xi_{i}-\mu}{\sigma}=\frac{\sqrt{n}}{\sigma}\left(\hat{J}_{n}-J\right)\tod\N(0,1),
+\]
+ откуда 
+\[
+\P\left(-x\leq\frac{\sqrt{n}}{\sigma}\left(\hat{J}_{n}-J\right)\leq x\right)\tod\Phi(x)-\Phi(-x)=1-\gamma\iff x=x_{\gamma},
+\]
+и 
+\[
+\P\left(-x_{\gamma}\frac{\sigma}{\sqrt{n}}\leq\hat{J}_{n}-J\leq x_{\gamma}\frac{\sigma}{\sqrt{n}}\right),
+\]
+откуда доверительный интервал имеет вид 
+\[
+J\in\left(\hat{J}_{n}-\frac{\sigma}{\sqrt{n}}x_{\gamma};\hat{J}_{n}+\frac{\sigma}{\sqrt{n}}x_{\gamma}\right).
+\]
+ Неизвестную $\sigma$ можно заменить на выборочный стандарт $s_{n}$.
+
+
+\section{Трудоемкость}
+
+Найдем такое $n_{0}:\forall n\geq n_{0}$ $\P\left(\left|\hat{J}_{n}-J\right|\leq\epsilon\right)=1-\gamma$:
+\[
+x_{\gamma}\frac{\sigma}{\sqrt{n_{0}}}=\epsilon\implies n_{0}=\frac{\sigma^{2}}{\epsilon^{2}}x_{\gamma}^{2}.
+\]
+
+
+Итого, скорость сходимости $\mathcal{O}(1/\sqrt{n})$. Для реального
+применения непригодны, потому что содержат неизвестную $\sigma$.
+ЦПТ выдерживает подстановку состоятельную оценку дисперсии.
+
+
+\section{Доверительный интервал через теорему Донскер}
+
+... Объединение доверительных интервалов не является доверительным
+интервалом для траектории ...
+
+\[
+\hat{J}_{n}=\frac{(n-1)\hat{J}_{n-1}+m(\xi_{n})}{n}
+\]
+
+
+Для таких вещей есть аналог ЦПТ: Пусть есть $x_{1},\ldots x_{n}$
+i.i.d с $\mu=\E x_{i},\sigma^{2}=\D x_{i}$. Переведем $\hat{J}_{n}=\frac{1}{n}\sum_{i=1}^{n}x_{i}$
+в интервал {[}0,1{]} :
+\[
+\delta_{n}(t)=\frac{1}{\left\lfloor nt\right\rfloor }\sum_{i=1}^{\left\lfloor nt\right\rfloor }x_{i},\quad t\in[0,1].
+\]
+Справедлива теорема Донскер: 
+\[
+\frac{1}{\sqrt{n}}\sum_{i=1}^{\left\lfloor nt\right\rfloor }\left(\frac{x_{i}-\mu}{\sigma}\right)\xrightarrow[n\to\infty]{\sim}W(t),
+\]
+ где $W(t)$ --- Броуновский мост. Как и ЦПТ, выдерживает замену $\sigma$
+на $\tilde{s}$ . $\hat{J}_{n}=\delta_{n}(1)$, $x_{i}=m(\xi_{i})$
+. 
+\[
+\frac{1}{\sqrt{n}\tilde{s}}\sum_{i=1}^{\left\lfloor nt\right\rfloor }\left(x_{i}-\delta(1)\right)-\underbrace{J}_{\mu}+J=\frac{1}{\sqrt{n}\tilde{s}}\sum_{i=1}^{\left\lfloor nt\right\rfloor }\left(x_{i}-J\right)-\frac{\left\lfloor nt\right\rfloor }{\sqrt{n}\tilde{s}}\left(\hat{J}_{n}-J\right)\xrightarrow[n\to\infty]{}W(t)+tU,\quad U\sim\N(0,1)
+\]
+(«броуновский мост со сносом»). Аналог доверительных интервалов для
+процессов: 
+\[
+\left(\delta_{n}(1)-\frac{\tilde{s}\sqrt{n}}{\left\lfloor nt\right\rfloor }U^{**}(t),\delta_{n}(1)+\frac{\tilde{s}\sqrt{n}}{\left\lfloor nt\right\rfloor }U^{**}(t)\right),
+\]
+для 95\%-го доверительного интервала можно взять 
+\[
+U^{**}(t)=a+b\sqrt{t},\quad a=0.1,b=3.15.
+\]
+
+\end{document}

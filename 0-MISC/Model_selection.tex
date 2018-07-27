@@ -1,0 +1,230 @@
+%% LyX 2.1.4 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[russian]{scrartcl}
+\usepackage[T2A,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper]{geometry}
+\geometry{verbose,tmargin=2cm,bmargin=2.5cm,lmargin=2cm,rmargin=2cm}
+\usepackage{color}
+\usepackage{babel}
+\usepackage{latexsym}
+\usepackage{mathtools}
+\usepackage{url}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage[unicode=true,pdfusetitle,
+ bookmarks=true,bookmarksnumbered=false,bookmarksopen=true,bookmarksopenlevel=1,
+ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=true]
+ {hyperref}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+\DeclareRobustCommand{\cyrtext}{%
+  \fontencoding{T2A}\selectfont\def\encodingdefault{T2A}}
+\DeclareRobustCommand{\textcyr}[1]{\leavevmode{\cyrtext #1}}
+\AtBeginDocument{\DeclareFontEncoding{T2A}{}{}}
+
+
+\@ifundefined{date}{}{\date{}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+%\usepackage{nicefrac}
+%\usepackage{colortbl}
+%\usepackage[noend]{algpseudocode}
+%\usepackage[all]{xy}
+\usepackage{mathrsfs}
+
+%\usepackage[columns=1,itemlayout=singlepar,totoc=true]{idxlayout}
+
+%\@addtoreset{chapter}{part}
+\DeclareMathOperator{\Int}{Int}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Err}{Err}
+\DeclareMathOperator{\cov}{cov}
+\DeclareMathOperator*{\mean}{mean}
+
+
+
+\newcommand{\bigperp}{%
+  \mathop{\mathpalette\bigp@rp\relax}%
+  \displaylimits
+}
+
+\newcommand{\bigp@rp}[2]{%
+  \vcenter{
+    \m@th\hbox{\scalebox{\ifx#1\displaystyle2.1\else1.5\fi}{$#1\perp$}}
+  }%
+}
+
+\newcommand{\bignparallel}{%
+  \mathop{\mathpalette\bignp@rp\relax}%
+  \displaylimits
+}
+
+\newcommand{\bignp@rp}[2]{%
+  \vcenter{
+    \m@th\hbox{\scalebox{\ifx#1\displaystyle2.1\else1.5\fi}{$#1\nparallel$}}
+  }%
+}
+
+\AtBeginDocument{
+  \def\labelitemii{\(\circ\)}
+  \def\labelitemiii{\(\Box\)}
+}
+
+\makeatother
+
+\begin{document}
+\global\long\def\N{\mathrm{N}}
+\global\long\def\P{\mathsf{P}}
+\global\long\def\E{\mathsf{E}}
+\global\long\def\D{\mathsf{D}}
+\global\long\def\O{\Omega}
+\global\long\def\F{\mathcal{F}}
+\global\long\def\K{\mathsf{K}}
+\global\long\def\A{\mathscr{A}}
+\global\long\def\Pcal{\mathcal{P}}
+\global\long\def\th{\theta}
+\global\long\def\toas{\xrightarrow{{\rm a.s.}}}
+\global\long\def\toP{\xrightarrow{\P}}
+\global\long\def\tod{\xrightarrow{\mathrm{d}}}
+\global\long\def\iid{\mathrm{i.i.d.}}
+\global\long\def\T{\mathrm{T}}
+\global\long\def\L{\mathcal{L}}
+\global\long\def\dd#1#2{\frac{\mathrm{d}#1}{\mathrm{d}#2}}
+\global\long\def\a{\alpha}
+\global\long\def\b{\beta}
+\global\long\def\t{\mathrm{t}}
+\global\long\def\RR{\mathbb{R}}
+\global\long\def\d{\,\mathrm{d}}
+\global\long\def\U{\mathrm{U}}
+\global\long\def\thb{\boldsymbol{\theta}}
+\global\long\def\I{\mathrm{I}}
+\global\long\def\II{\mathrm{II}}
+\global\long\def\ein{\mathbf{1}}
+\global\long\def\pv{p\text{-value}}
+\global\long\def\MLE{\mathrm{MLE}}
+\global\long\def\indep{\perp\!\!\!\perp}
+\global\long\def\xib{\boldsymbol{\xi}}
+\global\long\def\Pscr{\mathscr{P}}
+\global\long\def\m{\mathsf{m}}
+\global\long\def\X{\mathfrak{X}}
+\global\long\def\Q{\mathcal{Q}}
+\global\long\def\beb{\boldsymbol{\beta}}
+\global\long\def\xx{\mathbf{x}}
+\global\long\def\T{\mathsf{T}}
+\global\long\def\H{\mathcal{H}}
+\global\long\def\st{\mathrm{subject\ to\ }}
+\global\long\def\hh{\mathbf{h}}
+\global\long\def\RR{\mathbb{R}}
+\global\long\def\yy{\mathbf{y}}
+\global\long\def\Tcal{\mathcal{T}}
+\global\long\def\eb{\boldsymbol{\epsilon}}
+\global\long\def\Tau{\mathcal{T}}
+\global\long\def\err{\overline{\mathrm{err}}}
+\global\long\def\etab{\boldsymbol{\eta}}
+\global\long\def\Ib{\mathbf{I}}
+\global\long\def\bias{\mathrm{bias}}
+\global\long\def\variance{\mathrm{variance}}
+\global\long\def\Scal{\mathcal{S}}
+\global\long\def\Vcal{\mathcal{V}}
+
+
+
+\title{Model Selection}
+
+\maketitle
+\tableofcontents{}
+\begin{itemize}
+\item Модель 
+\[
+\etab=\mathbf{f}(\xib)+\eb,\quad\cov\eb=\sigma^{2}\Ib,\ \epsilon_{i}\indep\epsilon_{j}
+\]
+ 
+\item Функция потерь 
+\[
+L(f(\xib),\eta)=|f(\xib)-\eta|^{d},\quad d\in\{1,2\}.
+\]
+ 
+\item Пусть модель $\hat{f}$ обучена на тренировочном множестве $\Tau$;
+тогда хотелось бы знать её generalization (test, prediction) error
+\[
+\Err_{\Tcal}=\E\left[L(\hat{f}(\xib),\eta)\mid\Tau\right]
+\]
+ т.е. ожидание функции потерь на генеральной совокупности или 
+\[
+\Err=\E\left[\Err_{\Tau}\right]=\E\left[L(\hat{f}(\xib),\eta)\right]
+\]
+ т.е. ожидание еще и по всем тренировочным выборкам. Тогда из всех
+возможных моделей могли бы выбрать $\hat{f}$, минимизирующую $\Err_{\Tau}$
+(или $\Err$?)
+\item Справедливо для квадратичной $L$, 
+\begin{eqnarray*}
+\Err & = & \E\left[L(\hat{f}(\xib),\eta)\right]=\E\left[(\hat{f}(\xib)-\eta)^{2}\right]=\E\left[(\hat{f}(\xib)-f(\xib)+\epsilon)^{2}\right]\\
+ & = & \E\left[\hat{f}^{2}(\xib)-2\hat{f}(\xib)f(\xib)-2\hat{f}(\xib)\epsilon+2f(\xib)+f^{2}(\xib)+\epsilon^{2}\right]\\
+ & = & \E\left[f(\xib)-\hat{f}^{2}(\xib)\right]+2\E\epsilon\E(f(\xib)-\hat{f}(\xib))+\E\epsilon^{2}\\
+ & = & \E\left[f(\xib)-\hat{f}^{2}(\xib)\right]+\sigma^{2}.
+\end{eqnarray*}
+Видно, что $\E\left[f(\xib)-\hat{f}^{2}(\xib)\right]$ потенциально
+можно свести к 0, тогда как фиксированную $\sigma^{2}$ --- нет. Значит,
+нулевой ошибки для модели $\hat{f}$ добиться физически невозможно
+(её минимальной величиной и будет $\sigma^{2}$).
+\item Для $\xx_{0}\not\in\Tau$, и квадратичной функции потерь справедливо\footnote{\url{http://robjhyndman.com/hyndsight/files/2015/08/2-biasvardecomp.pdf}}
+разложение 
+\begin{eqnarray*}
+\Err(\xx_{0}) & = & \E\left[L(\hat{f}(\xx_{0}),\eta)\mid\xib=\xx_{0}\right]=\sigma^{2}+\underbrace{(\E\hat{f}(\xx_{0})-f(\xx_{0}))^{2}}_{\bias^{2}}+\underbrace{\E(\hat{f}(\xx_{0})-\E\hat{f}(\xx_{0}))^{2}}_{\D\hat{f}(\xx_{0})=\variance}
+\end{eqnarray*}
+
+
+\begin{description}
+\item [{bias}] показывает, насколько ожидание модели отличается от истинного
+значения,
+\item [{variance}] показывает, насколько изменится оценка $\hat{f}$, если
+изменится тренировочная выборка $\Tau$.
+\end{description}
+
+С ростом гибкости модели уменьшаяется смещение, но растет разброс
+(модель начинает аппроксимировать шум $\epsilon$) и наоборот. Стоит
+задача по тренировочной выборке подобрать такую гибкость модели, что
+$\Err_{\Tau}$ минимальна. Эмпирический способ это сделать --- в противовес
+аналитическим методам вроде информационных критериев --- для модели
+с заданной гибкости оценить $\Err_{\Tau}$.
+
+\item Пусть $\Scal$ --- test set; величина 
+\[
+\widehat{\Err}_{\Tau}(\Scal)=\frac{1}{\left|\Scal\right|}\sum_{\left(\xx_{i},y_{i}\right)\in\Scal}L(\hat{f}(\xx_{i}),y_{i})=\mean_{\Scal}L
+\]
+ будет иметь играть роль оценки $\Err_{\Tau}$ (model assessment).
+\item Для нахождения оптимальной гибкости могли бы непосредственно посчитать
+training error 
+\[
+\err_{\Tau}=\frac{1}{N}\sum_{i=1}^{N}L\left(\hat{f}(\xx_{i}),y_{i}\right)=\mean_{\Tau}L.
+\]
+Однако $\err_{\Tau}$ будет убывать с увеличением гибкости модели,
+в то время, как $\Err_{\Tau}$ с какого-то момента начнет расти.
+\item Поэтому тренировочную выборку следует разделить на собственно тренировочную
+(по которой строится модель) и валидационную $\Vcal$, по которой
+оценивать $\Err_{\Tau}$. Изменением гипер-параметров модели (регулирующих
+гибкость), минимизировать 
+\[
+\widehat{\Err}_{\Tau}(\Vcal)=\mean_{\Vcal}L.
+\]
+ Так осуществляется задача model selection.
+\item Если выборка мала и мало $\Vcal$, следует воспользоваться $K$-fold
+cross-validation: случайным образом разбить $\Tau$ на $\Tau_{1},\ldots,\Tau_{K}$,
+затем обучать модель $\hat{f}^{(-k)}$ на $\Tcal\setminus\Tcal_{k}$,
+а валидировать на $\Tau_{k}$; результаты затем усреднить:
+\[
+\frac{1}{K}\sum_{k=1}^{K}\left(\frac{1}{\left|\Tau_{k}\right|}\sum_{\left(\xx_{i},y_{i}\right)\in\Tau_{k}}\left|\hat{f}^{(-k)}(\xx_{i})-y_{i}\right|^{d}\right)=\mean_{\left\{ \Tau_{1},\ldots,\Tau_{K}\right\} }\left(\mean_{\Tau_{k}}L_{k}\right).
+\]
+
+
+\begin{itemize}
+\item При $K=N$ тренировочные выборки почти не отличаются друг от дружки,
+поэтому, по сравнению с другими вариантами, разброс будет большим
+как среднее скоррелированных величин, а смещение малым.
+\item При $K\to1$, наборот, разброс падает, смещение растет.\end{itemize}
+\end{itemize}
+
+\end{document}

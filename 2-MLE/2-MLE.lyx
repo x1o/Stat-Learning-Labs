@@ -1,0 +1,1295 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass scrartcl
+\begin_preamble
+%\usepackage{nicefrac}
+%\usepackage{colortbl}
+%\usepackage[noend]{algpseudocode}
+%\usepackage[all]{xy}
+\usepackage{mathrsfs}
+
+%\usepackage[columns=1,itemlayout=singlepar,totoc=true]{idxlayout}
+
+%\@addtoreset{chapter}{part}
+\DeclareMathOperator{\Int}{Int}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\qnt}{qnt}
+\DeclareMathOperator*{\rt}{root}
+\DeclareMathOperator*{\mean}{mean}
+
+\newcommand{\bigperp}{%
+  \mathop{\mathpalette\bigp@rp\relax}%
+  \displaylimits
+}
+
+\newcommand{\bigp@rp}[2]{%
+  \vcenter{
+    \m@th\hbox{\scalebox{\ifx#1\displaystyle2.1\else1.5\fi}{$#1\perp$}}
+  }%
+}
+
+\newcommand{\bignparallel}{%
+  \mathop{\mathpalette\bignp@rp\relax}%
+  \displaylimits
+}
+
+\newcommand{\bignp@rp}[2]{%
+  \vcenter{
+    \m@th\hbox{\scalebox{\ifx#1\displaystyle2.1\else1.5\fi}{$#1\nparallel$}}
+  }%
+}
+
+\addto\captionsrussian{%
+  \renewcommand{\abstractname}{TL;DR}%
+}
+\end_preamble
+\options abstract=yes
+\use_default_options true
+\begin_modules
+theorems-ams-bytype
+theorems-ams-extended-bytype
+theorems-chap-bytype
+\end_modules
+\maintain_unincluded_children false
+\begin_local_layout
+Format 49
+
+Style Solution
+        CopyStyle       "Proof"
+        LatexName       solution
+        Argument        1
+                LabelString   "Alternative Solution String"
+                Tooltip       "Alternative solution string"
+        EndArgument
+        LabelString     "Solution."
+        Preamble
+                \newenvironment{solution}
+                  {\renewcommand\qedsymbol{$\lrcorner$}
+                   \begin{proof}[\solutionname]}
+                  {\end{proof}}
+        EndPreamble
+        LangPreamble
+                \providecommand{\solutionname}{_(Solution)}
+        EndLangPreamble
+        BabelPreamble
+                \addto\captions$$lang{\renewcommand{\solutionname}{_(Solution)}}
+        EndBabelPreamble
+
+End
+\end_local_layout
+\language russian
+\language_package default
+\inputencoding utf8
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_math auto
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement h
+\paperfontsize default
+\spacing single
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen true
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder false
+\pdf_colorlinks true
+\pdf_backref false
+\pdf_pdfusetitle true
+\papersize a4paper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 2
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 2
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date true
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2.5cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language french
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\bullet 1 0 25 -1
+\bullet 2 0 26 -1
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\N}{\mathrm{N}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\P}{\mathsf{P}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\E}{\mathsf{E}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\D}{\mathsf{D}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\renewcommand{\O}{\Omega}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\F}{\mathcal{F}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\K}{\mathsf{K}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\A}{\mathscr{A}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\Pcal}{\mathcal{P}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\th}{\theta}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\toas}{\xrightarrow{{\rm a.s.}}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\toP}{\xrightarrow{\P}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\tod}{\xrightarrow{\mathrm{d}}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\iid}{\mathrm{i.i.d.}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\T}{\mathrm{T}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\L}{\mathcal{L}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\dd}[2]{\frac{\mathrm{d}#1}{\mathrm{d}#2}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\a}{\alpha}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\b}{\beta}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\t}{\mathrm{t}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\RR}{\mathbb{R}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\d}{\,\mathrm{d}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\U}{\mathrm{U}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\thb}{\boldsymbol{\theta}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\I}{\mathrm{I}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\II}{\mathrm{II}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\ein}{\mathbf{1}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\pv}{p\text{-value}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\MLE}{\mathrm{MLE}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\indep}{\perp\!\!\!\perp}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\xib}{\boldsymbol{\xi}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\Pscr}{\mathscr{P}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\m}{\mathsf{m}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\X}{\mathfrak{X}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\xx}{\mathbf{x}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Title
+\begin_inset Formula $M$
+\end_inset
+
+-оценки и ОМП
+\end_layout
+
+\begin_layout Date
+Tue 28 Feb 2017
+\end_layout
+
+\begin_layout Author
+422 группа
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+\begin_inset Formula $M$
+\end_inset
+
+- и 
+\begin_inset Formula $Z$
+\end_inset
+
+-оценки
+\end_layout
+
+\begin_layout Standard
+По выборке 
+\begin_inset Formula $\mathbf{x}=\left(x_{1},\ldots,x_{n}\right),$
+\end_inset
+
+ оценим параметр 
+\begin_inset Formula $\th\in\Theta$
+\end_inset
+
+.
+ Введем функцию-критерий 
+\begin_inset Formula 
+\[
+m_{\th}:\X\to\bar{\RR},
+\]
+
+\end_inset
+
+показывающую насколько наблюдения соответствуют параметру и отображение
+ 
+\begin_inset Formula 
+\[
+\th\mapsto M_{n}(\th)=\frac{1}{n}\sum_{i=1}^{n}m_{\th}(x_{i})=\mean_{\xx}m_{\th},
+\]
+
+\end_inset
+
+сопоставляющее каждому параметру его 
+\begin_inset Quotes fld
+\end_inset
+
+подходящесть
+\begin_inset Quotes frd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Definition*
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula $M$
+\end_inset
+
+-оценка
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+\begin_inset Quotes fld
+\end_inset
+
+Maximum
+\begin_inset Quotes frd
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+По принципу 
+\begin_inset Quotes fld
+\end_inset
+
+наилучшей хорошести
+\begin_inset Quotes frd
+\end_inset
+
+, оценка есть 
+\begin_inset Formula 
+\[
+\hat{\th}_{n}=\argmax_{\th}M_{n}(\th)=\argmax_{\th}\mean_{\xx}m_{\th}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+Чтобы 
+\begin_inset Formula $\hat{\th}_{n}$
+\end_inset
+
+ было случайной величиной, требуем, чтобы 
+\begin_inset Formula $\hat{\th}_{n}$
+\end_inset
+
+ было измеримым, а для этого, чтобы 
+\begin_inset Formula $\Theta$
+\end_inset
+
+ --- польским (полным, измеримым, метрическим).
+\end_layout
+
+\begin_layout --Separator--
+
+\end_layout
+
+\begin_layout Remark*
+Если взять 
+\begin_inset Formula $m=\log p_{\th}$
+\end_inset
+
+, то 
+\begin_inset Formula $M$
+\end_inset
+
+-оценка есть ОМП:
+\begin_inset Formula 
+\[
+\hat{\th}_{n}^{*}=\argmax_{\th}p(\xx\mid\th)=\argmax_{\th}\frac{1}{n}\sum_{i=1}^{n}\log p_{\th}(x_{i})=\argmax_{\th}\mean_{\xx}\log p_{\th}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition*
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Z-оценка
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+\begin_inset Quotes fld
+\end_inset
+
+Zero
+\begin_inset Quotes frd
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+Рассмотрим другие критерии 
+\begin_inset Formula $\psi_{\th}(x)$
+\end_inset
+
+ и отображение 
+\begin_inset Formula 
+\[
+\th\mapsto\Psi_{n}(\th)=\frac{1}{n}\sum_{i=1}^{n}\psi_{\th}(x_{i})=\mean_{\xx}\psi_{\th}.
+\]
+
+\end_inset
+
+В качестве оценки найдем 
+\begin_inset Formula 
+\[
+\hat{\th}_{n}=\rt_{\th}\Psi_{n}(\th)=\rt_{\th}\mean_{\xx}\psi_{\th}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+\begin_inset Formula $M$
+\end_inset
+
+-оценка может быть сведена к этой оценке 
+\begin_inset Formula $\psi_{\th}=\partial m_{\th}/\partial\th$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\argmax_{\th}\mean_{\xx}m_{\th}=\rt\frac{\partial}{\partial\th}\mean_{\xx}m_{\th}=\rt_{\th}\mean_{\xx}\frac{\partial}{\partial\th}m_{\th}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout --Separator--
+
+\end_layout
+
+\begin_layout Remark*
+\begin_inset Formula $\psi_{\th}$
+\end_inset
+
+ должна быть, конечно, дифференцируема.
+\end_layout
+
+\begin_layout Example*
+Пусть 
+\begin_inset Formula $x_{1},\ldots,x_{n}$
+\end_inset
+
+ 
+\begin_inset Formula $\iid$
+\end_inset
+
+ на 
+\begin_inset Formula $\U[0,\th)$
+\end_inset
+
+, то 
+\begin_inset Formula $p_{\th}=\th^{-1}\ein_{[0,\th)}$
+\end_inset
+
+ и 
+\begin_inset Formula 
+\[
+\th\mapsto\sum_{i=1}^{n}(\log\ein_{[0,\th)}(x_{i})-\log(\th)).
+\]
+
+\end_inset
+
+Максимум 
+\begin_inset Formula $M$
+\end_inset
+
+-оценки достигается на 
+\begin_inset Formula 
+\[
+\hat{\th}_{n}=\max x_{i}.
+\]
+
+\end_inset
+
+ ОМП оценку не найти, потому что не продифференцировать индикатор.
+\end_layout
+
+\begin_layout Section
+Состоятельность 
+\begin_inset Formula $M$
+\end_inset
+
+-оценок
+\end_layout
+
+\begin_layout Standard
+Пусть есть 
+\begin_inset Formula 
+\[
+M_{n}(\th)=\frac{1}{n}\sum_{i=1}^{n}m_{\th}(x_{i})\xrightarrow[n\to\infty]{\P}\E m_{\th}=M(\th)=\int m_{\th}\d\Pcal_{x}.
+\]
+
+\end_inset
+
+ Навесим 
+\begin_inset Formula $\argmax$
+\end_inset
+
+ на обе стороны: 
+\begin_inset Formula 
+\[
+M_{n}(\th)\rightsquigarrow\hat{\th}_{n}=\argmax_{\th}M_{n}(\th).
+\]
+
+\end_inset
+
+Если бы 
+\begin_inset Formula $\argmax$
+\end_inset
+
+ было непрерывным, то 
+\begin_inset Formula $\hat{\th}_{n}\xrightarrow[n\to\infty]{\P}\th^{*}=\argmax M(\th).$
+\end_inset
+
+ Нужно проверить следующие вещи:
+\end_layout
+
+\begin_layout Enumerate
+Сходится ли 
+\begin_inset Formula $\hat{\th}_{n}$
+\end_inset
+
+ хоть к чему-нибудь.
+\end_layout
+
+\begin_layout Enumerate
+Правда ли, что 
+\begin_inset Formula $\th^{*}=\th_{0}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\argmax$
+\end_inset
+
+ в принципе не является непрерывным.
+ До тех пор, пока находимся в области притяжения параметра, всё хорошо,
+ но как только из нее выходим, можем резко перескочить на другой экстремум.
+\end_layout
+
+\begin_layout Subsection
+Сходимость к чему-нибудь
+\end_layout
+
+\begin_layout Theorem*
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Вальд
+\end_layout
+
+\end_inset
+
+Рассматриваем 
+\begin_inset Formula $M$
+\end_inset
+
+-оценку.
+ Пусть
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $m_{\th}$
+\end_inset
+
+ полунепрерывна сверху по 
+\begin_inset Formula $\th$
+\end_inset
+
+ для почти всех 
+\begin_inset Formula $x$
+\end_inset
+
+: 
+\begin_inset Formula 
+\[
+\lim_{\th\to\th_{0}}\sup m_{\th}\leq m_{\th_{0}},\quad\text{для почти всех }x.
+\]
+
+\end_inset
+
+ (если экстремум в 
+\begin_inset Formula $\th_{0}$
+\end_inset
+
+, то он хорошо выражен).
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\argmax$
+\end_inset
+
+ должно быть случайной величиной.
+ Для этого отображение 
+\begin_inset Formula 
+\[
+\forall B_{\delta}\subset\Theta\ x\mapsto\sup_{\th\in B_{\delta}}m_{\th}(x)
+\]
+
+\end_inset
+
+ должно быть
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+измеримо
+\end_layout
+
+\begin_layout Enumerate
+ограничнено: 
+\begin_inset Formula 
+\[
+\int\sup_{B_{\delta}}m_{\th}(x)\d\P<\infty.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Remark*
+Пусть 
+\begin_inset Formula $\Theta^{*}=\left\{ \th^{*}\in\Theta:M(\th^{*})=\sup_{\th}M(\th)\right\} .$
+\end_inset
+
+ Еще ослабим условие: максимум будет достигаться асимптотически.
+ Пусть интересует 
+\begin_inset Formula 
+\[
+\hat{\th}_{n}=\argmax(M_{n}(\th)-o(1))
+\]
+
+\end_inset
+
+ (не доходим до максимума --- с точки зрения приложений ок, потому что ищем
+ оценки численно).
+\end_layout
+
+\end_deeper
+\begin_layout Theorem*
+Тогда для любой такой последовательности оценок, 
+\begin_inset Formula $\forall\epsilon>0\ \forall K\subset\Theta$
+\end_inset
+
+ (
+\begin_inset Formula $K$
+\end_inset
+
+ --- компакт), верно, что 
+\begin_inset Formula 
+\[
+\P\left(\dist\left(\hat{\th}_{n},\th^{*}\right)\geq\epsilon,\hat{\th}_{n}\in K\right)\xrightarrow[n\to\infty]{}0.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Иными словами, это условие на то, как оценка не сходится --- либо последовательн
+ость сходится, либо выходит за компакт.
+\end_layout
+
+\begin_layout Corollary*
+Поэтому для 
+\begin_inset Formula $\RR^{n}$
+\end_inset
+
+ всё либо сходится по вероятности, либо уходит на бесконечности --- 
+\emph on
+не может колебаться
+\emph default
+ на манер 
+\begin_inset Formula $\left(-1\right)^{n}$
+\end_inset
+
+.
+ Это очень здорово.
+\end_layout
+
+\begin_layout Subsection
+Равенство 
+\begin_inset Formula $\theta^{*}=\theta_{0}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Говорили, что ОМП получаются, когда 
+\begin_inset Formula 
+\[
+M_{n}(\th)=\frac{1}{n}\sum_{i=1}^{n}\log p_{\th}(x_{i}).
+\]
+
+\end_inset
+
+Совершим трюк: добавим константу, так что 
+\begin_inset Formula 
+\[
+M_{n}(\th)=\frac{1}{n}\sum_{i=1}^{n}\log\frac{p_{\th}(x_{i})}{p_{\th_{0}}(x_{i})}.
+\]
+
+\end_inset
+
+ На максимум не влияет, конечно.
+ Тогда 
+\begin_inset Formula 
+\[
+\frac{1}{n}\sum_{i=1}^{n}\ln\frac{p_{\thb}}{p_{\thb_{0}}}(x_{i})\toP\int_{\RR}\ln\left(\frac{p_{\thb}(x)}{p_{\thb_{0}}(x)}\right)p_{\thb_{0}}(x)\d x=\E\ln\frac{p_{\thb}}{p_{\thb_{0}}}\leq\ln\E\frac{p_{\thb}}{p_{\thb_{0}}}=\ln\int_{\RR}\frac{p_{\thb}}{p_{\thb_{0}}}(x)p_{\thb_{0}}(x)\d x=\ln1=0
+\]
+
+\end_inset
+
+ так что 
+\begin_inset Formula 
+\[
+M(\th)\leq0.
+\]
+
+\end_inset
+
+ Интересуемся 
+\begin_inset Formula $\th:M(\th)=0$
+\end_inset
+
+.
+ Это так, когда 
+\begin_inset Formula $p_{\th}=p_{\th_{0}}$
+\end_inset
+
+ для почти всех 
+\begin_inset Formula $x$
+\end_inset
+
+.
+ В предположении свойства 
+\emph on
+идентифицируемости
+\emph default
+ задачи (
+\begin_inset Formula $\th_{1}\neq\th_{2}\implies\Pcal_{\th_{1}}\neq\Pcal_{\th_{2}}$
+\end_inset
+
+), получаем 
+\begin_inset Formula $\th=\th_{0}.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Таким образом, нужно иметь адекватную модель (выполнялось бы условие идентифицир
+уемости).
+ Для выполнимость теоремы Вальда достаточно компактности и 
+\begin_inset Formula $\sqrt{\log p}$
+\end_inset
+
+\SpecialChar \ldots{}
+ Компактность на практике выполняется --- можно взять достаточно большой
+ отрезок всегда.
+\end_layout
+
+\begin_layout Standard
+Так что состоятельность выполняется.
+\end_layout
+
+\begin_layout Section
+Скорость сходимости
+\end_layout
+
+\begin_layout Standard
+При выполнении некоторых условий регулярности (простые почти никогда не
+ выполняются, сложные сложно проверить) ОМП асимптотически нормальны, т.е.
+ 
+\begin_inset Formula 
+\[
+\sqrt{n}(\hat{\th}_{n}-\th_{0})\tod\N(0,I^{-1}(\th_{0})).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Если условия регулярности не выполняются, может быть все что угодно.
+ Обычно, если 
+\begin_inset Formula $\Theta=\RR^{n}$
+\end_inset
+
+, то оценки сходятся оч быстро.
+ Иначе медленно.
+\end_layout
+
+\begin_layout Section
+Доверительные границы
+\end_layout
+
+\begin_layout Subsection
+Аппроксимация Вальда
+\end_layout
+
+\begin_layout Standard
+Исходя из нормальной аппроксимации, доверительные границы можно 
+\begin_inset Formula 
+\[
+\left(\hat{\th}_{n}-\th_{0}\right)^{\T}\Sigma^{-1}\left(\hat{\th}_{n}-\th_{0}\right)\tod\chi_{d}^{2}.
+\]
+
+\end_inset
+
+ Проблемы:
+\end_layout
+
+\begin_layout Itemize
+Границы лишь асимптотические.
+\end_layout
+
+\begin_layout Itemize
+Нужно знать 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+, зависящую от оцениваемого параметра.
+ Поэтому нужно еще и оценивать 
+\begin_inset Formula $\Sigma^{-1}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Так можно делать в низких размерностях и при больших выборках.
+\end_layout
+
+\begin_layout Subsection
+Метод профилей правдоподобия
+\end_layout
+
+\begin_layout Standard
+Пусть есть 
+\begin_inset Formula $\thb,\dim\thb=k$
+\end_inset
+
+.
+ НУО, выделим 
+\begin_inset Formula $\thb=(\thb_{1},\thb_{2}),\dim\thb_{1}=k_{1}.$
+\end_inset
+
+ Рассмотрим логарифм функции правдоподобия как функцию двух аргументов 
+\begin_inset Formula 
+\[
+\ell(\thb)=\ell(\thb_{1},\thb_{2}).
+\]
+
+\end_inset
+
+ Построим 
+\emph on
+профиль
+\emph default
+ 
+\begin_inset Formula 
+\[
+r(\thb_{2})=\ell(\hat{\thb}_{1}(\thb_{2}),\thb_{2}),
+\]
+
+\end_inset
+
+ где 
+\begin_inset Formula $\hat{\thb}_{1}(\thb_{2})$
+\end_inset
+
+ --- MLE оценка 
+\begin_inset Formula $\thb_{1}$
+\end_inset
+
+ с данным 
+\begin_inset Formula $\thb_{2}$
+\end_inset
+
+: 
+\begin_inset Formula $\hat{\thb}_{1}(\thb_{2})=\argmax_{\thb_{1}}\ell(\thb_{1},\thb_{2})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Remark*
+Если 
+\begin_inset Formula $\thb_{2}=\hat{\left(\thb_{2}\right)}_{\MLE}$
+\end_inset
+
+, то 
+\begin_inset Formula $\hat{\thb}_{1}\hat{\left(\thb_{2}\right)}_{\MLE}=\hat{\left(\thb_{1}\right)}_{\MLE}.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Claim*
+Пусть истинный параметр 
+\begin_inset Formula $\thb_{0}=(\thb_{10},\thb_{20})$
+\end_inset
+
+.
+ Тогда 
+\begin_inset Formula 
+\[
+z^{2}:=-2\left(r(\thb_{10})-\ell(\hat{\thb}_{n})\right)\tod\chi^{2}(k_{1}).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Идея доказательства
+\end_layout
+
+\end_inset
+
+Знаем, что 
+\begin_inset Formula $\hat{\thb}_{n}$
+\end_inset
+
+ имеет нормальное распределение, 
+\begin_inset Formula $\ell(\hat{\thb}_{n})\sim\chi^{2}.$
+\end_inset
+
+ Тогда в пределе 
+\begin_inset Formula $\ell$
+\end_inset
+
+ должна выглядеть как сумма квадратов --- можно разложить по Тейлору, будет
+ что-то вроде 
+\begin_inset Formula 
+\[
+\dots+\frac{1}{2}\left(\thb_{0}-\hat{\thb}_{n}\right)^{2}+\dots
+\]
+
+\end_inset
+
+ Условия регулярности нужны чтобы убить все члены старше второго.
+\end_layout
+
+\begin_layout Standard
+Нужно уметь обращать 
+\begin_inset Formula $r$
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+z?
+\end_layout
+
+\end_inset
+
+, чтобы 
+\begin_inset Formula 
+\[
+\thb_{10}:\qnt_{\chi^{2}}(\gamma_{1})\leq-2\left(\dots\right)\leq\qnt_{\chi^{2}}(\gamma_{2}).
+\]
+
+\end_inset
+
+Так что заменили задачу оценивания 
+\begin_inset Formula $\Sigma^{-1}$
+\end_inset
+
+ на задачу обращения детерминированной функции 
+\begin_inset Formula $r$
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+z?
+\end_layout
+
+\end_inset
+
+.
+ В качестве бонуса --- профиль должен быть похож на квадратичную функцию,
+ тогда доверительный интервал по квантилям будет правильно выбран (частный
+ случай 
+\begin_inset Quotes fld
+\end_inset
+
+локальной асимптотической нормальности
+\begin_inset Quotes frd
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+На глаз можно посмотреть график 
+\begin_inset Formula $\left|z\right|$
+\end_inset
+
+.
+ Когда всё хорошо, он будет выглядеть как модуль.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+В смысле 
+\begin_inset Quotes fld
+\end_inset
+
+всё хорошо
+\begin_inset Quotes frd
+\end_inset
+
+?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example*
+Пусть 
+\begin_inset Formula $\xi\sim\N(\mu_{0},\sigma_{0}^{2})$
+\end_inset
+
+, 
+\begin_inset Formula $\thb=(\mu,\sigma^{2})$
+\end_inset
+
+.
+ Пусть 
+\begin_inset Formula $\mu_{0}$
+\end_inset
+
+ известна; оценим по выборке 
+\begin_inset Formula $\sigma^{2}$
+\end_inset
+
+.
+ Т.к.
+ 
+\begin_inset Formula $\chi^{2}(1)=(\N(0,1))^{2}$
+\end_inset
+
+, то 
+\begin_inset Formula 
+\[
+z^{2}=-2(\underbrace{r(\mu_{0})}_{\max_{\sigma^{2}}\ell(\mu_{0},\sigma^{2})}-\ell(\mu_{0},\widehat{\sigma^{2}}))\tod\left(\N(0,1)\right)^{2}.
+\]
+
+\end_inset
+
+ Значит 
+\begin_inset Formula $z\tod\N(0,1)$
+\end_inset
+
+.
+ Ясно, что в 
+\begin_inset Formula $\widehat{\sigma^{2}}=\widehat{\sigma^{2}}_{\MLE},$
+\end_inset
+
+ 
+\begin_inset Formula $\left|z\right|=0$
+\end_inset
+
+.
+ На остальных значениях это модуль-галочка, причем по значениям 
+\begin_inset Formula $\left|z\right|$
+\end_inset
+
+ --- квантилям 
+\begin_inset Formula $\N(0,1)$
+\end_inset
+
+ --- можно построить доверительный интервал для 
+\begin_inset Formula $\widehat{\sigma^{2}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Remark*
+В R --- пакет 
+\family typewriter
+bbmle
+\family default
+, функция 
+\family typewriter
+mle2
+\family default
+.
+ На выходе --- объект типа 
+\family typewriter
+mle
+\family default
+.
+ Это оценки + \SpecialChar \ldots{}
+.
+ 
+\family typewriter
+summary(mle)
+\family default
+.
+ Построить профиль можно при помощи функции 
+\family typewriter
+p <- profile(m)
+\family default
+.
+ Вызывает 
+\family typewriter
+optim
+\family default
+ и т.п.
+ Профили можно рисовать:
+\family typewriter
+ plot(p)
+\family default
+.
+ Подсчет доверительных интервалов: 
+\family typewriter
+confint(p)
+\family default
+.
+\end_layout
+
+\end_body
+\end_document
